@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const C = {
   black: "#121212",
@@ -9,46 +9,11 @@ const C = {
 function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
-function PrimaryButton({ children, large, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        backgroundImage: C.purple.grad,
-        boxShadow: C.purple.shadow,
-        borderRadius: 6,
-        padding: large ? "14px 28px" : "12px 18px",
-        border: "none",
-        color: "#fff",
-        fontFamily: "'Inter',sans-serif",
-        fontWeight: 500,
-        fontSize: large ? 18 : 16,
-        cursor: "pointer",
-      }}
-    >
-      {children}
-    </button>
-  );
+function PrimaryButton({ children, large }) {
+  return <button style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
-function SecondaryButton({ children, onClick }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{
-        backgroundImage: C.purple.gradLight,
-        boxShadow: C.purple.shadowLight,
-        borderRadius: 6,
-        padding: "12px 18px",
-        border: "none",
-        fontFamily: "'Inter',sans-serif",
-        fontWeight: 500,
-        fontSize: 16,
-        cursor: "pointer",
-      }}
-    >
-      <GradientText>{children}</GradientText>
-    </button>
-  );
+function SecondaryButton({ children }) {
+  return <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
@@ -291,23 +256,22 @@ export default function ForWalletsPageMerged() {
   const [depositScreen, setDepositScreen] = useState(null);
   const [embedStyle, setEmbedStyle] = useState("tab");
   const [activeFeature, setActiveFeature] = useState(0);
-  const navigate = useNavigate();
 
   const wallet = WALLETS[activeWallet];
 
   return (
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
       {/* NAV */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 260px", position: "relative", zIndex: 10 }}>
-        <div onClick={() => navigate("/")} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, flexWrap: "wrap", gap: "12px", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>Y</span></div>
           <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-        </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <span onClick={() => navigate("/wallets")} style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, color: C.black, borderBottom: "2px solid #7A1CCB", cursor: "pointer" }}>For Wallets</span>
-          <span onClick={() => navigate("/vaults")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Vaults</span>
-          <span onClick={() => navigate("/creators")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Creators</span>
-          <span onClick={() => navigate("/docs")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>Docs</span>
+        </Link>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, color: C.black, borderBottom: "2px solid #7A1CCB", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
+          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
+          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
+          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
           <SecondaryButton>Dashboard</SecondaryButton>
@@ -316,7 +280,7 @@ export default function ForWalletsPageMerged() {
       </nav>
 
       {/* HERO */}
-      <section style={{ padding: "80px 260px 60px", position: "relative", overflow: "hidden" }}>
+      <section style={{ padding: "120px clamp(20px, 5vw, 260px) 60px", position: "relative", overflow: "hidden", marginTop: "80px" }}>
         <div style={{ position: "absolute", top: -200, left: "50%", transform: "translateX(-50%)", width: 1600, height: 900, background: "radial-gradient(ellipse at center, rgba(212,205,255,0.3) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ position: "relative", display: "flex", gap: 48, alignItems: "center" }}>
           <div style={{ flex: "1.2 1 0" }}>
@@ -329,7 +293,7 @@ export default function ForWalletsPageMerged() {
             </p>
             <div style={{ display: "flex", gap: 16, marginTop: 36 }}>
               <PrimaryButton large>Start Integrating</PrimaryButton>
-              <SecondaryButton onClick={() => navigate("/docs")}>View Documentation →</SecondaryButton>
+              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
             </div>
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "5 bps", l: "Your rev share" }, { n: "1 SDK", l: "All protocols" }, { n: "< 1 day", l: "Integration time" }].map((s, i) => (
@@ -360,7 +324,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* TRUSTED BY */}
-      <section style={{ padding: "60px 260px", background: "radial-gradient(ellipse at center top, rgba(212,205,255,0.25) 0%, transparent 70%)" }}>
+      <section style={{ padding: "60px clamp(20px, 5vw, 260px)", background: "radial-gradient(ellipse at center top, rgba(212,205,255,0.25) 0%, transparent 70%)" }}>
         <div style={{ textAlign: "center", fontSize: 14, fontWeight: 500, color: "rgba(0,0,0,0.3)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 28 }}>Built for leading wallets</div>
         <div style={{ display: "flex", gap: 48, justifyContent: "center", alignItems: "center" }}>
           {[
@@ -376,7 +340,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* THE PROBLEM */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="The Problem" title="Yield should be a profit center, not a cost center" subtitle="Adding yield to your wallet means integrating 20+ protocols, getting zero revenue, and shouldering all the maintenance." />
         <div style={{ display: "flex", gap: 20, marginTop: 56 }}>
           {[
@@ -395,7 +359,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* SOLUTION */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.015)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="The Solution" title="Yieldo handles everything" subtitle="One integration replaces 20 protocols. You earn on every deposit. We handle the complexity." />
         <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
@@ -414,7 +378,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* USER EXPERIENCE — merged from embed preview */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="User Experience" title="Three taps to yield" subtitle="From discovering opportunities to depositing — all inside the wallet they already trust. Try the interactive demo above, or explore the embed formats below." />
         <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
@@ -438,7 +402,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* EMBED FORMATS */}
-      <section style={{ padding: "80px 260px", background: "rgba(122,28,203,0.015)" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Embed Options" title="Multiple integration styles" subtitle="Choose the layout that fits your wallet's UX. All styles use the same SDK." />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginTop: 48 }}>
           {[
@@ -487,7 +451,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* SDK INTEGRATION */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <div style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Integration</Tag>
@@ -520,7 +484,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* REVENUE CALCULATOR */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.015)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <div style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Economics</Tag>
@@ -539,7 +503,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* PARTNER DASHBOARD PREVIEW */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="Partner Dashboard" title="Full visibility into your earnings" subtitle="Track revenue, deposits, vault performance, and campaign bonuses in real time." />
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginTop: 48 }}>
           {[
@@ -563,7 +527,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* COMPARISON */}
-      <section style={{ padding: "80px 260px", background: "rgba(122,28,203,0.015)" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Comparison" title="Yieldo vs. Building In-House" />
         <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
@@ -591,7 +555,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="Partners" title="Trusted by leading wallets" />
         <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
@@ -612,7 +576,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 260px 100px" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
         <div style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: C.purple.gradBg, boxShadow: "0 0 47px rgba(69,199,242,0.1)" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 300, background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ position: "relative" }}>
@@ -629,7 +593,7 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ padding: "48px 260px", backgroundImage: C.purple.gradBg, display: "flex", flexDirection: "column", gap: 32 }}>
+      <footer style={{ padding: "48px clamp(20px, 5vw, 260px)", backgroundImage: C.purple.gradBg, display: "flex", flexDirection: "column", gap: 32 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
@@ -639,10 +603,10 @@ export default function ForWalletsPageMerged() {
             <p style={{ fontSize: 15, color: "rgba(0,0,0,0.45)", maxWidth: 400, lineHeight: 1.5 }}>The intelligent distribution layer for on-chain yield.</p>
           </div>
           <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.45)" }}>
-            <a href="/wallets" onClick={(e) => { e.preventDefault(); navigate("/wallets"); }} style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
-            <a href="/vaults" onClick={(e) => { e.preventDefault(); navigate("/vaults"); }} style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
-            <a href="/creators" onClick={(e) => { e.preventDefault(); navigate("/creators"); }} style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
-            <a href="/docs" onClick={(e) => { e.preventDefault(); navigate("/docs"); }} style={{ color: "inherit", textDecoration: "none" }}>Documentation</a>
+            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
+            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
+            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
+            <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
           </div>
         </div>
         <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>

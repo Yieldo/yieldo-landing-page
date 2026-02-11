@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const COLORS = {
   black: "#121212",
@@ -198,6 +198,7 @@ function PlugIcon() {
     </svg>
   );
 }
+
 function ShieldIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -207,6 +208,7 @@ function ShieldIcon() {
     </svg>
   );
 }
+
 function DollarIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -216,6 +218,7 @@ function DollarIcon() {
     </svg>
   );
 }
+
 function LayersIcon() {
   return (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
@@ -269,12 +272,12 @@ function WalletLogo({ name }) {
       </div>
     ),
   };
+
   return logos[name] || null;
 }
 
 export default function YieldoHomepage() {
   const [hoveredPillar, setHoveredPillar] = useState(null);
-  const navigate = useNavigate();
 
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
@@ -284,22 +287,29 @@ export default function YieldoHomepage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "20px 260px",
-          position: "relative",
-          zIndex: 10,
+          padding: "20px clamp(20px, 5vw, 260px)",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          flexWrap: "wrap",
+          gap: "12px",
+          background: "#fff",
+          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
         }}
       >
-        <div onClick={() => navigate("/")} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #4B0CA6, #7A1CCB)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>Y</span>
           </div>
           <span style={{ fontSize: 18, fontWeight: 600, color: COLORS.black, letterSpacing: "0.05em" }}>YIELDO</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span onClick={() => navigate("/wallets")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Wallets</span>
-          <span onClick={() => navigate("/vaults")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Vaults</span>
-          <span onClick={() => navigate("/creators")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Creators</span>
-          <span onClick={() => navigate("/docs")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>Docs</span>
+        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
+          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
+          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
+          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
           <SecondaryButton>Dashboard</SecondaryButton>
@@ -310,10 +320,11 @@ export default function YieldoHomepage() {
       {/* HERO */}
       <section
         style={{
-          padding: "100px 260px 80px",
+          padding: "140px clamp(20px, 5vw, 260px) 80px",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
+          marginTop: "80px",
         }}
       >
         <div
@@ -351,9 +362,9 @@ export default function YieldoHomepage() {
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
             <PrimaryButton large>Start Integration</PrimaryButton>
-            <SecondaryButton onClick={() => navigate("/docs")}>View Documentation →</SecondaryButton>
+            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
           </div>
-          <div style={{ display: "flex", gap: 40, justifyContent: "center", marginTop: 56, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 40, justifyContent: "center", marginTop: 56, alignItems: "center", flexWrap: "wrap" }}>
             {["Nightly", "Phantom", "MetaMask", "Rabby", "Zerion"].map((name) => (
               <div key={name} style={{ opacity: 0.5 }}>
                 <WalletLogo name={name} />
@@ -364,13 +375,13 @@ export default function YieldoHomepage() {
       </section>
 
       {/* PROBLEM / WHY */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.02)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader
           tag="The Problem"
           title="Resource exhaustion kills wallet yield features"
           subtitle="Wallets face an impossible trilemma when trying to offer yield: too many protocols, zero monetization path, and unbearable complexity."
         />
-        <div style={{ display: "flex", gap: 24, marginTop: 64 }}>
+        <div style={{ display: "flex", gap: 24, marginTop: 64, flexWrap: "wrap" }}>
           {[
             {
               icon: <LayersIcon />,
@@ -398,6 +409,7 @@ export default function YieldoHomepage() {
               key={i}
               style={{
                 flex: "1 1 0",
+                minWidth: "280px",
                 padding: 32,
                 borderRadius: 16,
                 background: "#fff",
@@ -420,13 +432,13 @@ export default function YieldoHomepage() {
       </section>
 
       {/* THREE PILLARS */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="USP"
           title="Your Yield Infrastructure Layer"
           subtitle="Three pillars that turn yield from a maintenance burden into a revenue stream."
         />
-        <div style={{ display: "flex", gap: 24, marginTop: 64 }}>
+        <div style={{ display: "flex", gap: 24, marginTop: 64, flexWrap: "wrap" }}>
           {[
             {
               id: "zero",
@@ -471,6 +483,7 @@ export default function YieldoHomepage() {
               onMouseLeave={() => setHoveredPillar(null)}
               style={{
                 flex: "1 1 0",
+                minWidth: "280px",
                 padding: 32,
                 borderRadius: 16,
                 background: hoveredPillar === pillar.id ? "rgba(122,28,203,0.05)" : "#fff",
@@ -497,13 +510,13 @@ export default function YieldoHomepage() {
       </section>
 
       {/* LIVE YIELD TABLE */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.02)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader
           tag="Live Preview"
           title="Top AI-curated Yield Opportunities"
           subtitle="Preview the strategies your users will see. Real protocols, real yields, real-time updates."
         />
-        <div style={{ marginTop: 56, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
+        <div style={{ marginTop: 56, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
           <div
             style={{
               display: "grid",
@@ -515,6 +528,7 @@ export default function YieldoHomepage() {
               color: "rgba(0,0,0,0.5)",
               textTransform: "uppercase",
               letterSpacing: "0.05em",
+              minWidth: "800px",
             }}
           >
             <span>Strategy</span>
@@ -537,6 +551,7 @@ export default function YieldoHomepage() {
                 borderTop: "1px solid rgba(0,0,0,0.04)",
                 alignItems: "center",
                 fontSize: 15,
+                minWidth: "800px",
               }}
             >
               <div>
@@ -573,13 +588,13 @@ export default function YieldoHomepage() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="Integration"
           title="How It Works"
           subtitle="Go from zero to yield in three steps. No smart contract development required."
         />
-        <div style={{ display: "flex", gap: 80, marginTop: 64 }}>
+        <div style={{ display: "flex", gap: 80, marginTop: 64, flexWrap: "wrap", justifyContent: "center" }}>
           {[
             {
               step: "01",
@@ -600,7 +615,7 @@ export default function YieldoHomepage() {
               icon: "💰",
             },
           ].map((s, i) => (
-            <div key={i} style={{ flex: "1 1 0", textAlign: "center", position: "relative" }}>
+            <div key={i} style={{ flex: "1 1 0", minWidth: "250px", maxWidth: "350px", textAlign: "center", position: "relative" }}>
               <div
                 style={{
                   position: "absolute",
@@ -628,7 +643,7 @@ export default function YieldoHomepage() {
       </section>
 
       {/* ECONOMICS */}
-      <section style={{ padding: "80px 260px" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px)" }}>
         <div
           style={{
             borderRadius: 16,
@@ -655,7 +670,7 @@ export default function YieldoHomepage() {
             <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 40px", letterSpacing: "-0.02em" }}>
               Transparent & Aligned
             </h2>
-            <div style={{ display: "flex", gap: 24 }}>
+            <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
               <StatCard number="10 bps" label="Entry Fee" sublabel="0.1% — industry lowest" />
               <StatCard number="5 bps" label="Your Revenue Share" sublabel="50% goes directly to you" />
               <StatCard number="$500K+" label="Annual at $500M Volume" sublabel="Scales with your AUM" />
@@ -666,20 +681,20 @@ export default function YieldoHomepage() {
       </section>
 
       {/* VISION */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="Vision"
           title="The Most Trusted Filter in DeFi"
           subtitle="From curated middleware to decentralized yield governance."
         />
-        <div style={{ display: "flex", gap: 0, marginTop: 56, position: "relative" }}>
-          <div style={{ position: "absolute", top: "50%", left: 80, right: 80, height: 2, background: "linear-gradient(90deg, rgba(122,28,203,0.15) 0%, rgba(122,28,203,0.3) 50%, rgba(122,28,203,0.15) 100%)", transform: "translateY(-50%)" }} />
+        <div style={{ display: "flex", gap: 0, marginTop: 56, position: "relative", flexWrap: "wrap", justifyContent: "center" }}>
+          <div style={{ position: "absolute", top: "50%", left: 80, right: 80, height: 2, background: "linear-gradient(90deg, rgba(122,28,203,0.15) 0%, rgba(122,28,203,0.3) 50%, rgba(122,28,203,0.15) 100%)", transform: "translateY(-50%)", display: "none" }} />
           {[
             { phase: "Today", title: "Curated Middleware", desc: "Yieldo selects vaults based on external scoring (Credora, Bluechip). One API, best yields." },
             { phase: "Tomorrow", title: "Community Governance", desc: "Token holders and curators vote on which vaults enter the Recommended tier for partner wallets." },
             { phase: "Future", title: "Chainlink for Yield", desc: "Decentralized curation network. Risk ownership shifts to the system. Yieldo becomes the trust layer." },
           ].map((v, i) => (
-            <div key={i} style={{ flex: "1 1 0", textAlign: "center", position: "relative", zIndex: 1 }}>
+            <div key={i} style={{ flex: "1 1 0", minWidth: "280px", maxWidth: "350px", textAlign: "center", position: "relative", zIndex: 1, marginBottom: 40 }}>
               <div
                 style={{
                   width: 14,
@@ -699,7 +714,7 @@ export default function YieldoHomepage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 260px 100px" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
         <div
           style={{
             borderRadius: 16,
@@ -741,14 +756,14 @@ export default function YieldoHomepage() {
       {/* FOOTER */}
       <footer
         style={{
-          padding: "48px 260px",
+          padding: "48px clamp(20px, 5vw, 260px)",
           backgroundImage: COLORS.purple.gradientBg,
           display: "flex",
           flexDirection: "column",
           gap: 32,
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 24 }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
               <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #4B0CA6, #7A1CCB)", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -760,14 +775,14 @@ export default function YieldoHomepage() {
               The intelligent distribution layer for on-chain yield. One API for every wallet.
             </p>
           </div>
-          <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)" }}>
-            <a href="/wallets" onClick={(e) => { e.preventDefault(); navigate("/wallets"); }} style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
-            <a href="/vaults" onClick={(e) => { e.preventDefault(); navigate("/vaults"); }} style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
-            <a href="/creators" onClick={(e) => { e.preventDefault(); navigate("/creators"); }} style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
-            <a href="/docs" onClick={(e) => { e.preventDefault(); navigate("/docs"); }} style={{ color: "inherit", textDecoration: "none" }}>Documentation</a>
+          <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)", flexWrap: "wrap" }}>
+            <Link to="/wallet" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</Link>
+            <Link to="/vault" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</Link>
+            <Link to="/creator" style={{ color: "inherit", textDecoration: "none" }}>For Creators</Link>
+            <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
           </div>
         </div>
-        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>© 2025 YIELDO — All rights reserved</p>
           <div style={{ display: "flex", gap: 8 }}>
             {["𝕏", "✈", "▶", "M"].map((icon, i) => (

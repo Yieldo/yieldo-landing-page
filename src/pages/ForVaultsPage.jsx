@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const COLORS = {
   black: "#121212",
@@ -27,42 +27,15 @@ function GradientText({ children, style = {} }) {
 
 function PrimaryButton({ children, large, onClick }) {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        backgroundImage: COLORS.purple.gradient,
-        boxShadow: COLORS.purple.shadow,
-        borderRadius: 4,
-        padding: large ? "14px 28px" : "12px 18px",
-        border: "none",
-        color: "#fff",
-        fontFamily: "'Inter', sans-serif",
-        fontWeight: 500,
-        fontSize: large ? 18 : 16,
-        cursor: "pointer",
-      }}
-    >
+    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradient, boxShadow: COLORS.purple.shadow, borderRadius: 4, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>
       {children}
     </button>
   );
 }
 
-function SecondaryButton({ children, onClick }) {
+function SecondaryButton({ children }) {
   return (
-    <button
-      onClick={onClick}
-      style={{
-        backgroundImage: COLORS.purple.gradientLight,
-        boxShadow: COLORS.purple.shadowLight,
-        borderRadius: 4,
-        padding: "12px 18px",
-        border: "none",
-        fontFamily: "'Inter', sans-serif",
-        fontWeight: 500,
-        fontSize: 16,
-        cursor: "pointer",
-      }}
-    >
+    <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}>
       <GradientText>{children}</GradientText>
     </button>
   );
@@ -371,23 +344,22 @@ function FlowDiagram() {
 export default function ForVaultsV2() {
   const [activeTab, setActiveTab] = useState("revenue");
   const [hoveredBenefit, setHoveredBenefit] = useState(null);
-  const navigate = useNavigate();
 
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
       {/* NAV */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 260px", position: "relative", zIndex: 10 }}>
-        <div onClick={() => navigate("/")} style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer" }}>
+      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, flexWrap: "wrap", gap: "12px", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, background: "linear-gradient(135deg, #4B0CA6, #7A1CCB)", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>Y</span>
           </div>
           <span style={{ fontSize: 18, fontWeight: 600, color: COLORS.black, letterSpacing: "0.05em" }}>YIELDO</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span onClick={() => navigate("/wallets")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Wallets</span>
-          <span onClick={() => navigate("/vaults")} style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, color: COLORS.black, cursor: "pointer", borderBottom: "2px solid #7A1CCB" }}>For Vaults</span>
-          <span onClick={() => navigate("/creators")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>For Creators</span>
-          <span onClick={() => navigate("/docs")} style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer" }}>Docs</span>
+        </Link>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
+          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, color: COLORS.black, cursor: "pointer", borderBottom: "2px solid #7A1CCB", textDecoration: "none" }}>For Vaults</Link>
+          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
+          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
           <SecondaryButton>Dashboard</SecondaryButton>
@@ -396,7 +368,7 @@ export default function ForVaultsV2() {
       </nav>
 
       {/* HERO */}
-      <section style={{ padding: "100px 260px 80px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+      <section style={{ padding: "140px clamp(20px, 5vw, 260px) 80px", textAlign: "center", position: "relative", overflow: "hidden", marginTop: "80px" }}>
         <div style={{ position: "absolute", top: -200, left: "50%", transform: "translateX(-50%)", width: 1400, height: 800, background: "radial-gradient(ellipse at center, rgba(212,205,255,0.35) 0%, rgba(255,255,255,0) 70%)", pointerEvents: "none" }} />
         <div style={{ position: "relative", zIndex: 1 }}>
           <Tag>For Vault Protocols & Curators</Tag>
@@ -409,18 +381,18 @@ export default function ForVaultsV2() {
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
             <PrimaryButton large>Create a Campaign</PrimaryButton>
-            <SecondaryButton onClick={() => navigate("/docs")}>See How It Works →</SecondaryButton>
+            <SecondaryButton>See How It Works →</SecondaryButton>
           </div>
         </div>
       </section>
 
       {/* FLOW */}
-      <section style={{ padding: "40px 260px 60px" }}>
+      <section style={{ padding: "40px clamp(20px, 5vw, 260px) 60px" }}>
         <FlowDiagram />
       </section>
 
       {/* REVENUE SHARE MODEL — HERO SECTION */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.02)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader
           tag="Revenue Share"
           title="Your vault, their motivation"
@@ -440,7 +412,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* CAMPAIGN BUILDER */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="Campaigns"
           title="Build campaigns that attract sticky capital"
@@ -473,7 +445,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* WHY WALLETS CARE */}
-      <section style={{ padding: "100px 260px", background: "rgba(122,28,203,0.02)" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader
           tag="Wallet Perspective"
           title="Why wallets will push your vault"
@@ -529,7 +501,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* EXAMPLE SCENARIOS */}
-      <section style={{ padding: "100px 260px" }}>
+      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="Examples"
           title="Campaign strategies that work"
@@ -586,7 +558,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* COMPARISON TABLE */}
-      <section style={{ padding: "80px 260px", background: "rgba(122,28,203,0.02)" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader tag="Comparison" title="Revenue Share vs. Traditional Marketing" />
         <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.04)" }}>
@@ -612,7 +584,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px 260px 100px" }}>
+      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
         <div style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: COLORS.purple.gradientBg, boxShadow: "0px 0px 47px rgba(69,199,242,0.1)" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 300, background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.2) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ position: "relative" }}>
@@ -635,7 +607,7 @@ export default function ForVaultsV2() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ padding: "48px 260px", backgroundImage: COLORS.purple.gradientBg, display: "flex", flexDirection: "column", gap: 32 }}>
+      <footer style={{ padding: "48px clamp(20px, 5vw, 260px)", backgroundImage: COLORS.purple.gradientBg, display: "flex", flexDirection: "column", gap: 32 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
@@ -647,10 +619,9 @@ export default function ForVaultsV2() {
             <p style={{ fontSize: 15, color: "rgba(0,0,0,0.5)", maxWidth: 400, lineHeight: 1.5 }}>The intelligent distribution layer for on-chain yield.</p>
           </div>
           <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)" }}>
-            <a href="/wallets" onClick={(e) => { e.preventDefault(); navigate("/wallets"); }} style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
-            <a href="/vaults" onClick={(e) => { e.preventDefault(); navigate("/vaults"); }} style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
-            <a href="/creators" onClick={(e) => { e.preventDefault(); navigate("/creators"); }} style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
-            <a href="/docs" onClick={(e) => { e.preventDefault(); navigate("/docs"); }} style={{ color: "inherit", textDecoration: "none" }}>Documentation</a>
+            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
+            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
+            <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
           </div>
         </div>
         <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>

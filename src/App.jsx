@@ -1,21 +1,25 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage.jsx";
-import ForWalletsPage from "./pages/ForWalletsPage.jsx";
-import ForVaultsPage from "./pages/ForVaultsPage.jsx";
-import ForCreatorsPage from "./pages/ForCreatorsPage.jsx";
-import DocsPage from "./pages/DocsPage.jsx";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import ForWalletsPage from './pages/ForWalletsPage'
+import ForVaultsPage from './pages/ForVaultsPage'
+import ForCreatorsPage from './pages/ForCreatorsPage'
+import DocsPage from './pages/DocsPage'
+import './App.css'
 
-export default function App() {
+function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/wallets" element={<ForWalletsPage />} />
-        <Route path="/vaults" element={<ForVaultsPage />} />
-        <Route path="/creators" element={<ForCreatorsPage />} />
+        <Route path="/wallet" element={<ForWalletsPage />} />
+        <Route path="/vault" element={<ForVaultsPage />} />
+        <Route path="/creator" element={<ForCreatorsPage />} />
         <Route path="/docs" element={<DocsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
+
+export default App
+
