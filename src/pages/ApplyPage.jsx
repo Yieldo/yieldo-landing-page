@@ -129,7 +129,7 @@ export default function ApplyPage() {
   };
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <div style={{ width: 32, height: 32, borderRadius: 8, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>Y</span></div>
@@ -143,7 +143,7 @@ export default function ApplyPage() {
         <div />
       </nav>
 
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "120px 24px 100px" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "120px 24px 100px", flex: 1 }}>
         {submitted && (
           <div style={{ textAlign: "center", padding: "80px 0" }}>
             <div style={{ width: 72, height: 72, borderRadius: 36, backgroundImage: C.purple.grad, margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
