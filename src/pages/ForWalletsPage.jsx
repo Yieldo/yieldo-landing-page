@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const C = {
   black: "#121212",
@@ -9,11 +9,11 @@ const C = {
 function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
-function PrimaryButton({ children, large }) {
-  return <button style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
+function PrimaryButton({ children, large, onClick }) {
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
-function SecondaryButton({ children }) {
-  return <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
+function SecondaryButton({ children, onClick }) {
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
@@ -250,6 +250,7 @@ function RevenueCalculator() {
 
 /* ========== MAIN PAGE ========== */
 export default function ForWalletsPageMerged() {
+  const navigate = useNavigate();
   const [hoveredStep, setHoveredStep] = useState(null);
   const [activeWallet, setActiveWallet] = useState(0);
   const [selectedVault, setSelectedVault] = useState(0);
@@ -274,8 +275,8 @@ export default function ForWalletsPageMerged() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <SecondaryButton>Dashboard</SecondaryButton>
-          <PrimaryButton>Start Integrating</PrimaryButton>
+          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5, background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.3)" }} disabled>Dashboard</button>
+          <PrimaryButton onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
         </div>
       </nav>
 
@@ -292,7 +293,7 @@ export default function ForWalletsPageMerged() {
               One SDK. Every yield protocol. Automatic revenue share. Ship a "Yield" tab in days — not months.
             </p>
             <div style={{ display: "flex", gap: 16, marginTop: 36 }}>
-              <PrimaryButton large>Start Integrating</PrimaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
               <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
             </div>
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
@@ -323,8 +324,7 @@ export default function ForWalletsPageMerged() {
         </div>
       </section>
 
-      {/* TRUSTED BY */}
-      <section style={{ padding: "60px clamp(20px, 5vw, 260px)", background: "radial-gradient(ellipse at center top, rgba(212,205,255,0.25) 0%, transparent 70%)" }}>
+      {/*<section style={{ padding: "60px clamp(20px, 5vw, 260px)", background: "radial-gradient(ellipse at center top, rgba(212,205,255,0.25) 0%, transparent 70%)" }}>
         <div style={{ textAlign: "center", fontSize: 14, fontWeight: 500, color: "rgba(0,0,0,0.3)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 28 }}>Built for leading wallets</div>
         <div style={{ display: "flex", gap: 48, justifyContent: "center", alignItems: "center" }}>
           {[
@@ -337,7 +337,7 @@ export default function ForWalletsPageMerged() {
             </div>
           ))}
         </div>
-      </section>
+      </section>*/}
 
       {/* THE PROBLEM */}
       <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
@@ -554,8 +554,7 @@ export default function ForWalletsPageMerged() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      {/*<section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="Partners" title="Trusted by leading wallets" />
         <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
@@ -573,7 +572,7 @@ export default function ForWalletsPageMerged() {
             </div>
           ))}
         </div>
-      </section>
+      </section>*/}
 
       {/* CTA */}
       <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
@@ -584,8 +583,8 @@ export default function ForWalletsPageMerged() {
             <h2 style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 20px", lineHeight: 1.15, letterSpacing: "-.02em" }}>Ready to monetize<br />your user base?</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6 }}>Ship a "Yield" tab in your wallet, earn revenue on every deposit, and never worry about protocol integrations again.</p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <PrimaryButton large>Start Integrating</PrimaryButton>
-              <SecondaryButton>Book a Demo</SecondaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
+              <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
             </div>
             <p style={{ fontSize: 13, color: "rgba(0,0,0,0.35)", marginTop: 16 }}>Free SDK · No minimum volume · Revenue share from day one</p>
           </div>

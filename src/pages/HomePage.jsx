@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const COLORS = {
   black: "#121212",
@@ -277,6 +277,7 @@ function WalletLogo({ name }) {
 }
 
 export default function YieldoHomepage() {
+  const navigate = useNavigate();
   const [hoveredPillar, setHoveredPillar] = useState(null);
 
   return (
@@ -312,8 +313,8 @@ export default function YieldoHomepage() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <SecondaryButton>Dashboard</SecondaryButton>
-          <PrimaryButton>Integrate Now</PrimaryButton>
+          <button style={{ padding: "12px 18px", borderRadius: 4, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5, background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.3)" }} disabled>Dashboard</button>
+          <PrimaryButton onClick={() => navigate("/apply")}>Integrate Now</PrimaryButton>
         </div>
       </nav>
 
@@ -361,16 +362,16 @@ export default function YieldoHomepage() {
             Stop integrating 20 protocols — plug in Yieldo and ship yield in days.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
-            <PrimaryButton large>Start Integration</PrimaryButton>
+            <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
             <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
           </div>
-          <div style={{ display: "flex", gap: 40, justifyContent: "center", marginTop: 56, alignItems: "center", flexWrap: "wrap" }}>
+          {/*<div style={{ display: "flex", gap: 40, justifyContent: "center", marginTop: 56, alignItems: "center", flexWrap: "wrap" }}>
             {["Nightly", "Phantom", "MetaMask", "Rabby", "Zerion"].map((name) => (
               <div key={name} style={{ opacity: 0.5 }}>
                 <WalletLogo name={name} />
               </div>
             ))}
-          </div>
+          </div>*/}
         </div>
       </section>
 
@@ -743,8 +744,8 @@ export default function YieldoHomepage() {
               Ready to turn yield<br />into revenue?
             </h2>
             <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <PrimaryButton large>Start Integration</PrimaryButton>
-              <SecondaryButton>Book a Demo</SecondaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
+              <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
             </div>
             <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", marginTop: 16 }}>
               Free to start · No minimum volume · Ship in days

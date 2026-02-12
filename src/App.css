@@ -1,1 +1,10 @@
 /* App styles - minimal reset */
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-transition {
+  animation: pageFadeIn 0.3s ease-out;
+}

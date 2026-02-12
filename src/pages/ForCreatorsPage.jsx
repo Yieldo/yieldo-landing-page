@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const C = {
   black: "#121212",
@@ -9,11 +9,11 @@ const C = {
 function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
-function PrimaryButton({ children, large }) {
-  return <button style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
+function PrimaryButton({ children, large, onClick }) {
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
-function SecondaryButton({ children }) {
-  return <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
+function SecondaryButton({ children, onClick }) {
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
@@ -193,6 +193,7 @@ function EarningsCalc() {
 
 /* ============ MAIN PAGE ============ */
 export default function ForKOLsPage() {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
 
   return (
@@ -210,8 +211,8 @@ export default function ForKOLsPage() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <SecondaryButton>Dashboard</SecondaryButton>
-          <PrimaryButton>Apply Now</PrimaryButton>
+          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5, background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.3)" }} disabled>Dashboard</button>
+          <PrimaryButton onClick={() => navigate("/apply")}>Apply Now</PrimaryButton>
         </div>
       </nav>
 
@@ -228,13 +229,13 @@ export default function ForKOLsPage() {
               Share your curated yield picks with a personal referral page. Earn revenue every time someone deposits. No code, no contracts, just a link.
             </p>
             <div style={{ display: "flex", gap: 16, marginTop: 36 }}>
-              <PrimaryButton large>Apply to Join</PrimaryButton>
-              <SecondaryButton>See How It Works →</SecondaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Apply to Join</PrimaryButton>
+              <SecondaryButton onClick={() => document.getElementById("how-it-works").scrollIntoView({ behavior: "smooth" })}>See How It Works →</SecondaryButton>
             </div>
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "$2.4M+", l: "Earned by KOLs" }, { n: "180+", l: "Active creators" }, { n: "< 5 min", l: "Setup time" }].map((s, i) => (
                 <div key={i}>
-                  <div style={{ fontSize: 24, fontWeight: 600 }}><GradientText>{s.n}</GradientText></div>
+                  <div style={{ fontSize: 24, fontWeight: 600, filter: "blur(6px)", userSelect: "none" }}><GradientText>{s.n}</GradientText></div>
                   <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{s.l}</div>
                 </div>
               ))}
@@ -249,11 +250,11 @@ export default function ForKOLsPage() {
       {/* LIVE TICKER */}
       <section style={{ padding: "40px clamp(20px, 5vw, 260px)", background: "rgba(26,157,63,0.03)", borderTop: "1px solid rgba(26,157,63,0.08)", borderBottom: "1px solid rgba(26,157,63,0.08)" }}>
         <div style={{ textAlign: "center", fontSize: 12, fontWeight: 500, color: "rgba(0,0,0,0.3)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 14 }}>Creators earning right now</div>
-        <EarningsTicker />
+        <div style={{ filter: "blur(6px)", pointerEvents: "none", userSelect: "none" }}><EarningsTicker /></div>
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section id="how-it-works" style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="How It Works" title="Three steps to start earning" subtitle="No SDK. No smart contracts. No code. Just pick vaults, share your link, and earn." />
         <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
@@ -322,7 +323,7 @@ export default function ForKOLsPage() {
       {/* WHY YIELDO > DIRECT DEALS */}
       <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Why Yieldo?" title="Better than direct protocol deals" subtitle="No more DM'ing BD teams, negotiating one-offs, or chasing invoices." />
-        <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginTop: 48 }}>
           {[
             { icon: "🎯", title: "One dashboard, all protocols", desc: "Instead of separate deals with 10 protocols, access 100+ vaults through one platform. One referral page, one earnings stream." },
             { icon: "📊", title: "Transparent attribution", desc: "Every click, deposit, and withdrawal tracked on-chain. No disputes about who referred what. Your earnings are auditable." },
@@ -331,7 +332,7 @@ export default function ForKOLsPage() {
             { icon: "⚡", title: "No negotiation needed", desc: "Standard rev share terms. No back-and-forth with BD teams. Apply once, start earning immediately from all vaults." },
             { icon: "🔄", title: "Recurring, not one-time", desc: "Unlike sponsored posts (one-time fee), you earn continuously as long as deposits stay. Sticky capital = recurring revenue." },
           ].map((item, i) => (
-            <div key={i} style={{ flex: 1, padding: 24, borderRadius: 12, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} style={{ padding: 24, borderRadius: 12, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ fontSize: 28, marginBottom: 10 }}>{item.icon}</div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 6px" }}>{item.title}</h3>
               <p style={{ fontSize: 13, color: "rgba(0,0,0,0.5)", lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
@@ -407,8 +408,7 @@ export default function ForKOLsPage() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      {/*<section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader tag="Creators" title="Hear from our creators" />
         <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
@@ -437,7 +437,7 @@ export default function ForKOLsPage() {
             </div>
           ))}
         </div>
-      </section>
+      </section>*/}
 
       {/* FAQ */}
       <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
@@ -471,8 +471,8 @@ export default function ForKOLsPage() {
               Apply in 2 minutes. Get your personal yield page. Share your link. Earn recurring revenue from every deposit.
             </p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <PrimaryButton large>Apply to Join</PrimaryButton>
-              <SecondaryButton>View Example Page →</SecondaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Apply to Join</PrimaryButton>
+              <SecondaryButton onClick={() => navigate("/creator-demo")}>View Example Page →</SecondaryButton>
             </div>
             <p style={{ fontSize: 13, color: "rgba(0,0,0,0.35)", marginTop: 16 }}>Free to join · No minimum followers · Payouts from day one</p>
           </div>

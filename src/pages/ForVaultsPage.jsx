@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const COLORS = {
   black: "#121212",
@@ -33,9 +33,9 @@ function PrimaryButton({ children, large, onClick }) {
   );
 }
 
-function SecondaryButton({ children }) {
+function SecondaryButton({ children, onClick }) {
   return (
-    <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}>
+    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}>
       <GradientText>{children}</GradientText>
     </button>
   );
@@ -342,6 +342,7 @@ function FlowDiagram() {
 
 /* ============ MAIN PAGE ============ */
 export default function ForVaultsV2() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("revenue");
   const [hoveredBenefit, setHoveredBenefit] = useState(null);
 
@@ -362,8 +363,8 @@ export default function ForVaultsV2() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <SecondaryButton>Dashboard</SecondaryButton>
-          <PrimaryButton>List Your Vault</PrimaryButton>
+          <button style={{ padding: "12px 18px", borderRadius: 4, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5, background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.3)" }} disabled>Dashboard</button>
+          <PrimaryButton onClick={() => navigate("/apply")}>List Your Vault</PrimaryButton>
         </div>
       </nav>
 
@@ -380,8 +381,8 @@ export default function ForVaultsV2() {
             Offer tiered revenue share and run targeted campaigns to attract sticky capital from the largest wallet distribution network in DeFi.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
-            <PrimaryButton large>Create a Campaign</PrimaryButton>
-            <SecondaryButton>See How It Works →</SecondaryButton>
+            <PrimaryButton large onClick={() => navigate("/apply")}>Create a Campaign</PrimaryButton>
+            <SecondaryButton onClick={() => document.getElementById("campaign-section").scrollIntoView({ behavior: "smooth" })}>See How It Works →</SecondaryButton>
           </div>
         </div>
       </section>
@@ -407,12 +408,12 @@ export default function ForVaultsV2() {
           <p style={{ fontSize: 16, color: "rgba(0,0,0,0.5)", maxWidth: 650, margin: "0 auto 24px", lineHeight: 1.6 }}>
             Higher revenue share = higher priority in wallet UIs. Wallets see your offer alongside competing vaults and route users to the best deal. It's a transparent marketplace.
           </p>
-          <PrimaryButton>Set Up Revenue Share</PrimaryButton>
+          <PrimaryButton onClick={() => navigate("/apply")}>Set Up Revenue Share</PrimaryButton>
         </div>
       </section>
 
       {/* CAMPAIGN BUILDER */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section id="campaign-section" style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
         <SectionHeader
           tag="Campaigns"
           title="Build campaigns that attract sticky capital"
@@ -596,8 +597,8 @@ export default function ForVaultsV2() {
               Set your revenue share, launch a campaign, and let the wallet network compete to bring you the most AUM. Aligned incentives, on-chain transparency.
             </p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <PrimaryButton large>Create Your First Campaign</PrimaryButton>
-              <SecondaryButton>Talk to the Team</SecondaryButton>
+              <PrimaryButton large onClick={() => navigate("/apply")}>Create Your First Campaign</PrimaryButton>
+              <SecondaryButton onClick={() => navigate("/apply")}>Talk to the Team</SecondaryButton>
             </div>
             <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", marginTop: 16 }}>
               No listing fees · No minimum volume · Campaign builder included
