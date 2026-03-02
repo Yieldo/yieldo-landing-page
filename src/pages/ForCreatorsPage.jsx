@@ -211,7 +211,7 @@ export default function ForKOLsPage() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div style={{ display: "flex", gap: 12 }}>
-          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5, background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.3)" }} disabled>Dashboard</button>
+          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer", background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
           <PrimaryButton onClick={() => navigate("/apply")}>Apply Now</PrimaryButton>
         </div>
       </nav>
