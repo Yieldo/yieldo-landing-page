@@ -93,7 +93,7 @@ export default function DocsPage() {
       {/* SIDEBAR */}
       <aside style={{ width: 240, background: C.white, borderRight: `1px solid ${C.border}`, position: "sticky", top: 0, height: "100vh", overflow: "auto", flexShrink: 0 }}>
         <div style={{ padding: "18px 18px 14px", display: "flex", alignItems: "center", gap: 8, borderBottom: `1px solid ${C.border}` }}>
-          <div style={{ width: 28, height: 28, borderRadius: 6, backgroundImage: C.purpleGrad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 11 }}>Y</span></div>
+          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
           <span style={{ fontSize: 15, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
           <Badge color={C.text3} bg={C.surface}>Docs</Badge>
         </div>

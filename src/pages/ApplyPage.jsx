@@ -132,7 +132,7 @@ export default function ApplyPage() {
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <div style={{ width: 32, height: 32, borderRadius: 8, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>Y</span></div>
+          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
           <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: ".05em", color: C.black }}>YIELDO</span>
         </Link>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -297,7 +297,7 @@ export default function ApplyPage() {
 
       <footer style={{ padding: "32px clamp(20px, 5vw, 260px)", backgroundImage: C.purple.gradBg, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <div style={{ width: 24, height: 24, borderRadius: 5, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 10 }}>Y</span></div>
+          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 24, height: 24, borderRadius: 5 }} />
           <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
         </div>
         <p style={{ fontSize: 12, color: "rgba(0,0,0,0.3)", margin: 0 }}>&copy; 2025 YIELDO — All rights reserved</p>

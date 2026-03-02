@@ -95,7 +95,7 @@ export default function CreatorDemoPage() {
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#f8f7fc", color: C.black, minHeight: "100vh" }}>
       <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px clamp(20px, 5vw, 260px)", background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit" }}>
-          <div style={{ width: 28, height: 28, borderRadius: 6, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 12 }}>Y</span></div>
+          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
           <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: ".05em", color: C.black }}>YIELDO</span>
         </Link>
         <button onClick={() => navigate(-1)} style={{ background: "none", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 6, padding: "6px 14px", fontSize: 13, fontFamily: "'Inter',sans-serif", cursor: "pointer", color: "rgba(0,0,0,0.5)" }}>&larr; Back</button>
@@ -226,7 +226,7 @@ export default function CreatorDemoPage() {
 
         <div style={{ textAlign: "center", marginTop: 32 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", borderRadius: 10, background: "#fff", border: "1px solid rgba(0,0,0,0.06)" }}>
-            <div style={{ width: 22, height: 22, borderRadius: 5, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}><span style={{ color: "#fff", fontWeight: 700, fontSize: 9 }}>Y</span></div>
+            <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 22, height: 22, borderRadius: 5 }} />
             <span style={{ fontSize: 13, color: "rgba(0,0,0,0.35)" }}>Powered by <strong style={{ color: "#7A1CCB" }}>Yieldo</strong></span>
           </div>
           <div style={{ marginTop: 12, fontSize: 12, color: "rgba(0,0,0,0.25)" }}>
