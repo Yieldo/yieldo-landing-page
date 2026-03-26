@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const C = {
   black: "#121212",
@@ -10,16 +12,16 @@ function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
 function PrimaryButton({ children, large, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 8, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
 function SecondaryButton({ children, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
 }
 function SectionHeader({ tag, title, subtitle }) {
-  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 style={{ fontFamily: "'Inter',sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
+  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 className="section-title" style={{ fontFamily: "'Inter',sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
 }
 function Check({ children, color = "#7A1CCB" }) {
   return <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><rect x="2" y="2" width="20" height="20" rx="4" stroke={color} strokeWidth="1.5" /><path d="M8 12.5L11 15.5L16 9.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg><span style={{ fontSize: 15, color: "rgba(0,0,0,0.6)", lineHeight: 1.5 }}>{children}</span></div>;
@@ -199,30 +201,15 @@ export default function ForKOLsPage() {
   return (
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
       {/* NAV */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, flexWrap: "wrap", gap: "12px", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
-          <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-        </Link>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
-          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
-          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, borderBottom: "2px solid #7A1CCB", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
-          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
-        </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer", background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
-          <PrimaryButton onClick={() => navigate("/apply")}>Apply Now</PrimaryButton>
-        </div>
-      </nav>
+      <Nav />
 
       {/* HERO */}
-      <section style={{ padding: "120px clamp(20px, 5vw, 260px) 60px", position: "relative", overflow: "hidden", marginTop: "80px" }}>
+      <section className="hero-section section-padding" style={{ padding: "120px clamp(16px, 5vw, 260px) 60px", position: "relative", overflow: "hidden", marginTop: "72px" }}>
         <div style={{ position: "absolute", top: -200, left: "50%", transform: "translateX(-50%)", width: 1600, height: 900, background: "radial-gradient(ellipse at center, rgba(212,205,255,0.3) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "relative", display: "flex", gap: 60, alignItems: "center" }}>
+        <div className="two-col" style={{ position: "relative", display: "flex", gap: 60, alignItems: "center" }}>
           <div style={{ flex: "1.2 1 0" }}>
             <Tag>For DeFi Creators & KOLs</Tag>
-            <h1 style={{ fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
+            <h1 className="hero-title" style={{ fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
               Your audience trusts you.<br /><GradientText style={{ fontSize: 58 }}>Now get paid for it.</GradientText>
             </h1>
             <p style={{ fontSize: 20, maxWidth: 560, margin: "24px 0 0", lineHeight: 1.6, color: "rgba(0,0,0,0.55)" }}>
@@ -248,21 +235,21 @@ export default function ForKOLsPage() {
       </section>
 
       {/* LIVE TICKER */}
-      <section style={{ padding: "40px clamp(20px, 5vw, 260px)", background: "rgba(26,157,63,0.03)", borderTop: "1px solid rgba(26,157,63,0.08)", borderBottom: "1px solid rgba(26,157,63,0.08)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "40px clamp(16px, 5vw, 260px)", background: "rgba(26,157,63,0.03)", borderTop: "1px solid rgba(26,157,63,0.08)", borderBottom: "1px solid rgba(26,157,63,0.08)" }}>
         <div style={{ textAlign: "center", fontSize: 12, fontWeight: 500, color: "rgba(0,0,0,0.3)", textTransform: "uppercase", letterSpacing: ".08em", marginBottom: 14 }}>Creators earning right now</div>
         <div style={{ filter: "blur(6px)", pointerEvents: "none", userSelect: "none" }}><EarningsTicker /></div>
       </section>
 
       {/* HOW IT WORKS */}
-      <section id="how-it-works" style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section id="how-it-works" className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="How It Works" title="Three steps to start earning" subtitle="No SDK. No smart contracts. No code. Just pick vaults, share your link, and earn." />
-        <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
+        <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
             { step: "01", icon: "🎨", title: "Build your page", desc: "Pick your favorite vaults from the Yieldo catalog. Add your bio, branding, and commentary. Your personal yield page is live in minutes.", details: ["Choose from 100+ curated vaults", "Add your own risk commentary", "Custom URL: yieldo.io/@yourname", "Mobile-optimized automatically"] },
             { step: "02", icon: "📣", title: "Share your link", desc: "Post your Yieldo page on Twitter, YouTube, Discord, newsletter — anywhere you already have an audience. Every click is tracked.", details: ["One link for all platforms", "Per-vault deep links available", "UTM tracking for campaigns", "QR code for IRL events"] },
             { step: "03", icon: "💰", title: "Earn revenue", desc: "Every deposit through your page earns you a base revenue share plus campaign bonuses from vault curators who want your audience.", details: ["5 bps base on all volume", "Campaign bonuses up to 20%+", "Real-time earnings dashboard", "Monthly payouts in USDC"] },
           ].map((s, i) => (
-            <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: `1px solid ${activeStep === i ? "rgba(122,28,203,0.15)" : "rgba(0,0,0,0.06)"}`, boxShadow: activeStep === i ? "0 4px 20px rgba(122,28,203,0.06)" : "0 1px 4px rgba(0,0,0,0.02)", cursor: "default", transition: "all .2s" }} onMouseEnter={() => setActiveStep(i)}>
+            <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: `1px solid ${activeStep === i ? "rgba(122,28,203,0.15)" : "rgba(0,0,0,0.06)"}`, boxShadow: activeStep === i ? "0 4px 20px rgba(122,28,203,0.06)" : "0 1px 4px rgba(0,0,0,0.02)", cursor: "default", transition: "all .2s" }} onMouseEnter={() => setActiveStep(i)}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{s.icon}</div>
                 <span style={{ fontSize: 36, fontWeight: 200, color: "rgba(122,28,203,0.15)" }}>{s.step}</span>
@@ -278,11 +265,11 @@ export default function ForKOLsPage() {
       </section>
 
       {/* YOUR PERSONAL YIELD PAGE */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
-        <div style={{ display: "flex", gap: 56, alignItems: "center" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+        <div className="two-col" style={{ display: "flex", gap: 56, alignItems: "center" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Your Brand</Tag>
-            <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>A yield page<br />that's uniquely yours</h2>
+            <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>A yield page<br />that's uniquely yours</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>
               Your personal Yieldo page showcases your curated vault picks with your bio, commentary, and track record. It's your reputation — on-chain.
             </p>
@@ -302,11 +289,11 @@ export default function ForKOLsPage() {
       </section>
 
       {/* EARNINGS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
-        <div style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
+        <div className="two-col" style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Earnings</Tag>
-            <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Real revenue,<br />not empty promises</h2>
+            <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Real revenue,<br />not empty promises</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>
               You earn a base 5 bps on every deposit through your referral link. But it gets better — vault curators run campaigns offering you 10–25% bonus rev share to incentivize your promotion.
             </p>
@@ -321,9 +308,9 @@ export default function ForKOLsPage() {
       </section>
 
       {/* WHY YIELDO > DIRECT DEALS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Why Yieldo?" title="Better than direct protocol deals" subtitle="No more DM'ing BD teams, negotiating one-offs, or chasing invoices." />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginTop: 48 }}>
+        <div className="cards-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginTop: 48 }}>
           {[
             { icon: "🎯", title: "One dashboard, all protocols", desc: "Instead of separate deals with 10 protocols, access 100+ vaults through one platform. One referral page, one earnings stream." },
             { icon: "📊", title: "Transparent attribution", desc: "Every click, deposit, and withdrawal tracked on-chain. No disputes about who referred what. Your earnings are auditable." },
@@ -332,7 +319,7 @@ export default function ForKOLsPage() {
             { icon: "⚡", title: "No negotiation needed", desc: "Standard rev share terms. No back-and-forth with BD teams. Apply once, start earning immediately from all vaults." },
             { icon: "🔄", title: "Recurring, not one-time", desc: "Unlike sponsored posts (one-time fee), you earn continuously as long as deposits stay. Sticky capital = recurring revenue." },
           ].map((item, i) => (
-            <div key={i} style={{ padding: 24, borderRadius: 12, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} className="card-item" style={{ padding: 24, borderRadius: 12, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ fontSize: 28, marginBottom: 10 }}>{item.icon}</div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 6px" }}>{item.title}</h3>
               <p style={{ fontSize: 13, color: "rgba(0,0,0,0.5)", lineHeight: 1.6, margin: 0 }}>{item.desc}</p>
@@ -342,7 +329,7 @@ export default function ForKOLsPage() {
       </section>
 
       {/* COMPARISON TABLE */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="Comparison" title="Yieldo vs. the alternatives" />
         <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
@@ -371,15 +358,15 @@ export default function ForKOLsPage() {
       </section>
 
       {/* TIERS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Creator Tiers" title="Grow your tier, grow your rate" subtitle="The more AUM you bring, the better your revenue share gets." />
-        <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
+        <div className="cards-row" style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
             { name: "Explorer", icon: "🌱", range: "< $100K AUM", base: "5 bps", bonus: "Standard campaigns", perks: ["Personal yield page", "Basic analytics", "Monthly payouts"], color: "#2E9AB8" },
             { name: "Creator", icon: "⭐", range: "$100K – $1M AUM", base: "7 bps", bonus: "Priority campaigns", perks: ["Everything in Explorer", "Advanced analytics", "Bi-weekly payouts", "Featured in vault catalog"], color: "#7A1CCB", featured: true },
             { name: "Partner", icon: "💎", range: "> $1M AUM", base: "10 bps", bonus: "Exclusive campaigns", perks: ["Everything in Creator", "Custom campaigns with vaults", "Weekly payouts", "Direct vault relationships", "Yieldo Partner badge"], color: "#d97706" },
           ].map((tier, i) => (
-            <div key={i} style={{ flex: 1, borderRadius: 14, background: "#fff", border: `${tier.featured ? "2" : "1"}px solid ${tier.featured ? tier.color + "30" : "rgba(0,0,0,0.06)"}`, overflow: "hidden", boxShadow: tier.featured ? `0 4px 24px ${tier.color}12` : "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} className="card-item" style={{ flex: 1, borderRadius: 14, background: "#fff", border: `${tier.featured ? "2" : "1"}px solid ${tier.featured ? tier.color + "30" : "rgba(0,0,0,0.06)"}`, overflow: "hidden", boxShadow: tier.featured ? `0 4px 24px ${tier.color}12` : "0 1px 4px rgba(0,0,0,0.02)" }}>
               {tier.featured && <div style={{ padding: "6px", textAlign: "center", backgroundImage: C.purple.grad, color: "#fff", fontSize: 11, fontWeight: 600, letterSpacing: ".05em" }}>MOST POPULAR</div>}
               <div style={{ padding: 28 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
@@ -440,7 +427,7 @@ export default function ForKOLsPage() {
       </section>*/}
 
       {/* FAQ */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="FAQ" title="Common questions" />
         <div style={{ maxWidth: 680, margin: "48px auto 0", display: "flex", flexDirection: "column", gap: 12 }}>
           {[
@@ -459,18 +446,18 @@ export default function ForKOLsPage() {
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
-        <div style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: C.purple.gradBg, boxShadow: "0 0 47px rgba(69,199,242,0.1)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px) 100px" }}>
+        <div className="cta-box" style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: C.purple.gradBg, boxShadow: "0 0 47px rgba(69,199,242,0.1)" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 300, background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ position: "relative" }}>
             <Tag>Join the Network</Tag>
-            <h2 style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 20px", lineHeight: 1.15, letterSpacing: "-.02em" }}>
+            <h2 className="cta-title" style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 20px", lineHeight: 1.15, letterSpacing: "-.02em" }}>
               Your audience is waiting.<br />Start earning today.
             </h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6 }}>
               Apply in 2 minutes. Get your personal yield page. Share your link. Earn recurring revenue from every deposit.
             </p>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+            <div className="cta-buttons" style={{ display: "flex", gap: 16, justifyContent: "center" }}>
               <PrimaryButton large onClick={() => navigate("/apply")}>Apply to Join</PrimaryButton>
               <SecondaryButton onClick={() => navigate("/creator-demo")}>View Example Page →</SecondaryButton>
             </div>
@@ -480,30 +467,7 @@ export default function ForKOLsPage() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ padding: "48px clamp(20px, 5vw, 260px)", backgroundImage: C.purple.gradBg, display: "flex", flexDirection: "column", gap: 32 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-              <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
-              <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-            </div>
-            <p style={{ fontSize: 15, color: "rgba(0,0,0,0.45)", maxWidth: 400, lineHeight: 1.5 }}>The intelligent distribution layer for on-chain yield.</p>
-          </div>
-          <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.45)" }}>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
-          </div>
-        </div>
-        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.35)", margin: 0 }}>© 2025 YIELDO — All rights reserved</p>
-          <div style={{ display: "flex", gap: 8 }}>
-            {["𝕏", "✈", "▶"].map((icon, i) => (
-              <div key={i} style={{ width: 36, height: 36, borderRadius: 4, backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: "rgba(0,0,0,0.45)" }}>{icon}</div>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

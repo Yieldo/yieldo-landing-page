@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const C = {
   black: "#121212",
@@ -262,39 +264,23 @@ export default function ForWalletsPageMerged() {
 
   return (
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
-      {/* NAV */}
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, flexWrap: "wrap", gap: "12px", background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
-          <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-        </Link>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, fontWeight: 600, color: C.black, borderBottom: "2px solid #7A1CCB", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
-          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
-          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
-          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
-        </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button style={{ padding: "12px 18px", borderRadius: 6, border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer", background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
-          <PrimaryButton onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
-        </div>
-      </nav>
+      <Nav />
 
       {/* HERO */}
-      <section style={{ padding: "120px clamp(20px, 5vw, 260px) 60px", position: "relative", overflow: "hidden", marginTop: "80px" }}>
+      <section className="hero-section section-padding section-v-padding" style={{ padding: "120px clamp(16px, 5vw, 260px) 60px", position: "relative", overflow: "hidden", marginTop: "72px" }}>
         <div style={{ position: "absolute", top: -200, left: "50%", transform: "translateX(-50%)", width: 1600, height: 900, background: "radial-gradient(ellipse at center, rgba(212,205,255,0.3) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ position: "relative", display: "flex", gap: 48, alignItems: "center" }}>
+        <div className="two-col" style={{ position: "relative", display: "flex", gap: 48, alignItems: "center" }}>
           <div style={{ flex: "1.2 1 0" }}>
             <Tag>For Wallets & Portfolio Apps</Tag>
-            <h1 style={{ fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
+            <h1 className="hero-title" style={{ fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
               Turn idle balances into<br /><GradientText style={{ fontSize: 58 }}>your revenue stream</GradientText>
             </h1>
             <p style={{ fontSize: 20, maxWidth: 560, margin: "24px 0 0", lineHeight: 1.6, color: "rgba(0,0,0,0.55)" }}>
               One SDK. Every yield protocol. Automatic revenue share. Ship a "Yield" tab in days — not months.
             </p>
-            <div style={{ display: "flex", gap: 16, marginTop: 36 }}>
+            <div className="hero-buttons" style={{ display: "flex", gap: 16, marginTop: 36 }}>
               <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
-              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
             </div>
             <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "5 bps", l: "Your rev share" }, { n: "1 SDK", l: "All protocols" }, { n: "< 1 day", l: "Integration time" }].map((s, i) => (
@@ -340,15 +326,15 @@ export default function ForWalletsPageMerged() {
       </section>*/}
 
       {/* THE PROBLEM */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="The Problem" title="Yield should be a profit center, not a cost center" subtitle="Adding yield to your wallet means integrating 20+ protocols, getting zero revenue, and shouldering all the maintenance." />
-        <div style={{ display: "flex", gap: 20, marginTop: 56 }}>
+        <div className="cards-row" style={{ display: "flex", gap: 20, marginTop: 56 }}>
           {[
             { icon: "🔧", title: "Integration Nightmare", stat: "20+", statLabel: "protocols to maintain", desc: "Morpho, Aave, Compound, Yearn, Pendle — each with its own API, data format, and chain support. And they keep changing." },
             { icon: "💸", title: "Zero Revenue", stat: "$0", statLabel: "earned by wallets today", desc: "Protocols don't share fees with distributors. You invest engineering resources for a feature that earns you nothing." },
             { icon: "⚖️", title: "Risk Liability", stat: "∞", statLabel: "risk combinations", desc: "Which vault is safe? Which scoring to trust? If a user loses money, they blame you — not the protocol." },
           ].map((item, i) => (
-            <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(122,28,203,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{item.icon}</div>
               <h3 style={{ fontSize: 18, fontWeight: 600, margin: 0 }}>{item.title}</h3>
               <p style={{ fontSize: 14, color: "rgba(0,0,0,0.5)", lineHeight: 1.6, margin: 0, flex: 1 }}>{item.desc}</p>
@@ -359,15 +345,15 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* SOLUTION */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="The Solution" title="Yieldo handles everything" subtitle="One integration replaces 20 protocols. You earn on every deposit. We handle the complexity." />
-        <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
+        <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
             { label: "Zero-Maintenance Yield", icon: "🔌", title: "Plug in once, access every vault", bullets: ["Single SDK for Morpho, Aave, Pendle, Yearn + more", "Standardized data: APY, TVL, risk, chain — one format", "Multi-chain routing (Ethereum, Base, Arbitrum, Polygon)", "We maintain protocol integrations — you never touch them"] },
             { label: "Revenue-as-a-Service", icon: "💰", title: "Every deposit earns you money", bullets: ["5 bps automatic revenue share on all volume", "On-chain tracking — transparent, auditable", "No fee-taking smart contracts to build", "Vault curators can offer bonus rev share (up to 20%+)"] },
             { label: "Risk Abstraction", icon: "🛡️", title: "Curated, scored, standardized", bullets: ["Aggregated risk scores (Credora, Bluechip, etc.)", "AI-curated strategy recommendations", "Standardized risk labels for your UI", "You're a distributor, not an advisor"] },
           ].map((p, i) => (
-            <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(122,28,203,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{p.icon}</div>
               <GradientText style={{ fontSize: 13, fontWeight: 600, letterSpacing: ".02em" }}>{p.label}</GradientText>
               <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0, lineHeight: 1.3 }}>{p.title}</h3>
@@ -378,9 +364,9 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* USER EXPERIENCE — merged from embed preview */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="User Experience" title="Three taps to yield" subtitle="From discovering opportunities to depositing — all inside the wallet they already trust. Try the interactive demo above, or explore the embed formats below." />
-        <div style={{ display: "flex", gap: 24, marginTop: 56 }}>
+        <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
             { step: "1", title: "Discover", icon: "🔍", desc: "User opens the \"Yield\" tab. They see curated vaults sorted by APY, risk, and asset type. Filter chips make browsing effortless.", highlight: "Zero friction — already inside their wallet" },
             { step: "2", title: "Choose", icon: "📊", desc: "Tapping a vault reveals details: current APY, risk level, lock period, protocol info, and TVL. Everything they need to make a decision.", highlight: "Standardized data — easy to compare" },
@@ -402,9 +388,9 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* EMBED FORMATS */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Embed Options" title="Multiple integration styles" subtitle="Choose the layout that fits your wallet's UX. All styles use the same SDK." />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginTop: 48 }}>
+        <div className="embed-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginTop: 48 }}>
           {[
             { id: "tab", name: "Yield Tab", desc: "Full tab experience. Best for wallets with tab navigation.", icon: "📑", preview: (
               <div style={{ background: "#f8f7fc", borderRadius: 8, border: "1px solid rgba(0,0,0,0.06)", padding: 8, fontSize: 10 }}>
@@ -451,11 +437,11 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* SDK INTEGRATION */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
-        <div style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
+        <div className="two-col" style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Integration</Tag>
-            <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Ship yield<br />in under a day</h2>
+            <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Ship yield<br />in under a day</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>Three API calls: list vaults, deposit, withdraw. That's it. Our SDK handles routing, fee tracking, and revenue share automatically.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 28 }}>
               {[
@@ -484,11 +470,11 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* REVENUE CALCULATOR */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
-        <div style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+        <div className="two-col" style={{ display: "flex", gap: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0" }}>
             <Tag>Economics</Tag>
-            <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Model your<br />revenue</h2>
+            <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Model your<br />revenue</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>You earn 5 bps on every deposit routed through your wallet. Plus, vault curators can offer additional bonus revenue share through campaigns — up to 20%+ on top.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 32 }}>
               <Check>Base: 5 bps (0.05%) on every deposit — automatic</Check>
@@ -503,9 +489,9 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* PARTNER DASHBOARD PREVIEW */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="Partner Dashboard" title="Full visibility into your earnings" subtitle="Track revenue, deposits, vault performance, and campaign bonuses in real time." />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 16, marginTop: 48 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginTop: 48 }}>
           {[
             { icon: "📊", title: "Revenue Dashboard", desc: "Real-time earnings, payout history, and revenue projections across all vaults." },
             { icon: "🏦", title: "Vault Catalog", desc: "Browse 100+ vaults. Filter by chain, risk, APY, platform, curator. One-click enrollment." },
@@ -527,9 +513,9 @@ export default function ForWalletsPageMerged() {
       </section>
 
       {/* COMPARISON */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Comparison" title="Yieldo vs. Building In-House" />
-        <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
+        <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
           <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
             <div style={{ padding: "14px 24px" }} />
             <div style={{ padding: "14px 24px", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", textAlign: "center" }}><GradientText>Yieldo SDK</GradientText></div>
@@ -575,14 +561,14 @@ export default function ForWalletsPageMerged() {
       </section>*/}
 
       {/* CTA */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
-        <div style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: C.purple.gradBg, boxShadow: "0 0 47px rgba(69,199,242,0.1)" }}>
+      <section className="section-padding" style={{ padding: "80px clamp(16px, 5vw, 260px) 100px" }}>
+        <div className="cta-box" style={{ borderRadius: 16, padding: "80px", textAlign: "center", position: "relative", overflow: "hidden", backgroundImage: C.purple.gradBg, boxShadow: "0 0 47px rgba(69,199,242,0.1)" }}>
           <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 300, background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ position: "relative" }}>
             <Tag>Start Building</Tag>
-            <h2 style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 20px", lineHeight: 1.15, letterSpacing: "-.02em" }}>Ready to monetize<br />your user base?</h2>
+            <h2 className="cta-title" style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 20px", lineHeight: 1.15, letterSpacing: "-.02em" }}>Ready to monetize<br />your user base?</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 620, margin: "0 auto 32px", lineHeight: 1.6 }}>Ship a "Yield" tab in your wallet, earn revenue on every deposit, and never worry about protocol integrations again.</p>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+            <div className="cta-buttons" style={{ display: "flex", gap: 16, justifyContent: "center" }}>
               <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
               <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
             </div>
@@ -591,32 +577,7 @@ export default function ForWalletsPageMerged() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ padding: "48px clamp(20px, 5vw, 260px)", backgroundImage: C.purple.gradBg, display: "flex", flexDirection: "column", gap: 32 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-              <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
-              <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-            </div>
-            <p style={{ fontSize: 15, color: "rgba(0,0,0,0.45)", maxWidth: 400, lineHeight: 1.5 }}>The intelligent distribution layer for on-chain yield.</p>
-          </div>
-          <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.45)" }}>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</a>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</a>
-            <a href="#" style={{ color: "inherit", textDecoration: "none" }}>For Creators</a>
-            <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
-          </div>
-        </div>
-        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.35)", margin: 0 }}>© 2025 YIELDO — All rights reserved</p>
-          <div style={{ display: "flex", gap: 8 }}>
-            {["𝕏", "✈", "▶", "M"].map((icon, i) => (
-              <div key={i} style={{ width: 36, height: 36, borderRadius: 4, backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 14, color: "rgba(0,0,0,0.45)" }}>{icon}</div>
-            ))}
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

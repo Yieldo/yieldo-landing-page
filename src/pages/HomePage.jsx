@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const COLORS = {
@@ -17,6 +17,37 @@ const COLORS = {
   },
 };
 
+/* ===== SCROLL ANIMATION HOOK ===== */
+function useScrollReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("visible");
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
+}
+
+function AnimatedSection({ children, className = "", style = {} }) {
+  const ref = useScrollReveal();
+  return (
+    <div ref={ref} className={`fade-in-up ${className}`} style={style}>
+      {children}
+    </div>
+  );
+}
+
+/* ===== SHARED COMPONENTS ===== */
 function GradientText({ children, style, className = "" }) {
   return (
     <span
@@ -34,14 +65,15 @@ function GradientText({ children, style, className = "" }) {
   );
 }
 
-function PrimaryButton({ children, large, onClick }) {
+function PrimaryButton({ children, large, onClick, className = "", style = {} }) {
   return (
     <button
+      className={className}
       onClick={onClick}
       style={{
         backgroundImage: COLORS.purple.gradient,
         boxShadow: COLORS.purple.shadow,
-        borderRadius: 4,
+        borderRadius: 8,
         padding: large ? "14px 28px" : "12px 18px",
         border: "none",
         color: "#fff",
@@ -50,6 +82,7 @@ function PrimaryButton({ children, large, onClick }) {
         fontSize: large ? 18 : 16,
         cursor: "pointer",
         letterSpacing: "-0.01em",
+        ...style,
       }}
     >
       {children}
@@ -57,14 +90,15 @@ function PrimaryButton({ children, large, onClick }) {
   );
 }
 
-function SecondaryButton({ children, onClick }) {
+function SecondaryButton({ children, onClick, className = "", style = {} }) {
   return (
     <button
+      className={className}
       onClick={onClick}
       style={{
         backgroundImage: COLORS.purple.gradientLight,
         boxShadow: COLORS.purple.shadowLight,
-        borderRadius: 4,
+        borderRadius: 8,
         padding: "12px 18px",
         border: "none",
         fontFamily: "'Inter', sans-serif",
@@ -72,6 +106,7 @@ function SecondaryButton({ children, onClick }) {
         fontSize: 16,
         cursor: "pointer",
         backgroundClip: "padding-box",
+        ...style,
       }}
     >
       <GradientText>{children}</GradientText>
@@ -122,6 +157,7 @@ function SectionHeader({ tag, title, subtitle }) {
     <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
       {tag && <Tag>{tag}</Tag>}
       <h2
+        className="section-title"
         style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: 48,
@@ -137,6 +173,7 @@ function SectionHeader({ tag, title, subtitle }) {
       </h2>
       {subtitle && (
         <p
+          className="section-subtitle"
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: 20,
@@ -157,7 +194,7 @@ function SectionHeader({ tag, title, subtitle }) {
 function CheckItem({ children }) {
   return (
     <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
         <rect x="2" y="2" width="20" height="20" rx="4" stroke="#7A1CCB" strokeWidth="1.5" />
         <path d="M8 12.5L11 15.5L16 9.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -171,6 +208,7 @@ function CheckItem({ children }) {
 function StatCard({ number, label, sublabel }) {
   return (
     <div
+      className="stat-card"
       style={{
         flex: "1 1 0",
         padding: "32px 28px",
@@ -229,101 +267,121 @@ function LayersIcon() {
   );
 }
 
-function WalletLogo({ name }) {
-  const logos = {
-    Nightly: (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #1a1a2e, #16213e)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#e0e0ff", fontSize: 14 }}>N</span>
-        </div>
-        <span style={{ fontSize: 16, fontWeight: 500, color: COLORS.black }}>Nightly</span>
-      </div>
-    ),
-    Phantom: (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #AB9FF2, #7B61FF)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: 12, fontWeight: 700 }}>👻</span>
-        </div>
-        <span style={{ fontSize: 16, fontWeight: 500, color: COLORS.black }}>Phantom</span>
-      </div>
-    ),
-    MetaMask: (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #F6851B, #E2761B)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: 12 }}>🦊</span>
-        </div>
-        <span style={{ fontSize: 16, fontWeight: 500, color: COLORS.black }}>MetaMask</span>
-      </div>
-    ),
-    Rabby: (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #7084FF, #4B5EFC)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: 12 }}>🐰</span>
-        </div>
-        <span style={{ fontSize: 16, fontWeight: 500, color: COLORS.black }}>Rabby</span>
-      </div>
-    ),
-    Zerion: (
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div style={{ width: 28, height: 28, borderRadius: 6, background: "linear-gradient(135deg, #2962EF, #0052FF)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <span style={{ color: "#fff", fontSize: 14, fontWeight: 700 }}>Z</span>
-        </div>
-        <span style={{ fontSize: 16, fontWeight: 500, color: COLORS.black }}>Zerion</span>
-      </div>
-    ),
-  };
-
-  return logos[name] || null;
+/* ===== HAMBURGER ICON ===== */
+function HamburgerIcon({ open }) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#121212" strokeWidth="2" strokeLinecap="round">
+      {open ? (
+        <>
+          <line x1="6" y1="6" x2="18" y2="18" />
+          <line x1="6" y1="18" x2="18" y2="6" />
+        </>
+      ) : (
+        <>
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </>
+      )}
+    </svg>
+  );
 }
 
 export default function YieldoHomepage() {
   const navigate = useNavigate();
   const [hoveredPillar, setHoveredPillar] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navScrolled, setNavScrolled] = useState(false);
+
+  // Track scroll for nav shadow
+  useEffect(() => {
+    const onScroll = () => setNavScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileMenuOpen]);
+
+  const navTo = (path) => {
+    setMobileMenuOpen(false);
+    navigate(path);
+  };
 
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
       {/* NAV */}
       <nav
+        className="main-nav section-padding"
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "20px clamp(20px, 5vw, 260px)",
+          padding: "16px clamp(16px, 5vw, 260px)",
           position: "fixed",
           top: 0,
           left: 0,
           right: 0,
           zIndex: 1000,
-          flexWrap: "wrap",
-          gap: "12px",
-          background: "#fff",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+          background: navScrolled ? "rgba(255,255,255,0.92)" : "#fff",
+          backdropFilter: navScrolled ? "blur(16px)" : "none",
+          WebkitBackdropFilter: navScrolled ? "blur(16px)" : "none",
+          boxShadow: navScrolled ? "0 1px 12px rgba(0,0,0,0.06)" : "none",
+          transition: "all 0.3s ease",
         }}
       >
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
+        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
           <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
           <span style={{ fontSize: 18, fontWeight: 600, color: COLORS.black, letterSpacing: "0.05em" }}>YIELDO</span>
         </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
-          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
-          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
-          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
+        <div className="nav-links">
+          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Wallets</Link>
+          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Vaults</Link>
+          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Creators</Link>
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
-        <div style={{ display: "flex", gap: 12 }}>
-          <button style={{ padding: "12px 18px", borderRadius: 4, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer", background: "rgba(0,0,0,0.06)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
+        <div className="nav-actions">
+          <button style={{ padding: "10px 18px", borderRadius: 8, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
           <PrimaryButton onClick={() => navigate("/apply")}>Integrate Now</PrimaryButton>
         </div>
+        <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
+          <HamburgerIcon open={mobileMenuOpen} />
+        </button>
       </nav>
+
+      {/* MOBILE MENU */}
+      {mobileMenuOpen && (
+        <div className="mobile-menu-overlay">
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", padding: 8 }}
+            aria-label="Close menu"
+          >
+            <HamburgerIcon open={true} />
+          </button>
+          <Link to="/wallet" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Wallets</Link>
+          <Link to="/vault" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Vaults</Link>
+          <Link to="/creator" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Creators</Link>
+          <span style={{ color: "rgba(0,0,0,0.25)", fontWeight: 500 }}>Docs (Coming Soon)</span>
+          <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
+            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}>Dashboard</button>
+            <PrimaryButton large onClick={() => navTo("/apply")} style={{ borderRadius: 12, width: "100%" }}>Integrate Now</PrimaryButton>
+          </div>
+        </div>
+      )}
 
       {/* HERO */}
       <section
+        className="hero-section section-padding"
         style={{
-          padding: "140px clamp(20px, 5vw, 260px) 80px",
+          padding: "140px clamp(16px, 5vw, 260px) 80px",
           textAlign: "center",
           position: "relative",
           overflow: "hidden",
-          marginTop: "80px",
+          marginTop: "72px",
         }}
       >
         <div
@@ -341,6 +399,7 @@ export default function YieldoHomepage() {
         <div style={{ position: "relative", zIndex: 1 }}>
           <Tag>The Yield Gateway</Tag>
           <h1
+            className="hero-title"
             style={{
               fontSize: 64,
               fontWeight: 400,
@@ -352,35 +411,30 @@ export default function YieldoHomepage() {
             }}
           >
             The Stripe for<br />
-            <GradientText style={{ fontSize: 64, fontWeight: 400 }}>on-chain yield</GradientText>
+            <GradientText className="hero-title" style={{ fontWeight: 400 }}>on-chain yield</GradientText>
           </h1>
-          <p style={{ fontSize: 22, maxWidth: 700, margin: "28px auto 0", lineHeight: 1.6, color: "rgba(0,0,0,0.6)" }}>
+          <p className="hero-desc" style={{ fontSize: 22, maxWidth: 700, margin: "28px auto 0", lineHeight: 1.6, color: "rgba(0,0,0,0.6)" }}>
             One API. Every vault. Automatic revenue share.
             <br />
             Stop integrating 20 protocols — plug in Yieldo and ship yield in days.
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
+          <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
             <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 4, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
           </div>
-          {/*<div style={{ display: "flex", gap: 40, justifyContent: "center", marginTop: 56, alignItems: "center", flexWrap: "wrap" }}>
-            {["Nightly", "Phantom", "MetaMask", "Rabby", "Zerion"].map((name) => (
-              <div key={name} style={{ opacity: 0.5 }}>
-                <WalletLogo name={name} />
-              </div>
-            ))}
-          </div>*/}
         </div>
       </section>
 
       {/* PROBLEM / WHY */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
-        <SectionHeader
-          tag="The Problem"
-          title="Resource exhaustion kills wallet yield features"
-          subtitle="Wallets face an impossible trilemma when trying to offer yield: too many protocols, zero monetization path, and unbearable complexity."
-        />
-        <div style={{ display: "flex", gap: 24, marginTop: 64, flexWrap: "wrap" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
+        <AnimatedSection>
+          <SectionHeader
+            tag="The Problem"
+            title="Resource exhaustion kills wallet yield features"
+            subtitle="Wallets face an impossible trilemma when trying to offer yield: too many protocols, zero monetization path, and unbearable complexity."
+          />
+        </AnimatedSection>
+        <div className="cards-row" style={{ marginTop: 64 }}>
           {[
             {
               icon: <LayersIcon />,
@@ -404,11 +458,10 @@ export default function YieldoHomepage() {
               statLabel: "risk combinations",
             },
           ].map((item, i) => (
-            <div
+            <AnimatedSection
               key={i}
+              className="card-item"
               style={{
-                flex: "1 1 0",
-                minWidth: "280px",
                 padding: 32,
                 borderRadius: 16,
                 background: "#fff",
@@ -416,6 +469,7 @@ export default function YieldoHomepage() {
                 display: "flex",
                 flexDirection: "column",
                 gap: 16,
+                transitionDelay: `${i * 0.1}s`,
               }}
             >
               {item.icon}
@@ -425,19 +479,21 @@ export default function YieldoHomepage() {
                 <GradientText style={{ fontSize: 28, fontWeight: 600 }}>{item.stat}</GradientText>
                 <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{item.statLabel}</div>
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
 
       {/* THREE PILLARS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
-        <SectionHeader
-          tag="USP"
-          title="Your Yield Infrastructure Layer"
-          subtitle="Three pillars that turn yield from a maintenance burden into a revenue stream."
-        />
-        <div style={{ display: "flex", gap: 24, marginTop: 64, flexWrap: "wrap" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
+        <AnimatedSection>
+          <SectionHeader
+            tag="USP"
+            title="Your Yield Infrastructure Layer"
+            subtitle="Three pillars that turn yield from a maintenance burden into a revenue stream."
+          />
+        </AnimatedSection>
+        <div className="cards-row" style={{ marginTop: 64 }}>
           {[
             {
               id: "zero",
@@ -475,14 +531,11 @@ export default function YieldoHomepage() {
                 "You're a platform, not an advisor",
               ],
             },
-          ].map((pillar) => (
-            <div
+          ].map((pillar, i) => (
+            <AnimatedSection
               key={pillar.id}
-              onMouseEnter={() => setHoveredPillar(pillar.id)}
-              onMouseLeave={() => setHoveredPillar(null)}
+              className="card-item"
               style={{
-                flex: "1 1 0",
-                minWidth: "280px",
                 padding: 32,
                 borderRadius: 16,
                 background: hoveredPillar === pillar.id ? "rgba(122,28,203,0.05)" : "#fff",
@@ -493,107 +546,121 @@ export default function YieldoHomepage() {
                 flexDirection: "column",
                 gap: 20,
                 cursor: "default",
+                transitionDelay: `${i * 0.1}s`,
               }}
             >
-              {pillar.icon}
-              <GradientText style={{ fontSize: 14, fontWeight: 600, letterSpacing: "0.02em" }}>{pillar.label}</GradientText>
-              <h3 style={{ fontSize: 22, fontWeight: 600, margin: 0, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{pillar.title}</h3>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {pillar.bullets.map((b, i) => (
-                  <CheckItem key={i}>{b}</CheckItem>
-                ))}
+              <div
+                onMouseEnter={() => setHoveredPillar(pillar.id)}
+                onMouseLeave={() => setHoveredPillar(null)}
+                style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}
+              >
+                {pillar.icon}
+                <GradientText style={{ fontSize: 14, fontWeight: 600, letterSpacing: "0.02em" }}>{pillar.label}</GradientText>
+                <h3 style={{ fontSize: 22, fontWeight: 600, margin: 0, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{pillar.title}</h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  {pillar.bullets.map((b, j) => (
+                    <CheckItem key={j}>{b}</CheckItem>
+                  ))}
+                </div>
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
 
       {/* LIVE YIELD TABLE */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
-        <SectionHeader
-          tag="Live Preview"
-          title="Top AI-curated Yield Opportunities"
-          subtitle="Preview the strategies your users will see. Real protocols, real yields, real-time updates."
-        />
-        <div style={{ marginTop: 56, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "2fr 1fr 1fr 1fr 80px",
-              padding: "14px 20px",
-              background: "rgba(122,28,203,0.04)",
-              fontSize: 13,
-              fontWeight: 600,
-              color: "rgba(0,0,0,0.5)",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              minWidth: "800px",
-            }}
-          >
-            <span>Strategy</span>
-            <span>APY Range</span>
-            <span>Risk</span>
-            <span>Chain</span>
-            <span></span>
-          </div>
-          {[
-            { name: "USDC Lending Optimizer", type: "Morpho + Aave", apy: "8.2% → 14.5%", risk: "Low", riskColor: "#45f265", chain: "Ethereum" },
-            { name: "ETH Staking Yield", type: "Lido + Pendle", apy: "5.1% → 9.8%", risk: "Medium", riskColor: "#f2de45", chain: "Ethereum" },
-            { name: "Stablecoin Compounder", type: "Yearn + Morpho", apy: "12.5% → 34%", risk: "Low", riskColor: "#45f265", chain: "Base" },
-          ].map((row, i) => (
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
+        <AnimatedSection>
+          <SectionHeader
+            tag="Live Preview"
+            title="Top AI-curated Yield Opportunities"
+            subtitle="Preview the strategies your users will see. Real protocols, real yields, real-time updates."
+          />
+        </AnimatedSection>
+        <AnimatedSection style={{ marginTop: 56 }}>
+          <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
             <div
-              key={i}
+              className="yield-table-header"
               style={{
                 display: "grid",
                 gridTemplateColumns: "2fr 1fr 1fr 1fr 80px",
-                padding: "18px 20px",
-                borderTop: "1px solid rgba(0,0,0,0.04)",
-                alignItems: "center",
-                fontSize: 15,
-                minWidth: "800px",
+                padding: "14px 20px",
+                background: "rgba(122,28,203,0.04)",
+                fontSize: 13,
+                fontWeight: 600,
+                color: "rgba(0,0,0,0.5)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
               }}
             >
-              <div>
-                <div style={{ fontWeight: 500 }}>{row.name}</div>
-                <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{row.type}</div>
-              </div>
-              <div style={{ fontWeight: 500 }}>
-                <span style={{ color: "#f24548" }}>{row.apy.split("→")[0]}</span>
-                <span style={{ color: "rgba(0,0,0,0.3)", margin: "0 4px" }}>→</span>
-                <span style={{ color: "#45f265" }}>{row.apy.split("→")[1]}</span>
-              </div>
-              <div>
-                <span
-                  style={{
-                    padding: "4px 10px",
-                    borderRadius: 4,
-                    background: `${row.riskColor}15`,
-                    border: `1px solid ${row.riskColor}`,
-                    color: row.riskColor,
-                    fontSize: 13,
-                    fontWeight: 500,
-                  }}
-                >
-                  {row.risk}
-                </span>
-              </div>
-              <div style={{ color: "rgba(0,0,0,0.6)" }}>{row.chain}</div>
-              <div style={{ textAlign: "right" }}>
-                <span style={{ cursor: "pointer", color: "#7A1CCB", fontSize: 18 }}>→</span>
-              </div>
+              <span>Strategy</span>
+              <span>APY Range</span>
+              <span>Risk</span>
+              <span>Chain</span>
+              <span></span>
             </div>
-          ))}
-        </div>
+            {[
+              { name: "USDC Lending Optimizer", type: "Morpho + Aave", apy: "8.2% → 14.5%", risk: "Low", riskColor: "#1a9d3f", chain: "Ethereum" },
+              { name: "ETH Staking Yield", type: "Lido + Pendle", apy: "5.1% → 9.8%", risk: "Medium", riskColor: "#b8960a", chain: "Ethereum" },
+              { name: "Stablecoin Compounder", type: "Yearn + Morpho", apy: "12.5% → 34%", risk: "Low", riskColor: "#1a9d3f", chain: "Base" },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="yield-table-row"
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2fr 1fr 1fr 1fr 80px",
+                  padding: "18px 20px",
+                  borderTop: "1px solid rgba(0,0,0,0.04)",
+                  alignItems: "center",
+                  fontSize: 15,
+                  transition: "background 0.15s",
+                }}
+              >
+                <div>
+                  <div style={{ fontWeight: 500 }}>{row.name}</div>
+                  <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{row.type}</div>
+                </div>
+                <div style={{ fontWeight: 500 }}>
+                  <span style={{ color: "#f24548" }}>{row.apy.split("→")[0]}</span>
+                  <span style={{ color: "rgba(0,0,0,0.3)", margin: "0 4px" }}>→</span>
+                  <span style={{ color: "#1a9d3f" }}>{row.apy.split("→")[1]}</span>
+                </div>
+                <div>
+                  <span
+                    style={{
+                      padding: "4px 10px",
+                      borderRadius: 6,
+                      background: `${row.riskColor}15`,
+                      border: `1px solid ${row.riskColor}30`,
+                      color: row.riskColor,
+                      fontSize: 13,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {row.risk}
+                  </span>
+                </div>
+                <div style={{ color: "rgba(0,0,0,0.6)" }}>{row.chain}</div>
+                <div style={{ textAlign: "right" }}>
+                  <span style={{ cursor: "pointer", color: "#7A1CCB", fontSize: 18 }}>→</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
-        <SectionHeader
-          tag="Integration"
-          title="How It Works"
-          subtitle="Go from zero to yield in three steps. No smart contract development required."
-        />
-        <div style={{ display: "flex", gap: 80, marginTop: 64, flexWrap: "wrap", justifyContent: "center" }}>
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
+        <AnimatedSection>
+          <SectionHeader
+            tag="Integration"
+            title="How It Works"
+            subtitle="Go from zero to yield in three steps. No smart contract development required."
+          />
+        </AnimatedSection>
+        <div className="steps-row" style={{ marginTop: 64 }}>
           {[
             {
               step: "01",
@@ -614,7 +681,7 @@ export default function YieldoHomepage() {
               icon: "💰",
             },
           ].map((s, i) => (
-            <div key={i} style={{ flex: "1 1 0", minWidth: "250px", maxWidth: "350px", textAlign: "center", position: "relative" }}>
+            <AnimatedSection key={i} className="step-item" style={{ textAlign: "center", position: "relative", transitionDelay: `${i * 0.15}s` }}>
               <div
                 style={{
                   position: "absolute",
@@ -636,64 +703,68 @@ export default function YieldoHomepage() {
                 <h3 style={{ fontSize: 36, fontWeight: 400, margin: "0 0 12px" }}>{s.title}</h3>
                 <p style={{ fontSize: 15, color: "rgba(0,0,0,0.55)", lineHeight: 1.6, maxWidth: 300, margin: "0 auto" }}>{s.desc}</p>
               </div>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
 
       {/* ECONOMICS */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px)" }}>
-        <div
-          style={{
-            borderRadius: 16,
-            padding: "64px 80px",
-            background: COLORS.purple.gradientBg,
-            boxShadow: "0px 0px 47px 0px rgba(122,28,203,0.08)",
-            position: "relative",
-            overflow: "hidden",
-          }}
-        >
+      <section className="section-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)" }}>
+        <AnimatedSection>
           <div
+            className="economics-box"
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 200,
-              background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)",
-              pointerEvents: "none",
+              borderRadius: 16,
+              padding: "64px 80px",
+              background: COLORS.purple.gradientBg,
+              boxShadow: "0px 0px 47px 0px rgba(122,28,203,0.08)",
+              position: "relative",
+              overflow: "hidden",
             }}
-          />
-          <div style={{ position: "relative", textAlign: "center" }}>
-            <Tag>Economics</Tag>
-            <h2 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 40px", letterSpacing: "-0.02em" }}>
-              Transparent & Aligned
-            </h2>
-            <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
-              <StatCard number="10 bps" label="Entry Fee" sublabel="0.1% — industry lowest" />
-              <StatCard number="5 bps" label="Your Revenue Share" sublabel="50% goes directly to you" />
-              <StatCard number="$500K+" label="Annual at $500M Volume" sublabel="Scales with your AUM" />
-              <StatCard number="0" label="Dev Overhead" sublabel="No smart contract work needed" />
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 200,
+                background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)",
+                pointerEvents: "none",
+              }}
+            />
+            <div style={{ position: "relative", textAlign: "center" }}>
+              <Tag>Economics</Tag>
+              <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 40px", letterSpacing: "-0.02em" }}>
+                Transparent & Aligned
+              </h2>
+              <div className="economics-stats" style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+                <StatCard number="10 bps" label="Entry Fee" sublabel="0.1% — industry lowest" />
+                <StatCard number="5 bps" label="Your Revenue Share" sublabel="50% goes directly to you" />
+                <StatCard number="$500K+" label="Annual at $500M Volume" sublabel="Scales with your AUM" />
+                <StatCard number="0" label="Dev Overhead" sublabel="No smart contract work needed" />
+              </div>
             </div>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
 
       {/* VISION */}
-      <section style={{ padding: "100px clamp(20px, 5vw, 260px)" }}>
-        <SectionHeader
-          tag="Vision"
-          title="The Most Trusted Filter in DeFi"
-          subtitle="From curated middleware to decentralized yield governance."
-        />
-        <div style={{ display: "flex", gap: 0, marginTop: 56, position: "relative", flexWrap: "wrap", justifyContent: "center" }}>
-          <div style={{ position: "absolute", top: "50%", left: 80, right: 80, height: 2, background: "linear-gradient(90deg, rgba(122,28,203,0.15) 0%, rgba(122,28,203,0.3) 50%, rgba(122,28,203,0.15) 100%)", transform: "translateY(-50%)", display: "none" }} />
+      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
+        <AnimatedSection>
+          <SectionHeader
+            tag="Vision"
+            title="The Most Trusted Filter in DeFi"
+            subtitle="From curated middleware to decentralized yield governance."
+          />
+        </AnimatedSection>
+        <div className="vision-row" style={{ marginTop: 56 }}>
           {[
             { phase: "Today", title: "Curated Middleware", desc: "Yieldo selects vaults based on external scoring (Credora, Bluechip). One API, best yields." },
             { phase: "Tomorrow", title: "Community Governance", desc: "Token holders and curators vote on which vaults enter the Recommended tier for partner wallets." },
             { phase: "Future", title: "Chainlink for Yield", desc: "Decentralized curation network. Risk ownership shifts to the system. Yieldo becomes the trust layer." },
           ].map((v, i) => (
-            <div key={i} style={{ flex: "1 1 0", minWidth: "280px", maxWidth: "350px", textAlign: "center", position: "relative", zIndex: 1, marginBottom: 40 }}>
+            <AnimatedSection key={i} className="vision-item" style={{ textAlign: "center", position: "relative", zIndex: 1, marginBottom: 40, transitionDelay: `${i * 0.15}s` }}>
               <div
                 style={{
                   width: 14,
@@ -707,64 +778,68 @@ export default function YieldoHomepage() {
               <GradientText style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>{v.phase}</GradientText>
               <h3 style={{ fontSize: 20, fontWeight: 600, margin: "8px 0", letterSpacing: "-0.01em" }}>{v.title}</h3>
               <p style={{ fontSize: 14, color: "rgba(0,0,0,0.5)", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>{v.desc}</p>
-            </div>
+            </AnimatedSection>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px clamp(20px, 5vw, 260px) 100px" }}>
-        <div
-          style={{
-            borderRadius: 16,
-            padding: "80px",
-            textAlign: "center",
-            position: "relative",
-            overflow: "hidden",
-            backgroundImage: COLORS.purple.gradientBg,
-            boxShadow: "0px 0px 47px rgba(69,199,242,0.1)",
-          }}
-        >
+      <section className="section-padding" style={{ padding: "80px clamp(16px, 5vw, 260px) 100px" }}>
+        <AnimatedSection>
           <div
+            className="cta-box"
             style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: 300,
-              background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.2) 0%, transparent 70%)",
-              pointerEvents: "none",
+              borderRadius: 16,
+              padding: "80px",
+              textAlign: "center",
+              position: "relative",
+              overflow: "hidden",
+              backgroundImage: COLORS.purple.gradientBg,
+              boxShadow: "0px 0px 47px rgba(69,199,242,0.1)",
             }}
-          />
-          <div style={{ position: "relative" }}>
-            <Tag>Get Started</Tag>
-            <h2 style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 32px", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
-              Ready to turn yield<br />into revenue?
-            </h2>
-            <div style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-              <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-              <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 300,
+                background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.2) 0%, transparent 70%)",
+                pointerEvents: "none",
+              }}
+            />
+            <div style={{ position: "relative" }}>
+              <Tag>Get Started</Tag>
+              <h2 className="cta-title" style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 32px", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
+                Ready to turn yield<br />into revenue?
+              </h2>
+              <div className="cta-buttons" style={{ display: "flex", gap: 16, justifyContent: "center" }}>
+                <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
+                <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
+              </div>
+              <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", marginTop: 16 }}>
+                Free to start · No minimum volume · Ship in days
+              </p>
             </div>
-            <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", marginTop: 16 }}>
-              Free to start · No minimum volume · Ship in days
-            </p>
           </div>
-        </div>
+        </AnimatedSection>
       </section>
 
       {/* FOOTER */}
       <footer
+        className="section-padding"
         style={{
-          padding: "48px clamp(20px, 5vw, 260px)",
+          padding: "48px clamp(16px, 5vw, 260px)",
           backgroundImage: COLORS.purple.gradientBg,
           display: "flex",
           flexDirection: "column",
           gap: 32,
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 24 }}>
+        <div className="footer-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 24 }}>
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
               <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
               <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "0.05em" }}>YIELDO</span>
             </div>
@@ -772,15 +847,15 @@ export default function YieldoHomepage() {
               The intelligent distribution layer for on-chain yield. One API for every wallet.
             </p>
           </div>
-          <div style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)", flexWrap: "wrap" }}>
+          <div className="footer-links" style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)", flexWrap: "wrap" }}>
             <Link to="/wallet" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</Link>
             <Link to="/vault" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</Link>
             <Link to="/creator" style={{ color: "inherit", textDecoration: "none" }}>For Creators</Link>
             <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
           </div>
         </div>
-        <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>© 2025 YIELDO — All rights reserved</p>
+        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
+          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO — All rights reserved</p>
           <div style={{ display: "flex", gap: 8 }}>
             {["𝕏", "✈", "▶", "M"].map((icon, i) => (
               <div
@@ -788,7 +863,7 @@ export default function YieldoHomepage() {
                 style={{
                   width: 36,
                   height: 36,
-                  borderRadius: 4,
+                  borderRadius: 8,
                   backgroundImage: COLORS.purple.gradientLight,
                   boxShadow: COLORS.purple.shadowLight,
                   display: "flex",
@@ -797,6 +872,7 @@ export default function YieldoHomepage() {
                   cursor: "pointer",
                   fontSize: 14,
                   color: "rgba(0,0,0,0.5)",
+                  transition: "transform 0.15s",
                 }}
               >
                 {icon}

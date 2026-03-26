@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const C = {
   bg: "#faf9fe", white: "#ffffff", black: "#121212", surface: "#f5f4f9",
@@ -89,9 +91,9 @@ export default function DocsPage() {
   const langLabel = { ts: "TypeScript", py: "Python", curl: "cURL" };
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
+    <div className="two-col" style={{ fontFamily: "'Inter',sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
       {/* SIDEBAR */}
-      <aside style={{ width: 240, background: C.white, borderRight: `1px solid ${C.border}`, position: "sticky", top: 0, height: "100vh", overflow: "auto", flexShrink: 0 }}>
+      <aside className="docs-sidebar" style={{ width: 240, background: C.white, borderRight: `1px solid ${C.border}`, position: "sticky", top: 0, height: "100vh", overflow: "auto", flexShrink: 0 }}>
         <div style={{ padding: "18px 18px 14px", display: "flex", alignItems: "center", gap: 8, borderBottom: `1px solid ${C.border}` }}>
           <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
           <span style={{ fontSize: 15, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
@@ -131,7 +133,7 @@ export default function DocsPage() {
       </aside>
 
       {/* MAIN CONTENT */}
-      <main style={{ flex: 1, maxWidth: 920, padding: "32px 48px", overflow: "auto" }}>
+      <main className="docs-content" style={{ flex: 1, maxWidth: 920, padding: "32px 48px", overflow: "auto" }}>
         {/* Language switcher */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 24 }}>
           <div />

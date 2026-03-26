@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const C = {
   black: "#121212",
@@ -93,16 +95,10 @@ export default function CreatorDemoPage() {
 
   return (
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#f8f7fc", color: C.black, minHeight: "100vh" }}>
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px clamp(20px, 5vw, 260px)", background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit" }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
-          <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: ".05em", color: C.black }}>YIELDO</span>
-        </Link>
-        <button onClick={() => navigate(-1)} style={{ background: "none", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 6, padding: "6px 14px", fontSize: 13, fontFamily: "'Inter',sans-serif", cursor: "pointer", color: "rgba(0,0,0,0.5)" }}>&larr; Back</button>
-      </nav>
+      <Nav />
       <div style={{ backgroundImage: C.purple.grad, padding: "10px 24px", textAlign: "center", fontSize: 13, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
         <span>{"\u{1F3AF}"} This is a demo creator page — see what your audience experiences</span>
-        <button onClick={() => navigate("/apply")} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: 4, padding: "4px 12px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Create Your Own &rarr;</button>
+        <button onClick={() => navigate("/apply")} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: 8, padding: "4px 12px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Create Your Own &rarr;</button>
       </div>
 
       <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 20px 80px" }}>
@@ -155,11 +151,11 @@ export default function CreatorDemoPage() {
           <span style={{ fontSize: 12, color: "rgba(0,0,0,0.25)" }}>{filtered.length} vaults</span>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div className="cards-row" style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {filtered.map(v => {
             const expanded = expandedVault === v.id;
             return (
-              <div key={v.id} style={{ background: "#fff", borderRadius: 14, border: expanded ? "1.5px solid rgba(122,28,203,0.15)" : "1px solid rgba(0,0,0,0.06)", overflow: "hidden", transition: "all .2s", boxShadow: expanded ? "0 4px 20px rgba(122,28,203,0.06)" : "0 1px 3px rgba(0,0,0,0.02)" }}>
+              <div key={v.id} className="card-item" style={{ background: "#fff", borderRadius: 14, border: expanded ? "1.5px solid rgba(122,28,203,0.15)" : "1px solid rgba(0,0,0,0.06)", overflow: "hidden", transition: "all .2s", boxShadow: expanded ? "0 4px 20px rgba(122,28,203,0.06)" : "0 1px 3px rgba(0,0,0,0.02)" }}>
                 <div onClick={() => setExpandedVault(expanded ? null : v.id)} style={{ padding: "16px 20px", cursor: "pointer", display: "flex", alignItems: "center", gap: 14 }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: "rgba(122,28,203,0.04)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0 }}>{v.icon}</div>
                   <div style={{ flex: 1 }}>

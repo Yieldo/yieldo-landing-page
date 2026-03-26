@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const C = {
   black: "#121212",
@@ -130,18 +132,7 @@ export default function ApplyPage() {
 
   return (
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      <nav style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px clamp(20px, 5vw, 260px)", position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, background: "#fff", boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}>
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 6, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
-          <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: ".05em", color: C.black }}>YIELDO</span>
-        </Link>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Wallets</Link>
-          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Vaults</Link>
-          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none" }}>For Creators</Link>
-        </div>
-        <div />
-      </nav>
+      <Nav />
 
       <div style={{ maxWidth: 720, margin: "0 auto", padding: "120px 24px 100px", flex: 1 }}>
         {submitted && (
@@ -149,14 +140,14 @@ export default function ApplyPage() {
             <div style={{ width: 72, height: 72, borderRadius: 36, backgroundImage: C.purple.grad, margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <span style={{ color: "#fff", fontSize: 32 }}>&#10003;</span>
             </div>
-            <h1 style={{ fontSize: 36, fontWeight: 400, textTransform: "uppercase", margin: "0 0 12px", letterSpacing: "-.02em" }}>
+            <h1 className="section-title" style={{ fontSize: 36, fontWeight: 400, textTransform: "uppercase", margin: "0 0 12px", letterSpacing: "-.02em" }}>
               <GradientText>Application received!</GradientText>
             </h1>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 480, margin: "0 auto 32px", lineHeight: 1.6 }}>
               Thanks for your interest in Yieldo. We'll review your application and get back to you within 48 hours.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-              <button onClick={() => navigate("/")} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 20px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer" }}><GradientText>&#8592; Back to Home</GradientText></button>
+              <button onClick={() => navigate("/")} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 20px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer" }}><GradientText>&#8592; Back to Home</GradientText></button>
             </div>
             <div style={{ marginTop: 40, padding: "20px 24px", borderRadius: 12, background: "rgba(122,28,203,0.03)", border: "1px solid rgba(122,28,203,0.08)" }}>
               <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6 }}>While you wait</div>
@@ -173,7 +164,7 @@ export default function ApplyPage() {
           <div>
             <div style={{ textAlign: "center", marginBottom: 48 }}>
               <Tag>Get Started</Tag>
-              <h1 style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>
+              <h1 className="hero-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>
                 Join the <GradientText style={{ fontSize: 48 }}>Yieldo Network</GradientText>
               </h1>
               <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 520, margin: "16px auto 0", lineHeight: 1.6 }}>
@@ -191,7 +182,7 @@ export default function ApplyPage() {
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
                       <span style={{ fontSize: 18, fontWeight: 600 }}>{a.title}</span>
-                      <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 4, backgroundImage: C.purple.gradLight, color: "#7A1CCB" }}>{a.tag}</span>
+                      <span style={{ fontSize: 11, fontWeight: 500, padding: "2px 8px", borderRadius: 8, backgroundImage: C.purple.gradLight, color: "#7A1CCB" }}>{a.tag}</span>
                     </div>
                     <div style={{ fontSize: 14, color: "rgba(0,0,0,0.45)" }}>{a.desc}</div>
                   </div>
@@ -211,7 +202,7 @@ export default function ApplyPage() {
                 {AUDIENCES.find(a => a.id === audience).icon}
               </div>
               <div>
-                <h2 style={{ margin: 0, fontSize: 24, fontWeight: 600 }}>{audience === "wallet" ? "Wallet Partner Application" : audience === "vault" ? "Vault Protocol Application" : "Creator Application"}</h2>
+                <h2 className="section-title" style={{ margin: 0, fontSize: 24, fontWeight: 600 }}>{audience === "wallet" ? "Wallet Partner Application" : audience === "vault" ? "Vault Protocol Application" : "Creator Application"}</h2>
                 <p style={{ margin: "2px 0 0", fontSize: 14, color: "rgba(0,0,0,0.45)" }}>
                   {audience === "wallet" ? "Tell us about your wallet or app. We'll set up your partner account." : audience === "vault" ? "Tell us about your protocol. We'll help you reach new depositors." : "Tell us about your audience. We'll get your yield page set up."}
                 </p>
@@ -295,13 +286,7 @@ export default function ApplyPage() {
         )}
       </div>
 
-      <footer style={{ padding: "32px clamp(20px, 5vw, 260px)", backgroundImage: C.purple.gradBg, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 24, height: 24, borderRadius: 5 }} />
-          <span style={{ fontSize: 14, fontWeight: 600, letterSpacing: ".05em" }}>YIELDO</span>
-        </div>
-        <p style={{ fontSize: 12, color: "rgba(0,0,0,0.3)", margin: 0 }}>&copy; 2025 YIELDO — All rights reserved</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
