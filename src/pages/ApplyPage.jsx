@@ -134,9 +134,9 @@ export default function ApplyPage() {
     <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Nav />
 
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "120px 24px 100px", flex: 1 }}>
+      <div style={{ maxWidth: 720, width: "100%", margin: "0 auto", padding: "120px 24px 100px", flex: 1, boxSizing: "border-box" }}>
         {submitted && (
-          <div style={{ textAlign: "center", padding: "80px 0" }}>
+          <div style={{ textAlign: "center", padding: "clamp(40px, 6vw, 80px) 0" }}>
             <div style={{ width: 72, height: 72, borderRadius: 36, backgroundImage: C.purple.grad, margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <span style={{ color: "#fff", fontSize: 32 }}>&#10003;</span>
             </div>
@@ -151,7 +151,7 @@ export default function ApplyPage() {
             </div>
             <div style={{ marginTop: 40, padding: "20px 24px", borderRadius: 12, background: "rgba(122,28,203,0.03)", border: "1px solid rgba(122,28,203,0.08)" }}>
               <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6 }}>While you wait</div>
-              <div style={{ display: "flex", gap: 16, justifyContent: "center", fontSize: 13, color: "rgba(0,0,0,0.5)" }}>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "center", fontSize: 13, color: "rgba(0,0,0,0.5)" }}>
                 <span style={{ cursor: "pointer" }}>&#x1F426; Follow us on X</span>
                 <span style={{ cursor: "pointer" }}>&#x1F4AC; Join our Discord</span>
                 <span style={{ cursor: "pointer" }}>&#x2708;&#xFE0F; Telegram</span>
@@ -212,13 +212,13 @@ export default function ApplyPage() {
             <div style={{ padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               {audience === "wallet" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Company / Wallet Name" placeholder="e.g. Phantom" value={wName} onChange={setWName} required />
                     <TextInput label="Your Role" placeholder="e.g. Head of Product" value={wRole} onChange={setWRole} />
                   </div>
                   <SelectInput label="Monthly Active Users" options={["< 10K", "10K \u2013 100K", "100K \u2013 1M", "1M+"]} value={wMau} onChange={setWMau} required />
                   <MultiChip label="Chains Supported" options={["Ethereum", "Base", "Arbitrum", "Polygon", "Solana", "Optimism", "Other"]} selected={wChains} onChange={setWChains} required />
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Work Email" placeholder="you@company.com" type="email" value={wEmail} onChange={setWEmail} required />
                     <TextInput label="Telegram (optional)" placeholder="@username" value={wTg} onChange={setWTg} />
                   </div>
@@ -227,13 +227,13 @@ export default function ApplyPage() {
 
               {audience === "vault" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Protocol Name" placeholder="e.g. Morpho" value={vName} onChange={setVName} required />
                     <TextInput label="Your Role" placeholder="e.g. BD Lead" value={vRole} onChange={setVRole} />
                   </div>
                   <SelectInput label="Current TVL" options={["< $10M", "$10M \u2013 $100M", "$100M \u2013 $1B", "$1B+"]} value={vTvl} onChange={setVTvl} required />
                   <MultiChip label="What are you looking for?" options={["More depositors", "Wallet distribution", "KOL promotion", "Analytics & insights", "All of the above"]} selected={vGoals} onChange={setVGoals} required />
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Work Email" placeholder="you@protocol.com" type="email" value={vEmail} onChange={setVEmail} required />
                     <TextInput label="Telegram (optional)" placeholder="@username" value={vTg} onChange={setVTg} />
                   </div>
@@ -242,13 +242,13 @@ export default function ApplyPage() {
 
               {audience === "kol" && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Your Handle" placeholder="@yourname" value={kHandle} onChange={setKHandle} required />
                     <SelectInput label="Primary Platform" options={["Twitter / X", "YouTube", "Newsletter", "Discord", "Telegram", "Other"]} value={kPlatform} onChange={setKPlatform} required />
                   </div>
                   <SelectInput label="Audience Size" options={["< 5K", "5K \u2013 25K", "25K \u2013 100K", "100K+"]} value={kSize} onChange={setKSize} required />
                   <MultiChip label="Content Focus" options={["DeFi analysis", "Yield strategies", "General crypto", "Educational", "Trading", "Other"]} selected={kContent} onChange={setKContent} />
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <TextInput label="Email" placeholder="you@email.com" type="email" value={kEmail} onChange={setKEmail} required />
                     <TextInput label="Telegram (optional)" placeholder="@username" value={kTg} onChange={setKTg} />
                   </div>
@@ -271,7 +271,7 @@ export default function ApplyPage() {
               </div>
             </div>
 
-            <div style={{ marginTop: 24, display: "flex", gap: 20, justifyContent: "center" }}>
+            <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 20, justifyContent: "center" }}>
               {[
                 { icon: "\u{1F512}", text: "Your data stays private" },
                 { icon: "\u26A1", text: "48h response time" },

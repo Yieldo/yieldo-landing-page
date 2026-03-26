@@ -98,7 +98,7 @@ function CampaignBuilder() {
         <div style={{ fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>Revenue Share Tiers</div>
 
         {/* Base Tier */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, padding: "16px 20px", background: "rgba(122,28,203,0.1)", borderRadius: 8, border: "1px solid rgba(122,28,203,0.2)" }}>
+        <div className="campaign-tier" style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20, padding: "16px 20px", background: "rgba(122,28,203,0.1)", borderRadius: 8, border: "1px solid rgba(122,28,203,0.2)" }}>
           <div style={{ width: 44, height: 44, borderRadius: 10, backgroundImage: COLORS.purple.gradient, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>📊</div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 2 }}>Base Tier</div>
@@ -120,7 +120,7 @@ function CampaignBuilder() {
         </div>
 
         {/* Boost Tier */}
-        <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: "rgba(69,242,101,0.06)", borderRadius: 8, border: "1px solid rgba(69,242,101,0.15)" }}>
+        <div className="campaign-tier" style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 20px", background: "rgba(69,242,101,0.06)", borderRadius: 8, border: "1px solid rgba(69,242,101,0.15)" }}>
           <div style={{ width: 44, height: 44, borderRadius: 10, background: "linear-gradient(135deg, #45f265, #2dd84e)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>🚀</div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.green, marginBottom: 2 }}>Loyalty Boost</div>
@@ -145,7 +145,7 @@ function CampaignBuilder() {
       {/* Campaign Criteria */}
       <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: 24, marginBottom: 16, border: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>Campaign Criteria</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div className="responsive-grid-2 campaign-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
           <div style={{ padding: "14px 16px", background: "rgba(255,255,255,0.02)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.06)" }}>
             <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>Min. AUM per Wallet</div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -189,7 +189,7 @@ function CampaignBuilder() {
       {/* Simulation */}
       <div style={{ background: "rgba(255,255,255,0.03)", borderRadius: 10, padding: 24, border: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>Projected Impact @ $10M AUM</div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+        <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
           <div style={{ textAlign: "center", padding: 16 }}>
             <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginBottom: 4 }}>Base Rev. Share</div>
             <div style={{ fontSize: 22, fontWeight: 700, color: "#9E3BFF" }}>${((10000000 * baseBps) / 100 / 100).toLocaleString()}</div>
@@ -314,7 +314,7 @@ function FlowDiagram() {
   const arrow = { fontSize: 20, color: "rgba(0,0,0,0.2)", display: "flex", alignItems: "center" };
 
   return (
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "24px 0" }}>
+    <div className="flow-diagram" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "24px 0" }}>
       <div style={boxStyle("rgba(122,28,203,0.06)", "rgba(122,28,203,0.15)")}>
         <div style={{ fontSize: 22, marginBottom: 4 }}>🏦</div>
         <GradientText style={{ fontWeight: 600 }}>Your Vault</GradientText>
@@ -438,7 +438,7 @@ export default function ForVaultsV2() {
           subtitle="Understanding the wallet's incentive structure is key to maximizing your distribution."
         />
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 56 }}>
+        <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 56 }}>
           <div style={{ padding: 32, borderRadius: 14, background: "#fff", border: "1px solid rgba(122,28,203,0.08)" }}>
             <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 16 }}><GradientText>Without Yieldo</GradientText></div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -547,7 +547,7 @@ export default function ForVaultsV2() {
       <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader tag="Comparison" title="Revenue Share vs. Traditional Marketing" />
         <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.04)" }}>
+          <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.04)" }}>
             <div style={{ padding: "16px 24px" }}></div>
             <div style={{ padding: "16px 24px", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.05em", textAlign: "center" }}><GradientText>Yieldo Campaigns</GradientText></div>
             <div style={{ padding: "16px 24px", fontSize: 13, fontWeight: 600, color: "rgba(0,0,0,0.4)", textTransform: "uppercase", letterSpacing: "0.05em", textAlign: "center" }}>Ads / Grants / BD</div>
@@ -560,7 +560,7 @@ export default function ForVaultsV2() {
             { feature: "Cost predictability", yieldo: "% of volume (scales)", trad: "Fixed burn rate" },
             { feature: "Partner alignment", yieldo: "Wallets earn when you earn", trad: "No shared incentive" },
           ].map((row, i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+            <div key={i} className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
               <div style={{ padding: "14px 24px", fontSize: 14, fontWeight: 500 }}>{row.feature}</div>
               <div style={{ padding: "14px 24px", fontSize: 14, textAlign: "center", color: "#4B0CA6", fontWeight: 500, background: "rgba(122,28,203,0.02)" }}>{row.yieldo}</div>
               <div style={{ padding: "14px 24px", fontSize: 14, textAlign: "center", color: "rgba(0,0,0,0.4)" }}>{row.trad}</div>

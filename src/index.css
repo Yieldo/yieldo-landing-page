@@ -396,31 +396,120 @@ button:not(:disabled):active {
    MOBILE - ADDITIONAL RULES
    ========================================= */
 @media (max-width: 768px) {
-  /* Comparison table scroll hint */
-  .comparison-table {
+  /* Comparison / data tables - horizontal scroll */
+  .comparison-table,
+  .data-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Docs page mobile sidebar toggle */
+  /* Docs page */
+  .docs-sidebar {
+    display: none !important;
+  }
+
+  .docs-content {
+    padding: 20px 16px !important;
+    max-width: 100% !important;
+  }
+
   .docs-mobile-toggle {
     display: block !important;
   }
 
-  /* Phone shell centering */
+  /* Phone shell centering & responsive sizing */
   .two-col .phone-shell {
     margin: 0 auto;
   }
 
-  /* Step stats row */
+  .phone-mockup {
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto;
+  }
+
+  /* Hero stats row */
   .hero-stats {
     flex-direction: column !important;
     gap: 16px !important;
   }
 
-  /* Campaign builder grid */
+  /* Campaign builder grids */
   .campaign-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  /* All responsive grids - force single column */
+  .responsive-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Two-column grids - stack on mobile */
+  .responsive-grid-2 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Deposit modal - full width on mobile */
+  .deposit-modal {
+    width: calc(100vw - 32px) !important;
+    max-width: 420px !important;
+  }
+
+  /* Wallet selector buttons - scroll horizontally */
+  .wallet-selector {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  /* Flow diagram / horizontal layouts */
+  .flow-diagram {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  /* Comparison table - scrollable */
+  .comparison-grid {
+    min-width: 500px;
+  }
+
+  /* Campaign builder sections */
+  .campaign-tier {
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .campaign-tier > div:last-child {
+    flex-direction: row !important;
+    width: 100%;
+  }
+
+  /* Large paddings override */
+  .responsive-pad {
+    padding: clamp(24px, 4vw, 48px) !important;
+  }
+
+  /* Sparkline charts - fit container */
+  .sparkline-container svg {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Sticky elements - unstick on mobile */
+  .unstick-mobile {
+    position: static !important;
+  }
+
+  /* KOL phone mockup */
+  .kol-phone {
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+
+  /* Earnings ticker - scroll */
+  .earnings-ticker {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
@@ -442,6 +531,17 @@ button:not(:disabled):active {
 
   .card-item {
     padding: 20px !important;
+  }
+
+  /* Even smaller phone mockups */
+  .phone-mockup,
+  .kol-phone {
+    max-width: 280px !important;
+  }
+
+  /* Revenue calculator grid */
+  .calc-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 

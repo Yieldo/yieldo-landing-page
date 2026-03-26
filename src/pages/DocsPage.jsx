@@ -46,12 +46,12 @@ function CodeBlock({ code, lang = "typescript", title, compact }) {
 
 function ParamTable({ params }) {
   return (
-    <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", fontSize: 13 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr .6fr .5fr 2fr", padding: "8px 14px", background: C.surface, fontSize: 11, fontWeight: 600, color: C.text3, textTransform: "uppercase", letterSpacing: ".04em" }}>
+    <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto", fontSize: 13 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr .6fr .5fr 2fr", padding: "8px 14px", background: C.surface, fontSize: 11, fontWeight: 600, color: C.text3, textTransform: "uppercase", letterSpacing: ".04em", minWidth: 500 }}>
         <div>Parameter</div><div>Type</div><div>Required</div><div>Description</div>
       </div>
       {params.map((p, i) => (
-        <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr .6fr .5fr 2fr", padding: "9px 14px", borderTop: `1px solid ${C.border}`, alignItems: "flex-start" }}>
+        <div key={i} style={{ display: "grid", gridTemplateColumns: "1fr .6fr .5fr 2fr", padding: "9px 14px", borderTop: `1px solid ${C.border}`, alignItems: "flex-start", minWidth: 500 }}>
           <code style={{ fontSize: 12, color: C.purple, fontFamily: "'JetBrains Mono', monospace" }}>{p.name}</code>
           <span style={{ fontSize: 12, color: C.text3 }}>{p.type}</span>
           <span style={{ fontSize: 12, color: p.required ? C.red : C.text4 }}>{p.required ? "Yes" : "No"}</span>
@@ -152,7 +152,7 @@ export default function DocsPage() {
               <p style={{ fontSize: 16, color: C.text2, lineHeight: 1.6, margin: 0 }}>Everything you need to integrate yield opportunities into your wallet, app, or platform. One API for vault discovery, deposits, withdrawals, revenue tracking, and campaign management.</p>
             </div>
             <Callout type="info"><strong>Base URL:</strong> <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: C.purple }}>https://api.yieldo.io/v1</code> — All endpoints require authentication via API key.</Callout>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+            <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
               {[
                 { icon: "⚡", title: "Quick Start", desc: "Get up and running in 5 minutes with our SDK.", link: "quickstart" },
                 { icon: "🏦", title: "Vault Endpoints", desc: "List, filter, and get details on available vaults.", link: "vaults" },
@@ -170,7 +170,7 @@ export default function DocsPage() {
             </div>
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 12px" }}>API at a Glance</h3>
-              <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden" }}>
+              <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto" }}>
                 {[
                   ["GET", "/vaults", "List available vaults with filters"],
                   ["GET", "/vaults/:id", "Get vault details, APY history, risk scores"],
@@ -243,7 +243,7 @@ export default function DocsPage() {
             <CodeBlock title="Request header" lang="http" code={`Authorization: Bearer yd_live_your_api_key_here`} />
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>API Key Types</h3>
-              <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden" }}>
+              <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto" }}>
                 {[
                   { key: "yd_live_*", env: "Production", desc: "Live API key. All transactions are real and revenue is tracked.", color: C.green },
                   { key: "yd_test_*", env: "Sandbox", desc: "Test API key. Returns mock data. No real transactions or revenue.", color: C.amber },
@@ -456,7 +456,7 @@ export default function DocsPage() {
             </div>
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Event Types</h3>
-              <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden" }}>
+              <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto" }}>
                 {[
                   ["deposit.confirmed", "A deposit transaction is confirmed on-chain"],
                   ["deposit.failed", "A deposit transaction failed or was reverted"],
@@ -488,7 +488,7 @@ export default function DocsPage() {
               <h1 style={{ margin: "0 0 8px", fontSize: 28, fontWeight: 700 }}>📦 SDKs & Libraries</h1>
               <p style={{ fontSize: 16, color: C.text2, lineHeight: 1.6, margin: 0 }}>Official client libraries for popular languages and frameworks.</p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <div className="responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
               {[
                 { name: "TypeScript / JavaScript", pkg: "@yieldo" + "/sdk", install: "npm i" + "nstall @yieldo" + "/sdk", icon: "🟨", features: ["Full type safety", "React Native compatible", "Tree-shakeable", "Auto-retry & caching"] },
                 { name: "Python", pkg: "yieldo", install: "pip install yieldo", icon: "🐍", features: ["Async support", "Type hints", "Django & FastAPI friendly", "Auto-pagination"] },
@@ -519,7 +519,7 @@ export default function DocsPage() {
             </div>
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Error Codes</h3>
-              <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden" }}>
+              <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto" }}>
                 {[
                   ["200", "OK", "Request succeeded", C.green],
                   ["201", "Created", "Resource created (deposits, webhooks)", C.green],
@@ -545,7 +545,7 @@ export default function DocsPage() {
             </div>
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Rate Limits</h3>
-              <div style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden" }}>
+              <div className="data-table-wrap" style={{ borderRadius: 8, border: `1px solid ${C.border}`, overflow: "hidden", overflowX: "auto" }}>
                 {[
                   ["Read endpoints (GET)", "1,000 / minute", "Vaults, portfolio, revenue"],
                   ["Write endpoints (POST)", "100 / minute", "Deposits, withdrawals"],

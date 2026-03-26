@@ -37,7 +37,7 @@ function EarningsTicker() {
     { name: "@ethmaxi", amount: 2340, time: "25m ago" },
   ]);
   return (
-    <div style={{ display: "flex", gap: 10, overflow: "hidden" }}>
+    <div className="earnings-ticker" style={{ display: "flex", gap: 10, overflow: "hidden" }}>
       {amounts.map((a, i) => (
         <div key={i} style={{ padding: "8px 14px", background: "#fff", borderRadius: 8, border: "1px solid rgba(0,0,0,0.05)", display: "flex", alignItems: "center", gap: 8, whiteSpace: "nowrap", flexShrink: 0 }}>
           <div style={{ width: 28, height: 28, borderRadius: 14, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -56,7 +56,7 @@ function EarningsTicker() {
 /* ============ KOL LANDING PAGE MOCKUP ============ */
 function KolPageMockup() {
   return (
-    <div style={{ width: 320, background: "#fff", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif" }}>
+    <div className="kol-phone phone-mockup" style={{ width: 320, background: "#fff", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif" }}>
       {/* Profile header */}
       <div style={{ padding: "24px 20px 16px", textAlign: "center", backgroundImage: C.purple.gradBg }}>
         <div style={{ width: 56, height: 56, borderRadius: 28, backgroundImage: C.purple.grad, margin: "0 auto 10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -331,8 +331,8 @@ export default function ForKOLsPage() {
       {/* COMPARISON TABLE */}
       <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="Comparison" title="Yieldo vs. the alternatives" />
-        <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
+        <div className="data-table-wrap" style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
+          <div className="comparison-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
             <div style={{ padding: "14px 24px" }} />
             <div style={{ padding: "14px 18px", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", textAlign: "center" }}><GradientText>Yieldo Referrals</GradientText></div>
             <div style={{ padding: "14px 18px", fontSize: 13, fontWeight: 600, color: "rgba(0,0,0,0.35)", textTransform: "uppercase", letterSpacing: ".05em", textAlign: "center" }}>Sponsored Posts</div>
@@ -347,7 +347,7 @@ export default function ForKOLsPage() {
             ["Revenue upside", "Unlimited (scales with AUM)", "Fixed fee", "Usually capped"],
             ["Campaign bonuses", "Up to 20%+ from curators", "N/A", "Rare"],
           ].map(([feat, yieldo, spon, direct], i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+            <div key={i} className="comparison-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
               <div style={{ padding: "12px 24px", fontSize: 14, fontWeight: 500 }}>{feat}</div>
               <div style={{ padding: "12px 18px", fontSize: 14, textAlign: "center", color: "#4B0CA6", fontWeight: 500, background: "rgba(122,28,203,0.015)" }}>{yieldo}</div>
               <div style={{ padding: "12px 18px", fontSize: 14, textAlign: "center", color: "rgba(0,0,0,0.35)" }}>{spon}</div>

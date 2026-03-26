@@ -26,7 +26,7 @@ function Sparkline({ data, color = "#7A1CCB", w = 120, h = 32 }) {
   const d = pts.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
   const gid = `sp-${Math.random().toString(36).slice(2, 6)}`;
   return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={{ maxWidth: "100%", height: "auto" }}>
       <defs><linearGradient id={gid} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={color} stopOpacity=".15" /><stop offset="100%" stopColor={color} stopOpacity="0" /></linearGradient></defs>
       <path d={`${d} L${pts.at(-1).x},${h} L${pts[0].x},${h} Z`} fill={`url(#${gid})`} />
       <path d={d} fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -51,7 +51,7 @@ function ScoreRing({ score, size = 40 }) {
 function DepositModal({ vault, onClose }) {
   return (
     <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100, fontFamily: "'Inter',sans-serif" }} onClick={onClose}>
-      <div style={{ width: 420, background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 24px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
+      <div className="deposit-modal" style={{ width: 420, maxWidth: "95vw", background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 24px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
         <div style={{ padding: "24px 28px 16px", textAlign: "center", backgroundImage: C.purple.gradBg }}>
           <div style={{ fontSize: 32, marginBottom: 6 }}>{vault.icon}</div>
           <div style={{ fontSize: 18, fontWeight: 700 }}>{vault.name}</div>
@@ -101,7 +101,7 @@ export default function CreatorDemoPage() {
         <button onClick={() => navigate("/apply")} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: 8, padding: "4px 12px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Create Your Own &rarr;</button>
       </div>
 
-      <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 20px 80px" }}>
+      <div style={{ maxWidth: 680, width: "100%", margin: "0 auto", padding: "0 20px 80px", boxSizing: "border-box" }}>
         <div style={{ textAlign: "center", padding: "40px 0 24px" }}>
           <div style={{ width: 80, height: 80, borderRadius: 40, backgroundImage: C.purple.grad, margin: "0 auto 14px", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 20px rgba(122,28,203,0.2)" }}>
             <span style={{ color: "#fff", fontSize: 36 }}>{"\u{1F3AF}"}</span>
@@ -137,7 +137,7 @@ export default function CreatorDemoPage() {
         </div>
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {[{ id: "all", label: "All Picks" }, { id: "low", label: "Low Risk" }, { id: "stablecoin", label: "Stablecoins" }, { id: "crypto", label: "ETH & BTC" }].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)} style={{
                 padding: "6px 14px", borderRadius: 20, fontSize: 13, fontFamily: "'Inter',sans-serif", cursor: "pointer", transition: "all .15s",
@@ -185,7 +185,7 @@ export default function CreatorDemoPage() {
                       </div>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10, marginBottom: 14 }}>
+                    <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10, marginBottom: 14 }}>
                       {[
                         { label: "TVL", value: v.tvl, color: "#2E9AB8" },
                         { label: "Depositors", value: v.depositors.toLocaleString(), color: "#7A1CCB" },
@@ -201,7 +201,9 @@ export default function CreatorDemoPage() {
 
                     <div style={{ marginBottom: 14 }}>
                       <div style={{ fontSize: 11, fontWeight: 600, color: "rgba(0,0,0,0.25)", marginBottom: 6 }}>14-DAY APY HISTORY</div>
-                      <Sparkline data={v.apyHistory} w={600} h={48} color="#7A1CCB" />
+                      <div className="sparkline-container" style={{ width: "100%", overflow: "hidden" }}>
+                        <Sparkline data={v.apyHistory} w={600} h={48} color="#7A1CCB" />
+                      </div>
                     </div>
 
                     <button onClick={(e) => { e.stopPropagation(); setDepositVault(v); }} style={{ width: "100%", padding: "13px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif", boxShadow: C.purple.shadow }}>

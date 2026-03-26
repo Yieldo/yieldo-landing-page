@@ -44,7 +44,7 @@ const VAULTS = [
 /* ========== INTERACTIVE PHONE ========== */
 function PhoneShell({ wallet, children }) {
   return (
-    <div style={{ width: 340, background: wallet.bg, borderRadius: 28, boxShadow: "0 24px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif", flexShrink: 0 }}>
+    <div className="phone-mockup" style={{ width: 340, background: wallet.bg, borderRadius: 28, boxShadow: "0 24px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif", flexShrink: 0 }}>
       <div style={{ padding: "8px 20px 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "rgba(0,0,0,0.4)" }}><span style={{ fontWeight: 600 }}>9:41</span><div style={{ display: "flex", gap: 4, fontSize: 10 }}><span>📶</span><span>🔋</span></div></div>
       <div style={{ padding: "8px 18px 6px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -233,7 +233,7 @@ function RevenueCalculator() {
           </div>
         ))}
         <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 16 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
+          <div className="calc-grid responsive-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
             <div style={{ textAlign: "center", padding: 14, background: "rgba(122,28,203,0.04)", borderRadius: 10 }}>
               <div style={{ fontSize: 10, color: "rgba(0,0,0,0.4)" }}>Monthly Revenue</div>
               <div style={{ fontSize: 22, fontWeight: 700 }}><GradientText>{fmt(monthly)}</GradientText></div>
@@ -282,7 +282,7 @@ export default function ForWalletsPageMerged() {
               <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
               <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
             </div>
-            <div style={{ display: "flex", gap: 32, marginTop: 48 }}>
+            <div className="hero-stats" style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "5 bps", l: "Your rev share" }, { n: "1 SDK", l: "All protocols" }, { n: "< 1 day", l: "Integration time" }].map((s, i) => (
                 <div key={i}><div style={{ fontSize: 24, fontWeight: 600 }}><GradientText>{s.n}</GradientText></div><div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{s.l}</div></div>
               ))}
@@ -291,7 +291,7 @@ export default function ForWalletsPageMerged() {
           {/* Interactive phone in hero */}
           <div style={{ flex: "0 0 auto" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-              <div style={{ display: "flex", gap: 4 }}>
+              <div className="wallet-selector" style={{ display: "flex", gap: 4 }}>
                 {WALLETS.map((w, i) => (
                   <button key={w.id} onClick={() => { setActiveWallet(i); setDepositScreen(null); }} style={{
                     padding: "5px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontFamily: "'Inter',sans-serif", fontSize: 11,
@@ -372,7 +372,7 @@ export default function ForWalletsPageMerged() {
             { step: "2", title: "Choose", icon: "📊", desc: "Tapping a vault reveals details: current APY, risk level, lock period, protocol info, and TVL. Everything they need to make a decision.", highlight: "Standardized data — easy to compare" },
             { step: "3", title: "Deposit", icon: "💰", desc: "One-tap deposit with amount input, token selector, projected yield, and fee estimate. Confirm with their wallet — funds route through Yieldo.", highlight: "Your wallet earns revenue on every deposit" },
           ].map((s, i) => (
-            <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
+            <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 10, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{s.icon}</div>
                 <span style={{ fontSize: 36, fontWeight: 200, color: "rgba(122,28,203,0.15)" }}>{s.step}</span>
@@ -390,7 +390,7 @@ export default function ForWalletsPageMerged() {
       {/* EMBED FORMATS */}
       <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Embed Options" title="Multiple integration styles" subtitle="Choose the layout that fits your wallet's UX. All styles use the same SDK." />
-        <div className="embed-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginTop: 48 }}>
+        <div className="embed-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginTop: 48 }}>
           {[
             { id: "tab", name: "Yield Tab", desc: "Full tab experience. Best for wallets with tab navigation.", icon: "📑", preview: (
               <div style={{ background: "#f8f7fc", borderRadius: 8, border: "1px solid rgba(0,0,0,0.06)", padding: 8, fontSize: 10 }}>
@@ -465,7 +465,7 @@ export default function ForWalletsPageMerged() {
               ))}
             </div>
           </div>
-          <div style={{ flex: "1.1 1 0", position: "sticky", top: 40 }}><CodeBlock /></div>
+          <div className="unstick-mobile" style={{ flex: "1.1 1 0", position: "sticky", top: 40 }}><CodeBlock /></div>
         </div>
       </section>
 
@@ -491,7 +491,7 @@ export default function ForWalletsPageMerged() {
       {/* PARTNER DASHBOARD PREVIEW */}
       <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
         <SectionHeader tag="Partner Dashboard" title="Full visibility into your earnings" subtitle="Track revenue, deposits, vault performance, and campaign bonuses in real time." />
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginTop: 48 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16, marginTop: 48 }}>
           {[
             { icon: "📊", title: "Revenue Dashboard", desc: "Real-time earnings, payout history, and revenue projections across all vaults." },
             { icon: "🏦", title: "Vault Catalog", desc: "Browse 100+ vaults. Filter by chain, risk, APY, platform, curator. One-click enrollment." },
@@ -515,8 +515,8 @@ export default function ForWalletsPageMerged() {
       {/* COMPARISON */}
       <section className="section-padding section-v-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.015)" }}>
         <SectionHeader tag="Comparison" title="Yieldo vs. Building In-House" />
-        <div style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
+        <div className="data-table-wrap" style={{ marginTop: 48, borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff", overflowX: "auto" }}>
+          <div className="comparison-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", background: "rgba(122,28,203,0.03)" }}>
             <div style={{ padding: "14px 24px" }} />
             <div style={{ padding: "14px 24px", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: ".05em", textAlign: "center" }}><GradientText>Yieldo SDK</GradientText></div>
             <div style={{ padding: "14px 24px", fontSize: 13, fontWeight: 600, color: "rgba(0,0,0,0.35)", textTransform: "uppercase", letterSpacing: ".05em", textAlign: "center" }}>DIY Integration</div>
@@ -531,7 +531,7 @@ export default function ForWalletsPageMerged() {
             ["Embed formats", "Tab / Card / Modal / Banner", "Custom build each"],
             ["Cost", "Free (revenue-share model)", "$100K+ eng. investment"],
           ].map(([feat, yieldo, diy], i) => (
-            <div key={i} style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
+            <div key={i} className="comparison-grid" style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", borderTop: "1px solid rgba(0,0,0,0.04)" }}>
               <div style={{ padding: "12px 24px", fontSize: 14, fontWeight: 500 }}>{feat}</div>
               <div style={{ padding: "12px 24px", fontSize: 14, textAlign: "center", color: "#4B0CA6", fontWeight: 500, background: "rgba(122,28,203,0.015)" }}>{yieldo}</div>
               <div style={{ padding: "12px 24px", fontSize: 14, textAlign: "center", color: "rgba(0,0,0,0.35)" }}>{diy}</div>
