@@ -21,7 +21,7 @@ function TextInput({ label, placeholder, value, onChange, type = "text", require
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <label style={{ fontSize: 13, fontWeight: 500, color: "rgba(0,0,0,0.55)" }}>{label}{required && <span style={{ color: "#d93636", marginLeft: 2 }}>*</span>}</label>
-      <input type={type} placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)} style={{ padding: "11px 14px", borderRadius: 8, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", fontSize: 14, fontFamily: "'Inter',sans-serif", outline: "none", color: "#121212", transition: "border .15s", boxSizing: "border-box" }} onFocus={e => e.target.style.borderColor = "rgba(122,28,203,0.3)"} onBlur={e => e.target.style.borderColor = "rgba(0,0,0,0.1)"} />
+      <input type={type} placeholder={placeholder} value={value} onChange={e => onChange(e.target.value)} style={{ padding: "11px 14px", borderRadius: 8, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", fontSize: 14, fontFamily: "'Outfit', sans-serif", outline: "none", color: "#121212", transition: "border .15s", boxSizing: "border-box" }} onFocus={e => e.target.style.borderColor = "rgba(122,28,203,0.3)"} onBlur={e => e.target.style.borderColor = "rgba(0,0,0,0.1)"} />
     </div>
   );
 }
@@ -30,7 +30,7 @@ function SelectInput({ label, options, value, onChange, required }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <label style={{ fontSize: 13, fontWeight: 500, color: "rgba(0,0,0,0.55)" }}>{label}{required && <span style={{ color: "#d93636", marginLeft: 2 }}>*</span>}</label>
-      <select value={value} onChange={e => onChange(e.target.value)} style={{ padding: "11px 14px", borderRadius: 8, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", fontSize: 14, fontFamily: "'Inter',sans-serif", outline: "none", color: value ? "#121212" : "rgba(0,0,0,0.35)", appearance: "none", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center", cursor: "pointer", boxSizing: "border-box" }} onFocus={e => e.target.style.borderColor = "rgba(122,28,203,0.3)"} onBlur={e => e.target.style.borderColor = "rgba(0,0,0,0.1)"}>
+      <select value={value} onChange={e => onChange(e.target.value)} style={{ padding: "11px 14px", borderRadius: 8, border: "1px solid rgba(0,0,0,0.1)", background: "#fff", fontSize: 14, fontFamily: "'Outfit', sans-serif", outline: "none", color: value ? "#121212" : "rgba(0,0,0,0.35)", appearance: "none", backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 12px center", cursor: "pointer", boxSizing: "border-box" }} onFocus={e => e.target.style.borderColor = "rgba(122,28,203,0.3)"} onBlur={e => e.target.style.borderColor = "rgba(0,0,0,0.1)"}>
         <option value="" disabled>Select...</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>
@@ -49,7 +49,7 @@ function MultiChip({ label, options, selected, onChange, required }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
         {options.map(o => (
           <button key={o} onClick={() => toggle(o)} style={{
-            padding: "7px 14px", borderRadius: 20, fontSize: 13, fontFamily: "'Inter',sans-serif", cursor: "pointer", transition: "all .15s",
+            padding: "7px 14px", borderRadius: 20, fontSize: 13, fontFamily: "'Outfit', sans-serif", cursor: "pointer", transition: "all .15s",
             border: selected.includes(o) ? "1.5px solid rgba(122,28,203,0.3)" : "1px solid rgba(0,0,0,0.1)",
             background: selected.includes(o) ? "rgba(122,28,203,0.06)" : "#fff",
             color: selected.includes(o) ? "#7A1CCB" : "rgba(0,0,0,0.5)",
@@ -131,7 +131,7 @@ export default function ApplyPage() {
   };
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: C.black, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Nav />
 
       <div style={{ maxWidth: 720, width: "100%", margin: "0 auto", padding: "120px 24px 100px", flex: 1, boxSizing: "border-box" }}>
@@ -147,7 +147,7 @@ export default function ApplyPage() {
               Thanks for your interest in Yieldo. We'll review your application and get back to you within 48 hours.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-              <button onClick={() => navigate("/")} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 20px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer" }}><GradientText>&#8592; Back to Home</GradientText></button>
+              <button onClick={() => navigate("/")} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 20px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer" }}><GradientText>&#8592; Back to Home</GradientText></button>
             </div>
             <div style={{ marginTop: 40, padding: "20px 24px", borderRadius: 12, background: "rgba(122,28,203,0.03)", border: "1px solid rgba(122,28,203,0.08)" }}>
               <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 6 }}>While you wait</div>
@@ -168,13 +168,13 @@ export default function ApplyPage() {
                 Join the <GradientText style={{ fontSize: 48 }}>Yieldo Network</GradientText>
               </h1>
               <p style={{ fontSize: 18, color: "rgba(0,0,0,0.5)", maxWidth: 520, margin: "16px auto 0", lineHeight: 1.6 }}>
-                Whether you're a wallet, vault protocol, or content creator — we'd love to work with you. Choose your path below.
+                Whether you're a wallet, vault protocol, or content creator, we'd love to work with you. Choose your path below.
               </p>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {AUDIENCES.map(a => (
                 <button key={a.id} onClick={() => setAudience(a.id)} style={{
-                  display: "flex", alignItems: "center", gap: 18, padding: "24px 28px", borderRadius: 14, cursor: "pointer", fontFamily: "'Inter',sans-serif",
+                  display: "flex", alignItems: "center", gap: 18, padding: "24px 28px", borderRadius: 14, cursor: "pointer", fontFamily: "'Outfit', sans-serif",
                   border: "1px solid rgba(0,0,0,0.06)", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.02)",
                   textAlign: "left", transition: "all .2s", width: "100%",
                 }} onMouseEnter={e => { e.currentTarget.style.border = "1.5px solid rgba(122,28,203,0.2)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(122,28,203,0.06)"; }} onMouseLeave={e => { e.currentTarget.style.border = "1px solid rgba(0,0,0,0.06)"; e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.02)"; }}>
@@ -195,7 +195,7 @@ export default function ApplyPage() {
 
         {!submitted && audience && (
           <div>
-            <button onClick={() => setAudience(null)} style={{ background: "none", border: "none", fontSize: 14, color: "rgba(0,0,0,0.4)", cursor: "pointer", fontFamily: "'Inter',sans-serif", padding: 0, marginBottom: 24, display: "flex", alignItems: "center", gap: 4 }}>&larr; Choose a different path</button>
+            <button onClick={() => setAudience(null)} style={{ background: "none", border: "none", fontSize: 14, color: "rgba(0,0,0,0.4)", cursor: "pointer", fontFamily: "'Outfit', sans-serif", padding: 0, marginBottom: 24, display: "flex", alignItems: "center", gap: 4 }}>&larr; Choose a different path</button>
 
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 28 }}>
               <div style={{ width: 48, height: 48, borderRadius: 12, backgroundImage: C.purple.grad, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
@@ -258,7 +258,7 @@ export default function ApplyPage() {
               <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
                 <button onClick={handleSubmit} disabled={!canSubmit()} style={{
                   width: "100%", padding: "14px", borderRadius: 10, border: "none", fontSize: 16, fontWeight: 600, cursor: canSubmit() ? "pointer" : "not-allowed",
-                  fontFamily: "'Inter',sans-serif", color: canSubmit() ? "#fff" : "rgba(0,0,0,0.35)", transition: "all .2s",
+                  fontFamily: "'Outfit', sans-serif", color: canSubmit() ? "#fff" : "rgba(0,0,0,0.35)", transition: "all .2s",
                   background: canSubmit() ? C.purple.grad : "rgba(0,0,0,0.08)",
                   boxShadow: canSubmit() ? C.purple.shadow : "none",
                   opacity: canSubmit() ? 1 : 0.6,

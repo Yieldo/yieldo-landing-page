@@ -12,16 +12,16 @@ function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
 function PrimaryButton({ children, large, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 6, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
 function SecondaryButton({ children, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 6, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
 }
 function SectionHeader({ tag, title, subtitle }) {
-  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 style={{ fontFamily: "'Inter',sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
+  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
 }
 function Check({ children }) {
   return <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><rect x="2" y="2" width="20" height="20" rx="4" stroke="#7A1CCB" strokeWidth="1.5" /><path d="M8 12.5L11 15.5L16 9.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg><span style={{ fontSize: 15, color: "rgba(0,0,0,0.6)", lineHeight: 1.5 }}>{children}</span></div>;
@@ -44,7 +44,7 @@ const VAULTS = [
 /* ========== INTERACTIVE PHONE ========== */
 function PhoneShell({ wallet, children }) {
   return (
-    <div className="phone-mockup" style={{ width: 340, background: wallet.bg, borderRadius: 28, boxShadow: "0 24px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif", flexShrink: 0 }}>
+    <div className="phone-mockup" style={{ width: 340, background: wallet.bg, borderRadius: 28, boxShadow: "0 24px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Outfit', sans-serif", flexShrink: 0 }}>
       <div style={{ padding: "8px 20px 0", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 11, color: "rgba(0,0,0,0.4)" }}><span style={{ fontWeight: 600 }}>9:41</span><div style={{ display: "flex", gap: 4, fontSize: 10 }}><span>📶</span><span>🔋</span></div></div>
       <div style={{ padding: "8px 18px 6px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -82,8 +82,8 @@ function YieldTabContent({ selectedVault, setSelectedVault, depositScreen, setDe
   if (depositScreen !== null) {
     const v = VAULTS[depositScreen];
     return (
-      <div style={{ padding: "14px 18px", fontFamily: "'Inter',sans-serif" }}>
-        <button onClick={() => setDepositScreen(null)} style={{ background: "none", border: "none", fontSize: 12, color: "rgba(0,0,0,0.4)", cursor: "pointer", fontFamily: "'Inter',sans-serif", padding: 0, marginBottom: 10 }}>← Back</button>
+      <div style={{ padding: "14px 18px", fontFamily: "'Outfit', sans-serif" }}>
+        <button onClick={() => setDepositScreen(null)} style={{ background: "none", border: "none", fontSize: 12, color: "rgba(0,0,0,0.4)", cursor: "pointer", fontFamily: "'Outfit', sans-serif", padding: 0, marginBottom: 10 }}>← Back</button>
         <div style={{ textAlign: "center", marginBottom: 14 }}>
           <div style={{ fontSize: 24, marginBottom: 4 }}>{v.icon}</div>
           <div style={{ fontSize: 15, fontWeight: 700 }}>{v.name}</div>
@@ -100,7 +100,7 @@ function YieldTabContent({ selectedVault, setSelectedVault, depositScreen, setDe
         <div style={{ marginBottom: 10 }}>
           <label style={{ fontSize: 10, color: "rgba(0,0,0,0.4)", fontWeight: 600, display: "block", marginBottom: 3 }}>Amount</label>
           <div style={{ display: "flex", alignItems: "center", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 10, padding: "8px 12px", background: "rgba(0,0,0,0.015)" }}>
-            <input type="text" defaultValue="1,000" style={{ border: "none", background: "transparent", fontSize: 18, fontWeight: 700, outline: "none", flex: 1, fontFamily: "'Inter',sans-serif", color: "#121212", width: "100%" }} />
+            <input type="text" defaultValue="1,000" style={{ border: "none", background: "transparent", fontSize: 18, fontWeight: 700, outline: "none", flex: 1, fontFamily: "'Outfit', sans-serif", color: "#121212", width: "100%" }} />
             <div style={{ display: "flex", alignItems: "center", gap: 3, padding: "3px 6px", background: "rgba(0,0,0,0.04)", borderRadius: 5 }}>
               <span style={{ fontSize: 11 }}>💵</span><span style={{ fontSize: 12, fontWeight: 600 }}>USDC</span><span style={{ fontSize: 9, color: "rgba(0,0,0,0.3)" }}>▼</span>
             </div>
@@ -111,14 +111,14 @@ function YieldTabContent({ selectedVault, setSelectedVault, depositScreen, setDe
           <div style={{ display: "flex", justifyContent: "space-between" }}><span style={{ color: "rgba(0,0,0,0.4)" }}>Projected yearly</span><span style={{ fontWeight: 600, color: "#1a9d3f" }}>$124.00</span></div>
           <div style={{ display: "flex", justifyContent: "space-between", marginTop: 3 }}><span style={{ color: "rgba(0,0,0,0.4)" }}>Network fee</span><span style={{ color: "rgba(0,0,0,0.4)" }}>~$0.42</span></div>
         </div>
-        <button style={{ width: "100%", padding: "12px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif", boxShadow: C.purple.shadow }}>Confirm Deposit</button>
+        <button style={{ width: "100%", padding: "12px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: C.purple.shadow }}>Confirm Deposit</button>
         <div style={{ textAlign: "center", fontSize: 9, color: "rgba(0,0,0,0.2)", marginTop: 5 }}>Powered by Yieldo · Your wallet earns revenue</div>
       </div>
     );
   }
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif" }}>
       <div style={{ padding: "0 16px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6, paddingTop: 8 }}>
           <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(0,0,0,0.35)", textTransform: "uppercase", letterSpacing: ".04em" }}>Yield Opportunities</span>
@@ -155,7 +155,7 @@ function YieldTabContent({ selectedVault, setSelectedVault, depositScreen, setDe
         ))}
       </div>
       <div style={{ padding: "4px 12px 14px" }}>
-        <button onClick={() => setDepositScreen(selectedVault)} style={{ width: "100%", padding: "11px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif", boxShadow: C.purple.shadow }}>
+        <button onClick={() => setDepositScreen(selectedVault)} style={{ width: "100%", padding: "11px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 13, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: C.purple.shadow }}>
           Deposit into {VAULTS[selectedVault].name.split(" ")[0]}
         </button>
         <div style={{ textAlign: "center", fontSize: 8, color: "rgba(0,0,0,0.2)", marginTop: 4 }}>You earn revenue on every deposit · Powered by Yieldo</div>
@@ -181,7 +181,7 @@ function CodeBlock() {
     { indent: 1, code: "sortBy: 'apy',", color: "#2E9AB8" },
     { indent: 0, code: "});", color: "#121212" },
     { indent: 0, code: "", color: "transparent" },
-    { indent: 0, code: "// Deposit — revenue share auto-tracked", color: "rgba(0,0,0,0.3)" },
+    { indent: 0, code: "// Deposit - revenue share auto-tracked", color: "rgba(0,0,0,0.3)" },
     { indent: 0, code: "const tx = await yieldo.deposit({", color: "#121212" },
     { indent: 1, code: "vaultId: vaults[0].id,", color: "#1a9d3f" },
     { indent: 1, code: "amount: '10000',", color: "#1a9d3f" },
@@ -193,7 +193,7 @@ function CodeBlock() {
     <div style={{ background: "#faf9fe", borderRadius: 12, border: "1px solid rgba(122,28,203,0.1)", overflow: "hidden", fontFamily: "'JetBrains Mono', 'Fira Code', monospace", fontSize: 13, lineHeight: 1.7 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 16px", borderBottom: "1px solid rgba(0,0,0,0.04)", background: "rgba(122,28,203,0.03)" }}>
         <div style={{ display: "flex", gap: 6 }}>{[0, 1, 2].map(i => <div key={i} style={{ width: 10, height: 10, borderRadius: 5, background: "rgba(0,0,0,0.08)" }} />)}</div>
-        <span style={{ fontSize: 11, color: "rgba(0,0,0,0.3)", fontFamily: "'Inter',sans-serif" }}>integration.ts</span>
+        <span style={{ fontSize: 11, color: "rgba(0,0,0,0.3)", fontFamily: "'Outfit', sans-serif" }}>integration.ts</span>
       </div>
       <div style={{ padding: "16px 20px" }}>
         {lines.map((l, i) => <div key={i} style={{ paddingLeft: l.indent * 20, color: l.color, minHeight: l.code ? "auto" : 12 }}>{l.code}</div>)}
@@ -263,7 +263,7 @@ export default function ForWalletsPageMerged() {
   const wallet = WALLETS[activeWallet];
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
       <Nav />
 
       {/* HERO */}
@@ -272,15 +272,15 @@ export default function ForWalletsPageMerged() {
         <div className="two-col" style={{ position: "relative", display: "flex", gap: 48, alignItems: "center" }}>
           <div style={{ flex: "1.2 1 0" }}>
             <Tag>For Wallets & Portfolio Apps</Tag>
-            <h1 className="hero-title" style={{ fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
+            <h1 className="hero-title" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 58, fontWeight: 400, textTransform: "uppercase", lineHeight: 1.1, margin: "20px 0 0", letterSpacing: "-.02em" }}>
               Turn idle balances into<br /><GradientText style={{ fontSize: 58 }}>your revenue stream</GradientText>
             </h1>
             <p style={{ fontSize: 20, maxWidth: 560, margin: "24px 0 0", lineHeight: 1.6, color: "rgba(0,0,0,0.55)" }}>
-              One SDK. Every yield protocol. Automatic revenue share. Ship a "Yield" tab in days — not months.
+              One SDK. Every yield protocol. Automatic revenue share. Ship a "Yield" tab in days, not months.
             </p>
             <div className="hero-buttons" style={{ display: "flex", gap: 16, marginTop: 36 }}>
               <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
-              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
             </div>
             <div className="hero-stats" style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "5 bps", l: "Your rev share" }, { n: "1 SDK", l: "All protocols" }, { n: "< 1 day", l: "Integration time" }].map((s, i) => (
@@ -294,7 +294,7 @@ export default function ForWalletsPageMerged() {
               <div className="wallet-selector" style={{ display: "flex", gap: 4 }}>
                 {WALLETS.map((w, i) => (
                   <button key={w.id} onClick={() => { setActiveWallet(i); setDepositScreen(null); }} style={{
-                    padding: "5px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontFamily: "'Inter',sans-serif", fontSize: 11,
+                    padding: "5px 10px", borderRadius: 6, display: "flex", alignItems: "center", gap: 4, cursor: "pointer", fontFamily: "'Outfit', sans-serif", fontSize: 11,
                     border: activeWallet === i ? `1.5px solid ${w.accent}` : "1px solid rgba(0,0,0,0.06)",
                     background: activeWallet === i ? w.accent + "0a" : "#fff",
                     fontWeight: activeWallet === i ? 600 : 400, color: activeWallet === i ? w.accent : "rgba(0,0,0,0.4)",
@@ -330,9 +330,9 @@ export default function ForWalletsPageMerged() {
         <SectionHeader tag="The Problem" title="Yield should be a profit center, not a cost center" subtitle="Adding yield to your wallet means integrating 20+ protocols, getting zero revenue, and shouldering all the maintenance." />
         <div className="cards-row" style={{ display: "flex", gap: 20, marginTop: 56 }}>
           {[
-            { icon: "🔧", title: "Integration Nightmare", stat: "20+", statLabel: "protocols to maintain", desc: "Morpho, Aave, Compound, Yearn, Pendle — each with its own API, data format, and chain support. And they keep changing." },
+            { icon: "🔧", title: "Integration Nightmare", stat: "20+", statLabel: "protocols to maintain", desc: "Morpho, Aave, Compound, Yearn, Pendle, each with its own API, data format, and chain support. And they keep changing." },
             { icon: "💸", title: "Zero Revenue", stat: "$0", statLabel: "earned by wallets today", desc: "Protocols don't share fees with distributors. You invest engineering resources for a feature that earns you nothing." },
-            { icon: "⚖️", title: "Risk Liability", stat: "∞", statLabel: "risk combinations", desc: "Which vault is safe? Which scoring to trust? If a user loses money, they blame you — not the protocol." },
+            { icon: "⚖️", title: "Risk Liability", stat: "∞", statLabel: "risk combinations", desc: "Which vault is safe? Which scoring to trust? If a user loses money, they blame you, not the protocol." },
           ].map((item, i) => (
             <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 14, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ width: 44, height: 44, borderRadius: 10, background: "rgba(122,28,203,0.06)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>{item.icon}</div>
@@ -349,8 +349,8 @@ export default function ForWalletsPageMerged() {
         <SectionHeader tag="The Solution" title="Yieldo handles everything" subtitle="One integration replaces 20 protocols. You earn on every deposit. We handle the complexity." />
         <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
-            { label: "Zero-Maintenance Yield", icon: "🔌", title: "Plug in once, access every vault", bullets: ["Single SDK for Morpho, Aave, Pendle, Yearn + more", "Standardized data: APY, TVL, risk, chain — one format", "Multi-chain routing (Ethereum, Base, Arbitrum, Polygon)", "We maintain protocol integrations — you never touch them"] },
-            { label: "Revenue-as-a-Service", icon: "💰", title: "Every deposit earns you money", bullets: ["5 bps automatic revenue share on all volume", "On-chain tracking — transparent, auditable", "No fee-taking smart contracts to build", "Vault curators can offer bonus rev share (up to 20%+)"] },
+            { label: "Zero-Maintenance Yield", icon: "🔌", title: "Plug in once, access every vault", bullets: ["Single SDK for Morpho, Aave, Pendle, Yearn + more", "Standardized data: APY, TVL, risk, chain, all in one format", "Multi-chain routing (Ethereum, Base, Arbitrum, Polygon)", "We maintain protocol integrations so you never touch them"] },
+            { label: "Revenue-as-a-Service", icon: "💰", title: "Every deposit earns you money", bullets: ["5 bps automatic revenue share on all volume", "On-chain tracking, transparent and auditable", "No fee-taking smart contracts to build", "Vault curators can offer bonus rev share, up to 20%+"] },
             { label: "Risk Abstraction", icon: "🛡️", title: "Curated, scored, standardized", bullets: ["Aggregated risk scores (Credora, Bluechip, etc.)", "AI-curated strategy recommendations", "Standardized risk labels for your UI", "You're a distributor, not an advisor"] },
           ].map((p, i) => (
             <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", display: "flex", flexDirection: "column", gap: 16, boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
@@ -363,14 +363,14 @@ export default function ForWalletsPageMerged() {
         </div>
       </section>
 
-      {/* USER EXPERIENCE — merged from embed preview */}
+      {/* USER EXPERIENCE - merged from embed preview */}
       <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
-        <SectionHeader tag="User Experience" title="Three taps to yield" subtitle="From discovering opportunities to depositing — all inside the wallet they already trust. Try the interactive demo above, or explore the embed formats below." />
+        <SectionHeader tag="User Experience" title="Three taps to yield" subtitle="From discovering opportunities to depositing, all inside the wallet they already trust. Try the interactive demo above, or explore the embed formats below." />
         <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
-            { step: "1", title: "Discover", icon: "🔍", desc: "User opens the \"Yield\" tab. They see curated vaults sorted by APY, risk, and asset type. Filter chips make browsing effortless.", highlight: "Zero friction — already inside their wallet" },
-            { step: "2", title: "Choose", icon: "📊", desc: "Tapping a vault reveals details: current APY, risk level, lock period, protocol info, and TVL. Everything they need to make a decision.", highlight: "Standardized data — easy to compare" },
-            { step: "3", title: "Deposit", icon: "💰", desc: "One-tap deposit with amount input, token selector, projected yield, and fee estimate. Confirm with their wallet — funds route through Yieldo.", highlight: "Your wallet earns revenue on every deposit" },
+            { step: "1", title: "Discover", icon: "🔍", desc: "User opens the \"Yield\" tab. They see curated vaults sorted by APY, risk, and asset type. Filter chips make browsing effortless.", highlight: "Zero friction, already inside their wallet" },
+            { step: "2", title: "Choose", icon: "📊", desc: "Tapping a vault reveals details: current APY, risk level, lock period, protocol info, and TVL. Everything they need to make a decision.", highlight: "Standardized data, easy to compare" },
+            { step: "3", title: "Deposit", icon: "💰", desc: "One-tap deposit with amount input, token selector, projected yield, and fee estimate. Confirm with their wallet, funds route through Yieldo.", highlight: "Your wallet earns revenue on every deposit" },
           ].map((s, i) => (
             <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
@@ -445,8 +445,8 @@ export default function ForWalletsPageMerged() {
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>Three API calls: list vaults, deposit, withdraw. That's it. Our SDK handles routing, fee tracking, and revenue share automatically.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 28 }}>
               {[
-                { step: "01", title: "Install SDK", desc: "npm install @yieldo/sdk — TypeScript, React Native, or REST", time: "5 min" },
-                { step: "02", title: "Fetch vaults", desc: "Get curated vaults filtered by chain, risk, APY — standardized format", time: "30 min" },
+                { step: "01", title: "Install SDK", desc: "npm install @yieldo/sdk. TypeScript, React Native, or REST", time: "5 min" },
+                { step: "02", title: "Fetch vaults", desc: "Get curated vaults filtered by chain, risk, APY, standardized format", time: "30 min" },
                 { step: "03", title: "Enable deposits", desc: "Route deposits through Yieldo. Revenue share tracked automatically", time: "2 hrs" },
                 { step: "04", title: "Go live", desc: "Users see yield opportunities. You earn revenue. Zero maintenance", time: "Ship it 🚀" },
               ].map((s, i) => (
@@ -475,12 +475,12 @@ export default function ForWalletsPageMerged() {
           <div style={{ flex: "1 1 0" }}>
             <Tag>Economics</Tag>
             <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Model your<br />revenue</h2>
-            <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>You earn 5 bps on every deposit routed through your wallet. Plus, vault curators can offer additional bonus revenue share through campaigns — up to 20%+ on top.</p>
+            <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>You earn 5 bps on every deposit routed through your wallet. Plus, vault curators can offer additional bonus revenue share through campaigns, up to 20%+ on top.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 14, marginTop: 32 }}>
-              <Check>Base: 5 bps (0.05%) on every deposit — automatic</Check>
+              <Check>Base: 5 bps (0.05%) on every deposit, automatic</Check>
               <Check>Bonus: Vault campaigns can offer 10–20%+ extra rev share</Check>
               <Check>Loyalty boosts: higher rate for AUM that stays 60+ days</Check>
-              <Check>All tracked on-chain — transparent, auditable</Check>
+              <Check>All tracked on-chain, transparent and auditable</Check>
               <Check>Monthly payouts or continuous streaming</Check>
             </div>
           </div>
@@ -546,7 +546,7 @@ export default function ForWalletsPageMerged() {
           {[
             { name: "Nightly", role: "Head of Product", quote: "Yieldo turned our idle asset feature from a cost center into a revenue stream. Integration took half a day.", avatar: "N", bg: "#1a1a2e" },
             { name: "CoinStats", role: "CTO", quote: "We evaluated building in-house vs. Yieldo. The SDK paid for itself in the first month through revenue share alone.", avatar: "C", bg: "#2962EF" },
-            { name: "DeFi Portfolio App", role: "Founder", quote: "The campaign marketplace is a game-changer. Vaults compete to offer us better rev share — our users get better yields.", avatar: "D", bg: "#7A1CCB" },
+            { name: "DeFi Portfolio App", role: "Founder", quote: "The campaign marketplace is a game-changer. Vaults compete to offer us better rev share, and our users get better yields.", avatar: "D", bg: "#7A1CCB" },
           ].map((t, i) => (
             <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ fontSize: 30, marginBottom: 12 }}>"</div>

@@ -29,7 +29,7 @@ function GradientText({ children, style = {} }) {
 
 function PrimaryButton({ children, large, onClick }) {
   return (
-    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradient, boxShadow: COLORS.purple.shadow, borderRadius: 8, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>
+    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradient, boxShadow: COLORS.purple.shadow, borderRadius: 8, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>
       {children}
     </button>
   );
@@ -37,7 +37,7 @@ function PrimaryButton({ children, large, onClick }) {
 
 function SecondaryButton({ children, onClick }) {
   return (
-    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}>
+    <button onClick={onClick} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}>
       <GradientText>{children}</GradientText>
     </button>
   );
@@ -56,8 +56,8 @@ function SectionHeader({ tag, title, subtitle }) {
   return (
     <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
       {tag && <Tag>{tag}</Tag>}
-      <h2 className="section-title" style={{ fontFamily: "'Inter', sans-serif", fontSize: 48, fontWeight: 400, color: COLORS.black, textTransform: "uppercase", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.15 }}>{title}</h2>
-      {subtitle && <p style={{ fontFamily: "'Inter', sans-serif", fontSize: 20, color: COLORS.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: 0.7 }}>{subtitle}</p>}
+      <h2 className="section-title" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 48, fontWeight: 400, color: COLORS.black, textTransform: "uppercase", margin: 0, letterSpacing: "-0.02em", lineHeight: 1.15 }}>{title}</h2>
+      {subtitle && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, color: COLORS.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: 0.7 }}>{subtitle}</p>}
     </div>
   );
 }
@@ -69,7 +69,7 @@ function CheckItem({ children }) {
         <rect x="2" y="2" width="20" height="20" rx="4" stroke="#7A1CCB" strokeWidth="1.5" />
         <path d="M8 12.5L11 15.5L16 9.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span style={{ fontSize: 15, color: "rgba(0,0,0,0.6)", fontFamily: "'Inter', sans-serif", lineHeight: 1.5 }}>{children}</span>
+      <span style={{ fontSize: 15, color: "rgba(0,0,0,0.6)", fontFamily: "'Outfit', sans-serif", lineHeight: 1.5 }}>{children}</span>
     </div>
   );
 }
@@ -84,7 +84,7 @@ function CampaignBuilder() {
   const formatNum = (n) => n >= 1000 ? `$${(n / 1000).toFixed(0)}K` : `$${n}`;
 
   return (
-    <div style={{ background: "#0a0a14", borderRadius: 16, padding: 32, color: "#fff", fontFamily: "'Inter', sans-serif", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)" }}>
+    <div style={{ background: "#0a0a14", borderRadius: 16, padding: 32, color: "#fff", fontFamily: "'Outfit', sans-serif", boxShadow: "0 20px 60px rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 28 }}>
         <div>
           <span style={{ fontSize: 18, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.03em" }}>Campaign Builder</span>
@@ -349,7 +349,7 @@ export default function ForVaultsV2() {
   const [hoveredBenefit, setHoveredBenefit] = useState(null);
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
       {/* NAV */}
       <Nav />
 
@@ -377,7 +377,7 @@ export default function ForVaultsV2() {
         <FlowDiagram />
       </section>
 
-      {/* REVENUE SHARE MODEL — HERO SECTION */}
+      {/* REVENUE SHARE MODEL - HERO SECTION */}
       <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
         <SectionHeader
           tag="Revenue Share"
@@ -408,7 +408,7 @@ export default function ForVaultsV2() {
         <div className="two-col" style={{ display: "flex", gap: 40, marginTop: 56, alignItems: "flex-start" }}>
           <div style={{ flex: "1 1 0", display: "flex", flexDirection: "column", gap: 24 }}>
             <h3 style={{ fontSize: 24, fontWeight: 400, margin: 0, lineHeight: 1.4 }}>
-              Define exactly what you want —<br />
+              Define exactly what you want.<br />
               <GradientText style={{ fontWeight: 500 }}>Yieldo finds the wallets that deliver.</GradientText>
             </h3>
             <p style={{ fontSize: 16, color: "rgba(0,0,0,0.55)", lineHeight: 1.7, margin: 0 }}>
@@ -443,7 +443,7 @@ export default function ForVaultsV2() {
             <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 16 }}><GradientText>Without Yieldo</GradientText></div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                "Yield is a feature — costs dev time, earns nothing",
+                "Yield is a feature, costs dev time, earns nothing",
                 "Each protocol requires separate integration",
                 "No revenue share, no incentive to promote",
                 "Which vault to show first? No data to decide",
@@ -461,7 +461,7 @@ export default function ForVaultsV2() {
             <div style={{ fontSize: 14, fontWeight: 600, color: "#2aa845", marginBottom: 16 }}>With Yieldo + Your Campaign</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                "Yield is a profit center — automatic revenue share",
+                "Yield is a profit center: automatic revenue share",
                 "One SDK, all vaults, zero maintenance",
                 "Your 20% loyalty boost = priority promotion slot",
                 "AI-curated ranking, your vault promoted first",
@@ -480,7 +480,7 @@ export default function ForVaultsV2() {
           <div>
             <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.black, marginBottom: 4 }}>The key insight</div>
             <div style={{ fontSize: 14, color: "rgba(0,0,0,0.6)", lineHeight: 1.6 }}>
-              Wallets rank vaults by a blend of APY, risk score, and <strong>revenue share offer</strong>. A vault offering 20% loyalty boost will consistently appear above a vault offering 0%. You're not paying for ads — you're paying for aligned incentives.
+              Wallets rank vaults by a blend of APY, risk score, and <strong>revenue share offer</strong>. A vault offering 20% loyalty boost will consistently appear above a vault offering 0%. You're not paying for ads. You're paying for aligned incentives.
             </div>
           </div>
         </div>

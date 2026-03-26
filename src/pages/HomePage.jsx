@@ -77,7 +77,7 @@ function PrimaryButton({ children, large, onClick, className = "", style = {} })
         padding: large ? "14px 28px" : "12px 18px",
         border: "none",
         color: "#fff",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Outfit', sans-serif",
         fontWeight: 500,
         fontSize: large ? 18 : 16,
         cursor: "pointer",
@@ -101,7 +101,7 @@ function SecondaryButton({ children, onClick, className = "", style = {} }) {
         borderRadius: 8,
         padding: "12px 18px",
         border: "none",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Outfit', sans-serif",
         fontWeight: 500,
         fontSize: 16,
         cursor: "pointer",
@@ -159,7 +159,7 @@ function SectionHeader({ tag, title, subtitle }) {
       <h2
         className="section-title"
         style={{
-          fontFamily: "'Inter', sans-serif",
+          fontFamily: "'Space Grotesk', sans-serif",
           fontSize: 48,
           fontWeight: 400,
           color: COLORS.black,
@@ -175,7 +175,7 @@ function SectionHeader({ tag, title, subtitle }) {
         <p
           className="section-subtitle"
           style={{
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Outfit', sans-serif",
             fontSize: 20,
             color: COLORS.black,
             maxWidth: 700,
@@ -198,7 +198,7 @@ function CheckItem({ children }) {
         <rect x="2" y="2" width="20" height="20" rx="4" stroke="#7A1CCB" strokeWidth="1.5" />
         <path d="M8 12.5L11 15.5L16 9.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span style={{ fontSize: 16, color: "rgba(0,0,0,0.6)", fontFamily: "'Inter', sans-serif" }}>
+      <span style={{ fontSize: 16, color: "rgba(0,0,0,0.6)", fontFamily: "'Outfit', sans-serif" }}>
         {children}
       </span>
     </div>
@@ -218,7 +218,7 @@ function StatCard({ number, label, sublabel }) {
         textAlign: "center",
       }}
     >
-      <div style={{ fontSize: 40, fontWeight: 500, fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ fontSize: 40, fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
         <GradientText>{number}</GradientText>
       </div>
       <div style={{ fontSize: 16, color: COLORS.black, fontWeight: 500, marginTop: 4 }}>{label}</div>
@@ -312,7 +312,7 @@ export default function YieldoHomepage() {
   };
 
   return (
-    <div style={{ fontFamily: "'Inter', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
       {/* NAV */}
       <nav
         className="main-nav section-padding"
@@ -344,7 +344,7 @@ export default function YieldoHomepage() {
           <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
         </div>
         <div className="nav-actions">
-          <button style={{ padding: "10px 18px", borderRadius: 8, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
+          <button style={{ padding: "10px 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
           <PrimaryButton onClick={() => navigate("/apply")}>Integrate Now</PrimaryButton>
         </div>
         <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
@@ -367,7 +367,7 @@ export default function YieldoHomepage() {
           <Link to="/creator" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Creators</Link>
           <span style={{ color: "rgba(0,0,0,0.25)", fontWeight: 500 }}>Docs (Coming Soon)</span>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}>Dashboard</button>
+            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}>Dashboard</button>
             <PrimaryButton large onClick={() => navTo("/apply")} style={{ borderRadius: 12, width: "100%" }}>Integrate Now</PrimaryButton>
           </div>
         </div>
@@ -401,6 +401,7 @@ export default function YieldoHomepage() {
           <h1
             className="hero-title"
             style={{
+              fontFamily: "'Space Grotesk', sans-serif",
               fontSize: 64,
               fontWeight: 400,
               textTransform: "uppercase",
@@ -416,11 +417,11 @@ export default function YieldoHomepage() {
           <p className="hero-desc" style={{ fontSize: 22, maxWidth: 700, margin: "28px auto 0", lineHeight: 1.6, color: "rgba(0,0,0,0.6)" }}>
             One API. Every vault. Automatic revenue share.
             <br />
-            Stop integrating 20 protocols — plug in Yieldo and ship yield in days.
+            Stop integrating 20 protocols. Plug in Yieldo and ship yield in days.
           </p>
           <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
             <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
           </div>
         </div>
       </section>
@@ -439,7 +440,7 @@ export default function YieldoHomepage() {
             {
               icon: <LayersIcon />,
               title: "Market Fragmentation",
-              desc: "Morpho, Aave, Compound, Yearn, Pendle — 20+ protocols across multiple chains. Each one is a separate integration nightmare for your engineering team.",
+              desc: "Morpho, Aave, Compound, Yearn, Pendle. 20+ protocols across multiple chains. Each one is a separate integration nightmare for your engineering team.",
               stat: "20+",
               statLabel: "protocols to integrate",
             },
@@ -502,7 +503,7 @@ export default function YieldoHomepage() {
               title: "Integrate once, access every vault",
               bullets: [
                 "Single API/SDK for all top yield protocols",
-                "Morpho, Aave, Pendle + dozens more — auto-updated",
+                "Morpho, Aave, Pendle + dozens more, auto-updated",
                 "Multi-chain routing out of the box",
                 "No per-protocol maintenance",
               ],
@@ -739,7 +740,7 @@ export default function YieldoHomepage() {
                 Transparent & Aligned
               </h2>
               <div className="economics-stats" style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
-                <StatCard number="10 bps" label="Entry Fee" sublabel="0.1% — industry lowest" />
+                <StatCard number="10 bps" label="Entry Fee" sublabel="0.1%, industry lowest" />
                 <StatCard number="5 bps" label="Your Revenue Share" sublabel="50% goes directly to you" />
                 <StatCard number="$500K+" label="Annual at $500M Volume" sublabel="Scales with your AUM" />
                 <StatCard number="0" label="Dev Overhead" sublabel="No smart contract work needed" />
@@ -855,7 +856,7 @@ export default function YieldoHomepage() {
           </div>
         </div>
         <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO — All rights reserved</p>
+          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO. All rights reserved</p>
           <div style={{ display: "flex", gap: 8 }}>
             {["𝕏", "✈", "▶", "M"].map((icon, i) => (
               <div

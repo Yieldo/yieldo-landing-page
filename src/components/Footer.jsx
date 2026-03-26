@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-        <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO — All rights reserved</p>
+        <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO. All rights reserved</p>
         <div style={{ display: "flex", gap: 8 }}>
           {["\u{1D54F}", "\u2708", "\u25B6", "M"].map((icon, i) => (
             <div

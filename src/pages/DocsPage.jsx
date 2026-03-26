@@ -17,7 +17,7 @@ const C = {
 
 /* ============ COMPONENTS ============ */
 function Badge({ children, color = C.purple, bg }) {
-  return <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 4, background: bg || `${color}12`, color, whiteSpace: "nowrap", fontFamily: "'Inter',sans-serif" }}>{children}</span>;
+  return <span style={{ fontSize: 11, fontWeight: 600, padding: "3px 8px", borderRadius: 4, background: bg || `${color}12`, color, whiteSpace: "nowrap", fontFamily: "'Outfit', sans-serif" }}>{children}</span>;
 }
 function MethodBadge({ method }) {
   const m = { GET: { color: C.green, bg: C.greenDim }, POST: { color: C.blue, bg: C.blueDim }, PUT: { color: C.amber, bg: C.amberDim }, DELETE: { color: C.red, bg: C.redDim } };
@@ -32,10 +32,10 @@ function CodeBlock({ code, lang = "typescript", title, compact }) {
     <div style={{ background: C.codeBg, borderRadius: 10, overflow: "hidden", fontSize: compact ? 12 : 13, lineHeight: 1.7, border: "1px solid rgba(255,255,255,0.04)" }}>
       {title && (
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 14px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: "'Inter',sans-serif" }}>{title}</span>
+          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", fontFamily: "'Outfit', sans-serif" }}>{title}</span>
           <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", fontFamily: "'Inter',sans-serif" }}>{lang}</span>
-            <button onClick={handleCopy} style={{ background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 4, padding: "3px 8px", fontSize: 10, color: "rgba(255,255,255,0.4)", cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>{copied ? "✓ Copied" : "Copy"}</button>
+            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", fontFamily: "'Outfit', sans-serif" }}>{lang}</span>
+            <button onClick={handleCopy} style={{ background: "rgba(255,255,255,0.06)", border: "none", borderRadius: 4, padding: "3px 8px", fontSize: 10, color: "rgba(255,255,255,0.4)", cursor: "pointer", fontFamily: "'Outfit', sans-serif" }}>{copied ? "✓ Copied" : "Copy"}</button>
           </div>
         </div>
       )}
@@ -91,7 +91,7 @@ export default function DocsPage() {
   const langLabel = { ts: "TypeScript", py: "Python", curl: "cURL" };
 
   return (
-    <div className="two-col" style={{ fontFamily: "'Inter',sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
+    <div className="two-col" style={{ fontFamily: "'Outfit', sans-serif", background: C.bg, color: C.text, minHeight: "100vh", display: "flex" }}>
       {/* SIDEBAR */}
       <aside className="docs-sidebar" style={{ width: 240, background: C.white, borderRight: `1px solid ${C.border}`, position: "sticky", top: 0, height: "100vh", overflow: "auto", flexShrink: 0 }}>
         <div style={{ padding: "18px 18px 14px", display: "flex", alignItems: "center", gap: 8, borderBottom: `1px solid ${C.border}` }}>
@@ -101,23 +101,23 @@ export default function DocsPage() {
         </div>
         <div style={{ padding: "8px" }}>
           <div style={{ padding: "8px 12px", marginBottom: 4 }}>
-            <input placeholder="Search docs..." style={{ width: "100%", padding: "7px 10px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 6, fontSize: 12, fontFamily: "'Inter',sans-serif", outline: "none", color: C.text, boxSizing: "border-box" }} />
+            <input placeholder="Search docs..." style={{ width: "100%", padding: "7px 10px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: 6, fontSize: 12, fontFamily: "'Outfit', sans-serif", outline: "none", color: C.text, boxSizing: "border-box" }} />
           </div>
           <div style={{ fontSize: 10, fontWeight: 600, color: C.text4, textTransform: "uppercase", letterSpacing: ".06em", padding: "10px 12px 4px" }}>Getting Started</div>
           {NAV.slice(0, 3).map(n => (
-            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Inter',sans-serif", textAlign: "left" }}>
+            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Outfit', sans-serif", textAlign: "left" }}>
               <span style={{ fontSize: 13 }}>{n.icon}</span>{n.label}
             </button>
           ))}
           <div style={{ fontSize: 10, fontWeight: 600, color: C.text4, textTransform: "uppercase", letterSpacing: ".06em", padding: "14px 12px 4px" }}>API Reference</div>
           {NAV.slice(3, 8).map(n => (
-            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Inter',sans-serif", textAlign: "left" }}>
+            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Outfit', sans-serif", textAlign: "left" }}>
               <span style={{ fontSize: 13 }}>{n.icon}</span>{n.label}
             </button>
           ))}
           <div style={{ fontSize: 10, fontWeight: 600, color: C.text4, textTransform: "uppercase", letterSpacing: ".06em", padding: "14px 12px 4px" }}>Resources</div>
           {NAV.slice(8).map(n => (
-            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Inter',sans-serif", textAlign: "left" }}>
+            <button key={n.id} onClick={() => setPage(n.id)} style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 12px", background: page === n.id ? C.purpleDim : "transparent", border: "none", borderRadius: 6, color: page === n.id ? C.purple : C.text3, fontSize: 13, fontWeight: page === n.id ? 600 : 400, cursor: "pointer", fontFamily: "'Outfit', sans-serif", textAlign: "left" }}>
               <span style={{ fontSize: 13 }}>{n.icon}</span>{n.label}
             </button>
           ))}
@@ -139,7 +139,7 @@ export default function DocsPage() {
           <div />
           <div style={{ display: "flex", gap: 2, background: C.surface, borderRadius: 6, padding: 2, border: `1px solid ${C.border}` }}>
             {["ts", "py", "curl"].map(l => (
-              <button key={l} onClick={() => setLang(l)} style={{ fontFamily: "'Inter',sans-serif", fontSize: 12, fontWeight: lang === l ? 600 : 400, padding: "5px 12px", borderRadius: 4, border: "none", cursor: "pointer", background: lang === l ? C.white : "transparent", color: lang === l ? C.purple : C.text3, boxShadow: lang === l ? "0 1px 3px rgba(0,0,0,0.06)" : "none" }}>{langLabel[l]}</button>
+              <button key={l} onClick={() => setLang(l)} style={{ fontFamily: "'Outfit', sans-serif", fontSize: 12, fontWeight: lang === l ? 600 : 400, padding: "5px 12px", borderRadius: 4, border: "none", cursor: "pointer", background: lang === l ? C.white : "transparent", color: lang === l ? C.purple : C.text3, boxShadow: lang === l ? "0 1px 3px rgba(0,0,0,0.06)" : "none" }}>{langLabel[l]}</button>
             ))}
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function DocsPage() {
               <h1 style={{ margin: "0 0 8px", fontSize: 28, fontWeight: 700 }}>📖 Yieldo API Documentation</h1>
               <p style={{ fontSize: 16, color: C.text2, lineHeight: 1.6, margin: 0 }}>Everything you need to integrate yield opportunities into your wallet, app, or platform. One API for vault discovery, deposits, withdrawals, revenue tracking, and campaign management.</p>
             </div>
-            <Callout type="info"><strong>Base URL:</strong> <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: C.purple }}>https://api.yieldo.io/v1</code> — All endpoints require authentication via API key.</Callout>
+            <Callout type="info"><strong>Base URL:</strong> <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: C.purple }}>https://api.yieldo.io/v1</code>. All endpoints require authentication via API key.</Callout>
             <div className="responsive-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
               {[
                 { icon: "⚡", title: "Quick Start", desc: "Get up and running in 5 minutes with our SDK.", link: "quickstart" },
@@ -224,8 +224,8 @@ export default function DocsPage() {
             <div>
               <h3 style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>4. Create a deposit</h3>
               <CodeBlock title={lang === "curl" ? "Request" : `deposit.${lang === "ts" ? "ts" : "py"}`} lang={langLabel[lang]} code={
-                lang === "ts" ? `const tx = await yieldo.deposit({\n  vaultId: 'vault_abc',\n  amount: '10000',       // 10,000 USDC (6 decimals)\n  token: 'USDC',\n  chain: 'ethereum',\n  userAddress: '0xAb3...f12',\n});\n\n// tx.hash — on-chain transaction hash\n// tx.status — "pending" | "confirmed"\n// Revenue share is tracked automatically` :
-                lang === "py" ? `tx = yieldo.deposit(\n    vault_id="vault_abc",\n    amount="10000",\n    token="USDC",\n    chain="ethereum",\n    user_address="0xAb3...f12",\n)\n\n# tx.hash — on-chain transaction hash\n# tx.status — "pending" | "confirmed"\n# Revenue share is tracked automatically` :
+                lang === "ts" ? `const tx = await yieldo.deposit({\n  vaultId: 'vault_abc',\n  amount: '10000',       // 10,000 USDC (6 decimals)\n  token: 'USDC',\n  chain: 'ethereum',\n  userAddress: '0xAb3...f12',\n});\n\n// tx.hash - on-chain transaction hash\n// tx.status - "pending" | "confirmed"\n// Revenue share is tracked automatically` :
+                lang === "py" ? `tx = yieldo.deposit(\n    vault_id="vault_abc",\n    amount="10000",\n    token="USDC",\n    chain="ethereum",\n    user_address="0xAb3...f12",\n)\n\n# tx.hash - on-chain transaction hash\n# tx.status - "pending" | "confirmed"\n# Revenue share is tracked automatically` :
                 `curl -X POST "https://api.yieldo.io/v1/deposits" \\\n  -H "Authorization: Bearer $YIELDO_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d '{\n    "vault_id": "vault_abc",\n    "amount": "10000",\n    "token": "USDC",\n    "chain": "ethereum",\n    "user_address": "0xAb3...f12"\n  }'`
               } />
             </div>
@@ -343,7 +343,7 @@ export default function DocsPage() {
                 <MethodBadge method="POST" />
                 <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, color: C.text }}>/withdrawals</code>
               </div>
-              <p style={{ fontSize: 14, color: C.text2, margin: "0 0 16px" }}>Create a withdrawal from an active vault position. Same flow as deposits — returns an unsigned transaction.</p>
+              <p style={{ fontSize: 14, color: C.text2, margin: "0 0 16px" }}>Create a withdrawal from an active vault position. Same flow as deposits. Returns an unsigned transaction.</p>
               <ParamTable params={[
                 { name: "vault_id", type: "string", required: true, desc: "Vault to withdraw from" },
                 { name: "amount", type: "string", required: true, desc: "Withdrawal amount (or \"max\" for full)" },
@@ -430,7 +430,7 @@ export default function DocsPage() {
                 <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 15, color: C.text }}>/campaigns/:id/enroll</code>
               </div>
               <p style={{ fontSize: 14, color: C.text2, margin: "0 0 12px" }}>Enroll in a campaign. Once enrolled, all qualifying deposits automatically earn the campaign bonus.</p>
-              <Callout type="success">Campaign bonuses are <strong>additive</strong> — they stack on top of your base 5 bps rate. A 15 bps campaign means you earn 20 bps total on qualifying deposits.</Callout>
+              <Callout type="success">Campaign bonuses are <strong>additive</strong>: they stack on top of your base 5 bps rate. A 15 bps campaign means you earn 20 bps total on qualifying deposits.</Callout>
             </div>
           </div>
         )}
@@ -528,8 +528,8 @@ export default function DocsPage() {
                   ["403", "Forbidden", "Valid key but insufficient permissions", C.red],
                   ["404", "Not Found", "Resource doesn't exist", C.amber],
                   ["409", "Conflict", "Duplicate operation (e.g. double deposit)", C.amber],
-                  ["429", "Rate Limited", "Too many requests — back off and retry", C.red],
-                  ["500", "Server Error", "Internal error — contact support", C.red],
+                  ["429", "Rate Limited", "Too many requests. Back off and retry", C.red],
+                  ["500", "Server Error", "Internal error. Contact support", C.red],
                 ].map(([code, name, desc, color], i) => (
                   <div key={i} style={{ display: "grid", gridTemplateColumns: ".3fr .5fr 2fr", padding: "9px 14px", borderTop: i > 0 ? `1px solid ${C.border}` : "none", alignItems: "center" }}>
                     <Badge color={color}>{code}</Badge>

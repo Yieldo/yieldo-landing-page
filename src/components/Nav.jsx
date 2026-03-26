@@ -107,7 +107,7 @@ export default function Nav() {
               padding: "10px 18px",
               borderRadius: 8,
               border: "none",
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Outfit', sans-serif",
               fontWeight: 500,
               fontSize: 15,
               cursor: "pointer",
@@ -127,7 +127,7 @@ export default function Nav() {
               padding: "10px 18px",
               border: "none",
               color: "#fff",
-              fontFamily: "'Inter', sans-serif",
+              fontFamily: "'Outfit', sans-serif",
               fontWeight: 500,
               fontSize: 15,
               cursor: "pointer",
@@ -156,7 +156,7 @@ export default function Nav() {
           <span style={{ color: "rgba(0,0,0,0.25)", fontWeight: 500 }}>Docs (Coming Soon)</span>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
             <button
-              style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Inter', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }}
+              style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }}
               onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}
             >
               Dashboard
@@ -170,7 +170,7 @@ export default function Nav() {
                 padding: "16px",
                 border: "none",
                 color: "#fff",
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "'Outfit', sans-serif",
                 fontWeight: 500,
                 fontSize: 18,
                 cursor: "pointer",

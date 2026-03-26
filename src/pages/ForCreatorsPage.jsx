@@ -12,16 +12,16 @@ function GradientText({ children, style = {} }) {
   return <span style={{ backgroundImage: C.purple.grad, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", ...style }}>{children}</span>;
 }
 function PrimaryButton({ children, large, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 8, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.grad, boxShadow: C.purple.shadow, borderRadius: 8, padding: large ? "14px 28px" : "12px 18px", border: "none", color: "#fff", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: large ? 18 : 16, cursor: "pointer" }}>{children}</button>;
 }
 function SecondaryButton({ children, onClick }) {
-  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Inter',sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
+  return <button onClick={onClick} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>{children}</GradientText></button>;
 }
 function Tag({ children }) {
   return <div style={{ position: "relative", display: "inline-flex", alignItems: "center", padding: "4px 14px", borderRadius: 100 }}><span style={{ position: "absolute", filter: "blur(6px)", fontWeight: 700, fontSize: 18, color: "rgba(69,150,242,0.8)", letterSpacing: "-.36px" }}>{children}</span><span style={{ position: "relative", fontSize: 14, color: "rgba(100,100,120,0.9)", fontWeight: 500 }}>{children}</span></div>;
 }
 function SectionHeader({ tag, title, subtitle }) {
-  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 className="section-title" style={{ fontFamily: "'Inter',sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Inter',sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
+  return <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>{tag && <Tag>{tag}</Tag>}<h2 className="section-title" style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 48, fontWeight: 400, color: C.black, textTransform: "uppercase", margin: 0, letterSpacing: "-.02em", lineHeight: 1.15 }}>{title}</h2>{subtitle && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, color: C.black, maxWidth: 720, margin: 0, lineHeight: 1.5, opacity: .7 }}>{subtitle}</p>}</div>;
 }
 function Check({ children, color = "#7A1CCB" }) {
   return <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}><rect x="2" y="2" width="20" height="20" rx="4" stroke={color} strokeWidth="1.5" /><path d="M8 12.5L11 15.5L16 9.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg><span style={{ fontSize: 15, color: "rgba(0,0,0,0.6)", lineHeight: 1.5 }}>{children}</span></div>;
@@ -56,7 +56,7 @@ function EarningsTicker() {
 /* ============ KOL LANDING PAGE MOCKUP ============ */
 function KolPageMockup() {
   return (
-    <div className="kol-phone phone-mockup" style={{ width: 320, background: "#fff", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Inter',sans-serif" }}>
+    <div className="kol-phone phone-mockup" style={{ width: 320, background: "#fff", borderRadius: 16, boxShadow: "0 16px 48px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden", fontFamily: "'Outfit', sans-serif" }}>
       {/* Profile header */}
       <div style={{ padding: "24px 20px 16px", textAlign: "center", backgroundImage: C.purple.gradBg }}>
         <div style={{ width: 56, height: 56, borderRadius: 28, backgroundImage: C.purple.grad, margin: "0 auto 10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -93,7 +93,7 @@ function KolPageMockup() {
         ))}
       </div>
       <div style={{ padding: "8px 16px 16px" }}>
-        <button style={{ width: "100%", padding: "11px", borderRadius: 10, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Deposit Now</button>
+        <button style={{ width: "100%", padding: "11px", borderRadius: 10, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif" }}>Deposit Now</button>
         <div style={{ textAlign: "center", fontSize: 10, color: "rgba(0,0,0,0.25)", marginTop: 5 }}>Powered by Yieldo</div>
       </div>
     </div>
@@ -199,7 +199,7 @@ export default function ForKOLsPage() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: C.black, overflowX: "hidden" }}>
       {/* NAV */}
       <Nav />
 
@@ -246,7 +246,7 @@ export default function ForKOLsPage() {
         <div className="cards-row" style={{ display: "flex", gap: 24, marginTop: 56 }}>
           {[
             { step: "01", icon: "🎨", title: "Build your page", desc: "Pick your favorite vaults from the Yieldo catalog. Add your bio, branding, and commentary. Your personal yield page is live in minutes.", details: ["Choose from 100+ curated vaults", "Add your own risk commentary", "Custom URL: yieldo.io/@yourname", "Mobile-optimized automatically"] },
-            { step: "02", icon: "📣", title: "Share your link", desc: "Post your Yieldo page on Twitter, YouTube, Discord, newsletter — anywhere you already have an audience. Every click is tracked.", details: ["One link for all platforms", "Per-vault deep links available", "UTM tracking for campaigns", "QR code for IRL events"] },
+            { step: "02", icon: "📣", title: "Share your link", desc: "Post your Yieldo page on Twitter, YouTube, Discord, newsletter, anywhere you already have an audience. Every click is tracked.", details: ["One link for all platforms", "Per-vault deep links available", "UTM tracking for campaigns", "QR code for IRL events"] },
             { step: "03", icon: "💰", title: "Earn revenue", desc: "Every deposit through your page earns you a base revenue share plus campaign bonuses from vault curators who want your audience.", details: ["5 bps base on all volume", "Campaign bonuses up to 20%+", "Real-time earnings dashboard", "Monthly payouts in USDC"] },
           ].map((s, i) => (
             <div key={i} className="card-item" style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: `1px solid ${activeStep === i ? "rgba(122,28,203,0.15)" : "rgba(0,0,0,0.06)"}`, boxShadow: activeStep === i ? "0 4px 20px rgba(122,28,203,0.06)" : "0 1px 4px rgba(0,0,0,0.02)", cursor: "default", transition: "all .2s" }} onMouseEnter={() => setActiveStep(i)}>
@@ -271,10 +271,10 @@ export default function ForKOLsPage() {
             <Tag>Your Brand</Tag>
             <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>A yield page<br />that's uniquely yours</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>
-              Your personal Yieldo page showcases your curated vault picks with your bio, commentary, and track record. It's your reputation — on-chain.
+              Your personal Yieldo page showcases your curated vault picks with your bio, commentary, and track record. It's your reputation, on-chain.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 28 }}>
-              <Check>Custom URL — yieldo.io/@yourname</Check>
+              <Check>Custom URL: yieldo.io/@yourname</Check>
               <Check>Profile with avatar, bio, and social links</Check>
               <Check>Hand-picked vault selection with your commentary</Check>
               <Check>Live stats: AUM referred, depositors, avg. APY</Check>
@@ -295,7 +295,7 @@ export default function ForKOLsPage() {
             <Tag>Earnings</Tag>
             <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 0", letterSpacing: "-.02em", lineHeight: 1.15 }}>Real revenue,<br />not empty promises</h2>
             <p style={{ fontSize: 18, color: "rgba(0,0,0,0.55)", margin: "20px 0 0", lineHeight: 1.6, maxWidth: 480 }}>
-              You earn a base 5 bps on every deposit through your referral link. But it gets better — vault curators run campaigns offering you 10–25% bonus rev share to incentivize your promotion.
+              You earn a base 5 bps on every deposit through your referral link. But it gets better: vault curators run campaigns offering you 10–25% bonus rev share to incentivize your promotion.
             </p>
             <div style={{ marginTop: 28 }}>
               <DashboardPreview />
@@ -315,7 +315,7 @@ export default function ForKOLsPage() {
             { icon: "🎯", title: "One dashboard, all protocols", desc: "Instead of separate deals with 10 protocols, access 100+ vaults through one platform. One referral page, one earnings stream." },
             { icon: "📊", title: "Transparent attribution", desc: "Every click, deposit, and withdrawal tracked on-chain. No disputes about who referred what. Your earnings are auditable." },
             { icon: "💸", title: "Stacking revenue streams", desc: "Base rev share from Yieldo PLUS campaign bonuses from vault curators. Multiple vaults = multiple income streams from one link." },
-            { icon: "🛡️", title: "Curated, not risky", desc: "Only promote vaults that pass Yieldo's screening with aggregated risk scores. Protect your reputation — we filter the noise." },
+            { icon: "🛡️", title: "Curated, not risky", desc: "Only promote vaults that pass Yieldo's screening with aggregated risk scores. Protect your reputation. We filter the noise." },
             { icon: "⚡", title: "No negotiation needed", desc: "Standard rev share terms. No back-and-forth with BD teams. Apply once, start earning immediately from all vaults." },
             { icon: "🔄", title: "Recurring, not one-time", desc: "Unlike sponsored posts (one-time fee), you earn continuously as long as deposits stay. Sticky capital = recurring revenue." },
           ].map((item, i) => (
@@ -399,9 +399,9 @@ export default function ForKOLsPage() {
         <SectionHeader tag="Creators" title="Hear from our creators" />
         <div style={{ display: "flex", gap: 20, marginTop: 48 }}>
           {[
-            { name: "@defi_sage", followers: "45K", earned: "$28K+", quote: "I went from getting $500 per sponsored post to earning $4K/month passively. The yield page is basically my portfolio — except it pays me.", avatar: "DS" },
+            { name: "@defi_sage", followers: "45K", earned: "$28K+", quote: "I went from getting $500 per sponsored post to earning $4K/month passively. The yield page is basically my portfolio, except it pays me.", avatar: "DS" },
             { name: "@yieldfarmer_", followers: "120K", earned: "$94K+", quote: "I was already recommending vaults in my newsletter. Now I just link to my Yieldo page and the revenue tracks automatically. Best decision I made.", avatar: "YF" },
-            { name: "@onchain_dan", followers: "22K", earned: "$11K+", quote: "Even with a smaller audience, the conversion rate is insane because people trust my picks. Quality over quantity — Yieldo rewards that.", avatar: "OD" },
+            { name: "@onchain_dan", followers: "22K", earned: "$11K+", quote: "Even with a smaller audience, the conversion rate is insane because people trust my picks. Quality over quantity. Yieldo rewards that.", avatar: "OD" },
           ].map((t, i) => (
             <div key={i} style={{ flex: 1, padding: 28, borderRadius: 14, background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 1px 4px rgba(0,0,0,0.02)" }}>
               <div style={{ fontSize: 30, marginBottom: 12, color: "rgba(122,28,203,0.2)" }}>"</div>
@@ -434,7 +434,7 @@ export default function ForKOLsPage() {
             { q: "Do I need any technical skills?", a: "None. You pick vaults from a visual catalog, customize your page, and share a link. Everything else is handled." },
             { q: "How do I get paid?", a: "Monthly payouts in USDC to your wallet. Creator tier and above get bi-weekly or weekly payouts." },
             { q: "What if a vault I recommend loses money?", a: "You're sharing data-backed opportunities, not giving financial advice. All vaults include risk scores. Your page includes a standard disclaimer." },
-            { q: "Can I promote specific vaults over others?", a: "Yes — you curate which vaults appear on your page and in what order. You can also add commentary explaining your reasoning." },
+            { q: "Can I promote specific vaults over others?", a: "Yes, you curate which vaults appear on your page and in what order. You can also add commentary explaining your reasoning." },
             { q: "Is there an application process?", a: "Yes, a brief review to ensure quality. We look for genuine DeFi expertise, not follower count. Smaller creators with engaged audiences are welcome." },
           ].map((faq, i) => (
             <div key={i} style={{ padding: "18px 24px", background: "#fff", borderRadius: 10, border: "1px solid rgba(0,0,0,0.06)" }}>

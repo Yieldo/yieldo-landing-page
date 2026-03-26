@@ -50,7 +50,7 @@ function ScoreRing({ score, size = 40 }) {
 
 function DepositModal({ vault, onClose }) {
   return (
-    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100, fontFamily: "'Inter',sans-serif" }} onClick={onClose}>
+    <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 100, fontFamily: "'Outfit', sans-serif" }} onClick={onClose}>
       <div className="deposit-modal" style={{ width: 420, maxWidth: "95vw", background: "#fff", borderRadius: 20, overflow: "hidden", boxShadow: "0 24px 80px rgba(0,0,0,0.2)" }} onClick={e => e.stopPropagation()}>
         <div style={{ padding: "24px 28px 16px", textAlign: "center", backgroundImage: C.purple.gradBg }}>
           <div style={{ fontSize: 32, marginBottom: 6 }}>{vault.icon}</div>
@@ -68,7 +68,7 @@ function DepositModal({ vault, onClose }) {
         <div style={{ padding: "18px 28px 24px" }}>
           <label style={{ fontSize: 12, color: "rgba(0,0,0,0.4)", fontWeight: 600, display: "block", marginBottom: 6 }}>Amount</label>
           <div style={{ display: "flex", alignItems: "center", border: "1px solid rgba(0,0,0,0.1)", borderRadius: 12, padding: "12px 16px", background: "rgba(0,0,0,0.015)", marginBottom: 12 }}>
-            <input type="text" defaultValue="1,000" style={{ border: "none", background: "transparent", fontSize: 22, fontWeight: 700, outline: "none", flex: 1, fontFamily: "'Inter',sans-serif", color: "#121212", width: "100%" }} />
+            <input type="text" defaultValue="1,000" style={{ border: "none", background: "transparent", fontSize: 22, fontWeight: 700, outline: "none", flex: 1, fontFamily: "'Outfit', sans-serif", color: "#121212", width: "100%" }} />
             <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "5px 10px", background: "rgba(0,0,0,0.04)", borderRadius: 8 }}>
               <span style={{ fontSize: 13 }}>{"\u{1F4B5}"}</span><span style={{ fontSize: 14, fontWeight: 600 }}>USDC</span><span style={{ fontSize: 10, color: "rgba(0,0,0,0.3)" }}>{"\u25BC"}</span>
             </div>
@@ -77,7 +77,7 @@ function DepositModal({ vault, onClose }) {
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13 }}><span style={{ color: "rgba(0,0,0,0.4)" }}>Projected yearly yield</span><span style={{ fontWeight: 600, color: "#1a9d3f" }}>${(1000 * vault.apy / 100).toFixed(0)}.00</span></div>
             <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginTop: 4 }}><span style={{ color: "rgba(0,0,0,0.4)" }}>Network fee</span><span style={{ color: "rgba(0,0,0,0.4)" }}>~$0.42</span></div>
           </div>
-          <button style={{ width: "100%", padding: "14px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 16, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif", boxShadow: C.purple.shadow }}>Connect Wallet & Deposit</button>
+          <button style={{ width: "100%", padding: "14px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 16, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: C.purple.shadow }}>Connect Wallet & Deposit</button>
           <div style={{ textAlign: "center", fontSize: 10, color: "rgba(0,0,0,0.2)", marginTop: 8 }}>Powered by Yieldo &middot; Referred by @defi_sage</div>
         </div>
       </div>
@@ -94,11 +94,11 @@ export default function CreatorDemoPage() {
   const filtered = filter === "all" ? VAULTS : filter === "low" ? VAULTS.filter(v => v.risk === "Low") : filter === "stablecoin" ? VAULTS.filter(v => ["\u{1F4B5}", "\u{1F504}", "\u25C6"].includes(v.icon)) : VAULTS.filter(v => ["\u27E0", "\u20BF"].includes(v.icon));
 
   return (
-    <div style={{ fontFamily: "'Inter',sans-serif", background: "#f8f7fc", color: C.black, minHeight: "100vh" }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#f8f7fc", color: C.black, minHeight: "100vh" }}>
       <Nav />
       <div style={{ backgroundImage: C.purple.grad, padding: "10px 24px", textAlign: "center", fontSize: 13, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", gap: 12 }}>
-        <span>{"\u{1F3AF}"} This is a demo creator page — see what your audience experiences</span>
-        <button onClick={() => navigate("/apply")} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: 8, padding: "4px 12px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif" }}>Create Your Own &rarr;</button>
+        <span>{"\u{1F3AF}"} This is a demo creator page. See what your audience experiences</span>
+        <button onClick={() => navigate("/apply")} style={{ background: "rgba(255,255,255,0.2)", border: "none", borderRadius: 8, padding: "4px 12px", color: "#fff", fontSize: 12, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif" }}>Create Your Own &rarr;</button>
       </div>
 
       <div style={{ maxWidth: 680, width: "100%", margin: "0 auto", padding: "0 20px 80px", boxSizing: "border-box" }}>
@@ -109,7 +109,7 @@ export default function CreatorDemoPage() {
           <h1 style={{ fontSize: 24, fontWeight: 700, margin: "0 0 2px" }}>@defi_sage</h1>
           <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", margin: "0 0 10px" }}>DeFi analyst &middot; 45K followers &middot; Yield strategies & risk analysis</p>
           <p style={{ fontSize: 15, color: "rgba(0,0,0,0.55)", maxWidth: 440, margin: "0 auto 14px", lineHeight: 1.6 }}>
-            These are my personally vetted yield strategies. I research, I deposit, I share what works. No paid promotions — just honest picks.
+            These are my personally vetted yield strategies. I research, I deposit, I share what works. No paid promotions, just honest picks.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 8 }}>
             {[
@@ -140,7 +140,7 @@ export default function CreatorDemoPage() {
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {[{ id: "all", label: "All Picks" }, { id: "low", label: "Low Risk" }, { id: "stablecoin", label: "Stablecoins" }, { id: "crypto", label: "ETH & BTC" }].map(f => (
               <button key={f.id} onClick={() => setFilter(f.id)} style={{
-                padding: "6px 14px", borderRadius: 20, fontSize: 13, fontFamily: "'Inter',sans-serif", cursor: "pointer", transition: "all .15s",
+                padding: "6px 14px", borderRadius: 20, fontSize: 13, fontFamily: "'Outfit', sans-serif", cursor: "pointer", transition: "all .15s",
                 border: filter === f.id ? "1.5px solid rgba(122,28,203,0.25)" : "1px solid rgba(0,0,0,0.08)",
                 background: filter === f.id ? "rgba(122,28,203,0.06)" : "#fff",
                 color: filter === f.id ? "#7A1CCB" : "rgba(0,0,0,0.4)",
@@ -206,7 +206,7 @@ export default function CreatorDemoPage() {
                       </div>
                     </div>
 
-                    <button onClick={(e) => { e.stopPropagation(); setDepositVault(v); }} style={{ width: "100%", padding: "13px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "'Inter',sans-serif", boxShadow: C.purple.shadow }}>
+                    <button onClick={(e) => { e.stopPropagation(); setDepositVault(v); }} style={{ width: "100%", padding: "13px", borderRadius: 12, backgroundImage: C.purple.grad, border: "none", color: "#fff", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: "'Outfit', sans-serif", boxShadow: C.purple.shadow }}>
                       Deposit into {v.name.split(" ")[0]} &rarr;
                     </button>
                   </div>
