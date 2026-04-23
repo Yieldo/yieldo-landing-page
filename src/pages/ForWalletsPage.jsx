@@ -280,7 +280,7 @@ export default function ForWalletsPageMerged() {
             </p>
             <div className="hero-buttons" style={{ display: "flex", gap: 16, marginTop: 36 }}>
               <PrimaryButton large onClick={() => navigate("/apply")}>Start Integrating</PrimaryButton>
-              <button style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+              <button onClick={() => window.open("https://docs.yieldo.xyz", "_blank")} style={{ backgroundImage: C.purple.gradLight, boxShadow: C.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>View Documentation →</GradientText></button>
             </div>
             <div className="hero-stats" style={{ display: "flex", gap: 32, marginTop: 48 }}>
               {[{ n: "5 bps", l: "Your rev share" }, { n: "1 SDK", l: "All protocols" }, { n: "< 1 day", l: "Integration time" }].map((s, i) => (

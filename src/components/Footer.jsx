@@ -34,7 +34,7 @@ export default function Footer() {
           <Link to="/wallet" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</Link>
           <Link to="/vault" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</Link>
           <Link to="/creator" style={{ color: "inherit", textDecoration: "none" }}>For Creators</Link>
-          <span style={{ color: "rgba(0,0,0,0.3)", opacity: 0.5, cursor: "not-allowed" }}>Documentation</span>
+          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>Documentation</a>
         </div>
       </div>
       <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
