@@ -99,7 +99,10 @@ export default function Nav() {
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path} style={linkStyle(link.path)}>{link.label}</Link>
           ))}
-          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
+          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer"
+             style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", textDecoration: "none" }}>
+            Docs
+          </a>
         </div>
         <div className="nav-actions">
           <button
@@ -153,7 +156,11 @@ export default function Nav() {
           {navLinks.map((link) => (
             <Link key={link.path} to={link.path} onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>{link.label}</Link>
           ))}
-          <span style={{ color: "rgba(0,0,0,0.25)", fontWeight: 500 }}>Docs (Coming Soon)</span>
+          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer"
+             onClick={() => setMobileMenuOpen(false)}
+             style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>
+            Docs
+          </a>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
             <button
               style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }}

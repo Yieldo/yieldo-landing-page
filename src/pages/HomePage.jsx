@@ -341,7 +341,7 @@ export default function YieldoHomepage() {
           <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Wallets</Link>
           <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Vaults</Link>
           <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Creators</Link>
-          <span style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.3)", cursor: "not-allowed", opacity: 0.5 }}>Docs</span>
+          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>Docs</a>
         </div>
         <div className="nav-actions">
           <button style={{ padding: "10px 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
@@ -365,7 +365,7 @@ export default function YieldoHomepage() {
           <Link to="/wallet" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Wallets</Link>
           <Link to="/vault" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Vaults</Link>
           <Link to="/creator" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Creators</Link>
-          <span style={{ color: "rgba(0,0,0,0.25)", fontWeight: 500 }}>Docs (Coming Soon)</span>
+          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>Docs</a>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
             <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}>Dashboard</button>
             <PrimaryButton large onClick={() => navTo("/apply")} style={{ borderRadius: 12, width: "100%" }}>Integrate Now</PrimaryButton>
@@ -421,7 +421,7 @@ export default function YieldoHomepage() {
           </p>
           <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
             <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-            <button style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "not-allowed", opacity: 0.5 }} disabled><GradientText>View Documentation →</GradientText></button>
+            <button onClick={() => window.open("https://docs.yieldo.xyz", "_blank")} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>View Documentation →</GradientText></button>
           </div>
         </div>
       </section>
