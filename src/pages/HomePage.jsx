@@ -356,8 +356,8 @@ export default function YieldoHomepage() {
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
-          <button style={{ height: 38, padding: "0 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", boxSizing: "border-box" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
-          <PrimaryButton onClick={() => navigate("/apply")}>Integrate Now</PrimaryButton>
+          <button style={{ height: 38, padding: "0 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", boxSizing: "border-box" }} onClick={() => navigate("/apply")}>Integrate Now</button>
+          <PrimaryButton onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Open App</PrimaryButton>
         </div>
         <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
           <HamburgerIcon open={mobileMenuOpen} />
@@ -380,8 +380,8 @@ export default function YieldoHomepage() {
           <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>Docs</a>
           <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>X / @YieldoHQ</a>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }}>Dashboard</button>
-            <PrimaryButton large onClick={() => navTo("/apply")} style={{ borderRadius: 12, width: "100%" }}>Integrate Now</PrimaryButton>
+            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); navTo("/apply"); }}>Integrate Now</button>
+            <PrimaryButton large onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }} style={{ borderRadius: 12, width: "100%" }}>Open App</PrimaryButton>
           </div>
         </div>
       )}
