@@ -346,13 +346,13 @@ export default function YieldoHomepage() {
         <div className="nav-actions">
           <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer"
              aria-label="Yieldo on X" title="Yieldo on X"
-             style={{ width: 36, height: 36, borderRadius: 8, background: "#000",
+             style={{ height: 40, width: 40, padding: 0, borderRadius: 8, background: "#000",
                       color: "#fff", display: "inline-flex", alignItems: "center",
-                      justifyContent: "center", textDecoration: "none",
+                      justifyContent: "center", textDecoration: "none", boxSizing: "border-box",
                       transition: "transform .15s, background .15s" }}
              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#1a1a1a"; }}
              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#000"; }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
@@ -871,27 +871,20 @@ export default function YieldoHomepage() {
         <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
           <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO. All rights reserved</p>
           <div style={{ display: "flex", gap: 8 }}>
-            {["𝕏", "✈", "▶", "M"].map((icon, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 8,
-                  backgroundImage: COLORS.purple.gradientLight,
-                  boxShadow: COLORS.purple.shadowLight,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  cursor: "pointer",
-                  fontSize: 14,
-                  color: "rgba(0,0,0,0.5)",
-                  transition: "transform 0.15s",
-                }}
-              >
-                {icon}
-              </div>
-            ))}
+            <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer"
+               aria-label="Yieldo on X" title="Yieldo on X"
+               style={{
+                 width: 36, height: 36, borderRadius: 8, background: "#000",
+                 color: "#fff", display: "inline-flex", alignItems: "center",
+                 justifyContent: "center", cursor: "pointer", textDecoration: "none",
+                 transition: "transform 0.15s, background 0.15s",
+               }}
+               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.background = "#1a1a1a"; }}
+               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#000"; }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </footer>
