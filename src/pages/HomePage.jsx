@@ -346,17 +346,17 @@ export default function YieldoHomepage() {
         <div className="nav-actions">
           <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer"
              aria-label="Yieldo on X" title="Yieldo on X"
-             style={{ height: 40, width: 40, padding: 0, borderRadius: 8, background: "#000",
+             style={{ height: 38, width: 38, padding: 0, borderRadius: 8, background: "#000",
                       color: "#fff", display: "inline-flex", alignItems: "center",
                       justifyContent: "center", textDecoration: "none", boxSizing: "border-box",
-                      transition: "transform .15s, background .15s" }}
+                      transition: "transform .15s, background .15s", flexShrink: 0 }}
              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#1a1a1a"; }}
              onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#000"; }}>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
-          <button style={{ padding: "10px 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
+          <button style={{ height: 38, padding: "0 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", boxSizing: "border-box" }} onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Dashboard</button>
           <PrimaryButton onClick={() => navigate("/apply")}>Integrate Now</PrimaryButton>
         </div>
         <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
