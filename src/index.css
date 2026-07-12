@@ -112,6 +112,10 @@ button {
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
+.hero-btn-mobile-only {
+  display: none;
+}
+
 button:not(:disabled):hover {
   transform: translateY(-1px);
 }
@@ -275,6 +279,14 @@ button:not(:disabled):active {
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .hero-btn-desktop-only {
+    display: none !important;
+  }
+
+  .hero-btn-mobile-only {
+    display: block !important;
   }
 
   .hero-buttons button {
