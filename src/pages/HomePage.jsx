@@ -393,8 +393,8 @@ export default function YieldoHomepage() {
           <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>X / @YieldoHQ</a>
           <a href="https://discord.gg/5qvKa5FhjM" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>Discord</a>
           <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); navTo("/apply"); }}>Integrate Now</button>
             <PrimaryButton large onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }} style={{ borderRadius: 12, width: "100%" }}>Open App</PrimaryButton>
+            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); navTo("/apply"); }}>Integrate Now</button>
           </div>
         </div>
       )}
@@ -446,8 +446,10 @@ export default function YieldoHomepage() {
             Stop integrating 20 protocols. Plug in Yieldo and ship yield in days.
           </p>
           <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
-            <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-            <button onClick={() => window.open("https://docs.yieldo.xyz", "_blank")} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>View Documentation →</GradientText></button>
+            <PrimaryButton className="hero-btn-desktop-only" large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
+            <button className="hero-btn-desktop-only" onClick={() => window.open("https://docs.yieldo.xyz", "_blank")} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>View Documentation →</GradientText></button>
+            <PrimaryButton className="hero-btn-mobile-only" large onClick={() => window.open("https://app.yieldo.xyz", "_blank")} style={{ borderRadius: 12, width: "100%" }}>Open App</PrimaryButton>
+            <button className="hero-btn-mobile-only" onClick={() => navigate("/apply")} style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", width: "100%" }}>Integrate Now</button>
           </div>
         </div>
       </section>
