@@ -136,10 +136,10 @@ function Hero() {
             Independent vault analytics for allocators
           </div>
           <h1 className="fh-h1" style={{ margin: 0, lineHeight: 1.02, fontWeight: 800, letterSpacing: "-0.035em" }}>
-            Due diligence for on-chain yield. <span style={{ color: "#4B0CA6" }}>In 48 hours, not weeks.</span>
+            Due diligence for on-chain yield. <span style={{ color: "#4B0CA6", display: "block" }}>Decide on evidence, not headlines.</span>
           </h1>
           <p style={{ margin: 0, fontSize: 21, lineHeight: 1.55, color: "#3A3350", maxWidth: 560 }}>
-            Yieldo scores and monitors DeFi vaults on raw on-chain data, so your team decides on evidence, not on APY screenshots and TVL headlines.
+            Yieldo scores and monitors DeFi vaults on raw on-chain data, before you allocate and every day after.
           </p>
           <div className="fh-hero-btns">
             <a href="#scan" style={{ padding: "18px 28px", borderRadius: 12, background: "linear-gradient(135deg, #4B0CA6, #7A1CCB)", color: "#ffffff", fontSize: 17, fontWeight: 600 }}>
