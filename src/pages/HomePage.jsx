@@ -1,922 +1,530 @@
-import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const COLORS = {
-  black: "#121212",
-  white: "#FFFFFF",
-  purple: {
-    gradient: "linear-gradient(100deg, #4B0CA6 0%, #7A1CCB 58%, #9E3BFF 114%)",
-    gradientLight: "linear-gradient(100deg, rgba(75,12,166,0.1) 0%, rgba(122,28,203,0.1) 58%, rgba(158,59,255,0.1) 114%)",
-    gradientBg: "linear-gradient(100deg, rgba(75,12,166,0.05) 0%, rgba(122,28,203,0.05) 58%, rgba(158,59,255,0.05) 114%)",
-    shadow: "0px 0px 17px 0px rgba(80,14,170,0.15)",
-    shadowLight: "0px 0px 17px 0px rgba(80,14,170,0.1)",
-  },
-  teal: {
-    gradient: "linear-gradient(101deg, #45C7F2 0%, #4FE3C1 58%, #4596F2 114%)",
-    shadow: "0px 0px 17px 0px rgba(69,199,242,0.35)",
-  },
+// Hero report-card snapshot (static, refresh by hand)
+const SNAPSHOT = {
+  date: "4 Oct 2026",
+  name: "Spark USDC Vault",
+  tags: ["Base", "Morpho", "USDC"],
+  score: 79,
+  bars: { Risk: 86, Trust: 66, Capital: 94, Performance: 65 },
+  tvl: "$333.2M",
+  topDepositors: "37.6% of TVL",
+  apyVsAave: "+0.21 pp",
+  trackRecord: "642 days",
 };
 
-/* ===== SCROLL ANIMATION HOOK ===== */
-function useScrollReveal() {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("visible");
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-  return ref;
-}
+const DOCS_URL = "https://docs.yieldo.xyz/Scoring/scoring-model";
+const ext = { target: "_blank", rel: "noopener noreferrer" };
 
-function AnimatedSection({ children, className = "", style = {} }) {
-  const ref = useScrollReveal();
-  return (
-    <div ref={ref} className={`fade-in-up ${className}`} style={style}>
-      {children}
-    </div>
-  );
-}
+const MONO = "'JetBrains Mono', ui-monospace, monospace";
 
-/* ===== SHARED COMPONENTS ===== */
-function GradientText({ children, style, className = "" }) {
-  return (
-    <span
-      className={className}
-      style={{
-        backgroundImage: COLORS.purple.gradient,
-        WebkitBackgroundClip: "text",
-        WebkitTextFillColor: "transparent",
-        backgroundClip: "text",
-        ...style,
-      }}
-    >
-      {children}
-    </span>
-  );
-}
+const eyebrow = {
+  fontFamily: MONO,
+  fontSize: 13,
+  fontWeight: 600,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase",
+  color: "#00766C",
+};
+const h2Style = { margin: 0, lineHeight: 1.08, fontWeight: 800, letterSpacing: "-0.03em" };
+const bodyP = { margin: 0, fontSize: 17, lineHeight: 1.6, color: "#3A3350" };
+const monoLabels = { display: "flex", justifyContent: "space-between", fontFamily: MONO, fontSize: 12, color: "#5E5773" };
+const signalCard = {
+  padding: 32,
+  borderRadius: 20,
+  background: "#ffffff",
+  border: "1px solid #E3DDEE",
+  display: "flex",
+  flexDirection: "column",
+  gap: 20,
+};
+const signalTitle = { fontSize: 24, fontWeight: 700, letterSpacing: "-0.01em" };
+const signalP = { margin: 0, fontSize: 16, lineHeight: 1.6, color: "#3A3350" };
+const iconProps = {
+  width: 40,
+  height: 40,
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "#4B0CA6",
+  strokeWidth: 1.8,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+};
 
-function PrimaryButton({ children, large, onClick, className = "", style = {} }) {
-  return (
-    <button
-      className={className}
-      onClick={onClick}
-      style={{
-        backgroundImage: COLORS.purple.gradient,
-        boxShadow: COLORS.purple.shadow,
-        borderRadius: 8,
-        padding: large ? "14px 28px" : "12px 18px",
-        border: "none",
-        color: "#fff",
-        fontFamily: "'Outfit', sans-serif",
-        fontWeight: 500,
-        fontSize: large ? 18 : 16,
-        cursor: "pointer",
-        letterSpacing: "-0.01em",
-        ...style,
-      }}
-    >
-      {children}
-    </button>
-  );
-}
+const scoreRows = [
+  ["Risk", "35%", SNAPSHOT.bars.Risk],
+  ["Trust", "25%", SNAPSHOT.bars.Trust],
+  ["Capital", "20%", SNAPSHOT.bars.Capital],
+  ["Performance", "20%", SNAPSHOT.bars.Performance],
+];
 
-function SecondaryButton({ children, onClick, className = "", style = {} }) {
-  return (
-    <button
-      className={className}
-      onClick={onClick}
-      style={{
-        backgroundImage: COLORS.purple.gradientLight,
-        boxShadow: COLORS.purple.shadowLight,
-        borderRadius: 8,
-        padding: "12px 18px",
-        border: "none",
-        fontFamily: "'Outfit', sans-serif",
-        fontWeight: 500,
-        fontSize: 16,
-        cursor: "pointer",
-        backgroundClip: "padding-box",
-        ...style,
-      }}
-    >
-      <GradientText>{children}</GradientText>
-    </button>
-  );
-}
+const reportStats = [
+  ["TVL", SNAPSHOT.tvl, null],
+  ["Top 5 depositors", SNAPSHOT.topDepositors, null],
+  ["Net APY vs Aave base rate", SNAPSHOT.apyVsAave, "#00766C"],
+  ["Track record", SNAPSHOT.trackRecord, null],
+];
 
-function Tag({ children }) {
-  return (
-    <div
-      style={{
-        position: "relative",
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "4px 14px",
-        borderRadius: 100,
-      }}
-    >
-      <span
-        style={{
-          position: "absolute",
-          filter: "blur(6px)",
-          fontWeight: 700,
-          fontSize: 18,
-          color: "rgba(69,150,242,0.8)",
-          letterSpacing: "-0.36px",
-        }}
-      >
-        {children}
-      </span>
-      <span
-        style={{
-          position: "relative",
-          fontSize: 14,
-          color: "rgba(100,100,120,0.9)",
-          fontWeight: 500,
-        }}
-      >
-        {children}
-      </span>
-    </div>
-  );
-}
+const proofItems = [
+  ["100+", "vaults scored"],
+  ["8", "chains covered"],
+  ["48h", "from request to scored report"],
+  ["Public", <>scoring formula &amp; weights. <a href={DOCS_URL} {...ext}>See it</a></>],
+  ["$0", "taken from the vaults we score"],
+];
 
-function SectionHeader({ tag, title, subtitle }) {
-  return (
-    <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-      {tag && <Tag>{tag}</Tag>}
-      <h2
-        className="section-title"
-        style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontSize: 48,
-          fontWeight: 400,
-          color: COLORS.black,
-          textTransform: "uppercase",
-          margin: 0,
-          letterSpacing: "-0.02em",
-          lineHeight: 1.15,
-        }}
-      >
-        {title}
-      </h2>
-      {subtitle && (
-        <p
-          className="section-subtitle"
-          style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: 20,
-            color: COLORS.black,
-            maxWidth: 700,
-            margin: 0,
-            lineHeight: 1.5,
-            opacity: 0.7,
-          }}
-        >
-          {subtitle}
-        </p>
-      )}
-    </div>
-  );
-}
+const problems = [
+  ["APY is inflated", "Incentives and short windows make headline yield look better than what the vault actually earns over time."],
+  ["TVL hides concentration", "A big number can be a handful of wallets. When they leave, liquidity and yield leave with them."],
+  ["Manual DD doesn't scale", "Each vault takes weeks of contract reviews, Dune queries and Discord reading, and the work is stale the day after."],
+];
 
-function CheckItem({ children }) {
-  return (
-    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0 }}>
-        <rect x="2" y="2" width="20" height="20" rx="4" stroke="#7A1CCB" strokeWidth="1.5" />
-        <path d="M8 12.5L11 15.5L16 9.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-      <span style={{ fontSize: 16, color: "rgba(0,0,0,0.6)", fontFamily: "'Outfit', sans-serif" }}>
-        {children}
-      </span>
-    </div>
-  );
-}
+const offers = [
+  ["01", "Yieldo Score for every vault you send", "One composite number and four dimension scores, comparable across protocols, curators and chains."],
+  ["02", "The data room behind the score", "Admin and pause history, depositor concentration, yield vs. Aave base rate. The raw on-chain evidence, ready to paste into your memo."],
+  ["03", "Live alerts in Telegram", "HIGH, MEDIUM and LOW alerts on the vaults your wallets hold. Pauses, admin changes, depositor exits, yield collapses."],
+  ["04", "A methodology you can audit", "The composite formula and weights are public. You can defend every number to your LPs."],
+];
 
-function StatCard({ number, label, sublabel }) {
+const alertBadge = {
+  padding: "4px 10px",
+  borderRadius: 6,
+  fontFamily: MONO,
+  fontSize: 12,
+  fontWeight: 700,
+};
+const alerts = [
+  ["HIGH", { background: "#ffffff", color: "#140A2A" }, "[Vault] contract paused by admin multisig", "example · 14:02 UTC"],
+  ["MED", { background: "#9E3BFF", color: "#ffffff" }, "Top depositor withdrew 18% of [Vault] TVL", "example · 09:41 UTC"],
+  ["LOW", { border: "1.5px solid #A99FC0", color: "#CFC7E0" }, "[Vault] APY fell below Aave base rate (7d)", "example · yesterday"],
+];
+
+const steps = [
+  ["1", "Send your vaults", "The shortlist you're evaluating, plus the wallet addresses you want monitored."],
+  ["2", "Scored within 48 hours", "Every vault scored, with the underlying data loaded into your dashboard."],
+  ["3", "Monitored from then on", "Ongoing Telegram alerts for every vault your wallets hold."],
+];
+
+function Nav() {
   return (
-    <div
-      className="stat-card"
-      style={{
-        flex: "1 1 0",
-        padding: "32px 28px",
-        borderRadius: 12,
-        background: "rgba(122,28,203,0.04)",
-        border: "1px solid rgba(122,28,203,0.08)",
-        textAlign: "center",
-      }}
-    >
-      <div style={{ fontSize: 40, fontWeight: 500, fontFamily: "'Outfit', sans-serif" }}>
-        <GradientText>{number}</GradientText>
+    <nav style={{ borderBottom: "1px solid #ECE8F3" }}>
+      <div className="fh-wrap fh-nav">
+        <a href="#top" style={{ display: "flex", alignItems: "center", gap: 12, color: "#140A2A" }}>
+          <img src="/yieldo-new.png" alt="" width={32} height={32} style={{ width: 32, height: 32, borderRadius: 8, objectFit: "cover" }} />
+          <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: "-0.02em" }}>Yieldo</span>
+        </a>
+        <div className="fh-nav-links">
+          <a className="fh-nav-link" href="#signals" style={{ color: "#3A3350" }}>What we check</a>
+          <a className="fh-nav-link" href="#how" style={{ color: "#3A3350" }}>How it works</a>
+          <a className="fh-nav-link" href={DOCS_URL} {...ext} style={{ color: "#3A3350" }}>Methodology</a>
+          <a className="fh-nav-cta" href="#scan" style={{ borderRadius: 10, background: "#4B0CA6", color: "#ffffff", fontWeight: 600 }}>
+            Request a vault scan
+          </a>
+        </div>
       </div>
-      <div style={{ fontSize: 16, color: COLORS.black, fontWeight: 500, marginTop: 4 }}>{label}</div>
-      {sublabel && <div style={{ fontSize: 13, color: "rgba(0,0,0,0.45)", marginTop: 4 }}>{sublabel}</div>}
-    </div>
+    </nav>
   );
 }
 
-// Icons
-function PlugIcon() {
+function Hero() {
   return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="rgba(122,28,203,0.08)" />
-      <path d="M14 18H26M14 22H26M18 14V18M22 14V18M16 26H24C25.1046 26 26 25.1046 26 24V18H14V24C14 25.1046 14.8954 26 16 26Z" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function ShieldIcon() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="rgba(122,28,203,0.08)" />
-      <path d="M20 28C20 28 27 24 27 19V14L20 12L13 14V19C13 24 20 28 20 28Z" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M17 19.5L19 21.5L23 17.5" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function DollarIcon() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="rgba(122,28,203,0.08)" />
-      <circle cx="20" cy="20" r="7" stroke="#7A1CCB" strokeWidth="1.5" />
-      <path d="M20 16V24M18 18C18 17.4 18.9 17 20 17C21.1 17 22 17.4 22 18C22 18.8 20 19 20 20C20 20.6 20.9 21 22 21C21.1 23 18 22.6 18 22" stroke="#7A1CCB" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function LayersIcon() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-      <rect width="40" height="40" rx="10" fill="rgba(122,28,203,0.08)" />
-      <path d="M20 14L28 18L20 22L12 18L20 14Z" stroke="#7A1CCB" strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M12 22L20 26L28 22" stroke="#7A1CCB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-/* ===== HAMBURGER ICON ===== */
-function HamburgerIcon({ open }) {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#121212" strokeWidth="2" strokeLinecap="round">
-      {open ? (
-        <>
-          <line x1="6" y1="6" x2="18" y2="18" />
-          <line x1="6" y1="18" x2="18" y2="6" />
-        </>
-      ) : (
-        <>
-          <line x1="4" y1="7" x2="20" y2="7" />
-          <line x1="4" y1="12" x2="20" y2="12" />
-          <line x1="4" y1="17" x2="20" y2="17" />
-        </>
-      )}
-    </svg>
-  );
-}
-
-export default function YieldoHomepage() {
-  const navigate = useNavigate();
-  const [hoveredPillar, setHoveredPillar] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [navScrolled, setNavScrolled] = useState(false);
-
-  // Track scroll for nav shadow
-  useEffect(() => {
-    const onScroll = () => setNavScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileMenuOpen]);
-
-  const navTo = (path) => {
-    setMobileMenuOpen(false);
-    navigate(path);
-  };
-
-  return (
-    <div style={{ fontFamily: "'Outfit', sans-serif", background: "#fff", color: COLORS.black, overflowX: "hidden" }}>
-      {/* NAV */}
-      <nav
-        className="main-nav section-padding"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px clamp(16px, 5vw, 260px)",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          background: navScrolled ? "rgba(255,255,255,0.92)" : "#fff",
-          backdropFilter: navScrolled ? "blur(16px)" : "none",
-          WebkitBackdropFilter: navScrolled ? "blur(16px)" : "none",
-          boxShadow: navScrolled ? "0 1px 12px rgba(0,0,0,0.06)" : "none",
-          transition: "all 0.3s ease",
-        }}
-      >
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none", color: "inherit", cursor: "pointer" }}>
-          <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 32, height: 32, borderRadius: 8 }} />
-          <span style={{ fontSize: 18, fontWeight: 600, color: COLORS.black, letterSpacing: "0.05em" }}>YIELDO</span>
-        </Link>
-        <div className="nav-links">
-          <Link to="/wallet" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Wallets</Link>
-          <Link to="/vault" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Vaults</Link>
-          <Link to="/creator" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>For Creators</Link>
-          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" style={{ padding: "8px 18px", fontSize: 15, color: "rgba(0,0,0,0.6)", cursor: "pointer", textDecoration: "none", borderRadius: 6, transition: "background 0.2s" }}>Docs</a>
-        </div>
-        <div className="nav-actions">
-          <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer"
-             aria-label="Yieldo on X" title="Yieldo on X"
-             style={{ height: 38, width: 38, padding: 0, borderRadius: 8, background: "#000",
-                      color: "#fff", display: "inline-flex", alignItems: "center",
-                      justifyContent: "center", textDecoration: "none", boxSizing: "border-box",
-                      transition: "transform .15s, background .15s", flexShrink: 0 }}
-             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#1a1a1a"; }}
-             onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#000"; }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
-          <a href="https://discord.gg/5qvKa5FhjM" target="_blank" rel="noopener noreferrer"
-             aria-label="Yieldo on Discord" title="Yieldo on Discord"
-             style={{ height: 38, width: 38, padding: 0, borderRadius: 8, background: "#5865F2",
-                      color: "#fff", display: "inline-flex", alignItems: "center",
-                      justifyContent: "center", textDecoration: "none", boxSizing: "border-box",
-                      transition: "transform .15s, background .15s", flexShrink: 0 }}
-             onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.background = "#4752C4"; }}
-             onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#5865F2"; }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-            </svg>
-          </a>
-          <button style={{ height: 38, padding: "0 18px", borderRadius: 8, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 15, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", boxSizing: "border-box" }} onClick={() => navigate("/apply")}>Integrate Now</button>
-          <PrimaryButton onClick={() => window.open("https://app.yieldo.xyz", "_blank")}>Open App</PrimaryButton>
-        </div>
-        <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Menu">
-          <HamburgerIcon open={mobileMenuOpen} />
-        </button>
-      </nav>
-
-      {/* MOBILE MENU */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-overlay">
-          <button
-            onClick={() => setMobileMenuOpen(false)}
-            style={{ position: "absolute", top: 16, right: 16, background: "none", border: "none", cursor: "pointer", padding: 8 }}
-            aria-label="Close menu"
-          >
-            <HamburgerIcon open={true} />
-          </button>
-          <Link to="/wallet" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Wallets</Link>
-          <Link to="/vault" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Vaults</Link>
-          <Link to="/creator" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>For Creators</Link>
-          <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>Docs</a>
-          <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>X / @YieldoHQ</a>
-          <a href="https://discord.gg/5qvKa5FhjM" target="_blank" rel="noopener noreferrer" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(0,0,0,0.7)", textDecoration: "none", fontWeight: 500 }}>Discord</a>
-          <div style={{ marginTop: 24, display: "flex", flexDirection: "column", gap: 12 }}>
-            <PrimaryButton large onClick={() => { setMobileMenuOpen(false); window.open("https://app.yieldo.xyz", "_blank"); }} style={{ borderRadius: 12, width: "100%" }}>Open App</PrimaryButton>
-            <button style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)" }} onClick={() => { setMobileMenuOpen(false); navTo("/apply"); }}>Integrate Now</button>
+    <section>
+      <div className="fh-wrap fh-hero">
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          <div style={{ ...eyebrow, display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#00C6B5", flexShrink: 0 }} />
+            Independent vault analytics for allocators
           </div>
-        </div>
-      )}
-
-      {/* HERO */}
-      <section
-        className="hero-section section-padding"
-        style={{
-          padding: "140px clamp(16px, 5vw, 260px) 80px",
-          textAlign: "center",
-          position: "relative",
-          overflow: "hidden",
-          marginTop: "72px",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: -200,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: 1400,
-            height: 800,
-            background: "radial-gradient(ellipse at center, rgba(212,205,255,0.4) 0%, rgba(255,255,255,0) 70%)",
-            pointerEvents: "none",
-          }}
-        />
-        <div style={{ position: "relative", zIndex: 1 }}>
-          <Tag>The Yield Gateway</Tag>
-          <h1
-            className="hero-title"
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: 64,
-              fontWeight: 400,
-              textTransform: "uppercase",
-              lineHeight: 1.1,
-              margin: "24px auto 0",
-              maxWidth: 900,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            The Stripe for<br />
-            <GradientText className="hero-title" style={{ fontWeight: 400 }}>on-chain yield</GradientText>
+          <h1 className="fh-h1" style={{ margin: 0, lineHeight: 1.02, fontWeight: 800, letterSpacing: "-0.035em" }}>
+            Due diligence for on-chain yield. <span style={{ color: "#4B0CA6" }}>In 48 hours, not weeks.</span>
           </h1>
-          <p className="hero-desc" style={{ fontSize: 22, maxWidth: 700, margin: "28px auto 0", lineHeight: 1.6, color: "rgba(0,0,0,0.6)" }}>
-            One API. Every vault. Automatic revenue share.
-            <br />
-            Stop integrating 20 protocols. Plug in Yieldo and ship yield in days.
+          <p style={{ margin: 0, fontSize: 21, lineHeight: 1.55, color: "#3A3350", maxWidth: 560 }}>
+            Yieldo scores and monitors DeFi vaults on raw on-chain data, so your team decides on evidence, not on APY screenshots and TVL headlines.
           </p>
-          <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", marginTop: 40 }}>
-            <PrimaryButton className="hero-btn-desktop-only" large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-            <button className="hero-btn-desktop-only" onClick={() => window.open("https://docs.yieldo.xyz", "_blank")} style={{ backgroundImage: COLORS.purple.gradientLight, boxShadow: COLORS.purple.shadowLight, borderRadius: 8, padding: "12px 18px", border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 16, cursor: "pointer" }}><GradientText>View Documentation →</GradientText></button>
-            <PrimaryButton className="hero-btn-mobile-only" large onClick={() => window.open("https://app.yieldo.xyz", "_blank")} style={{ borderRadius: 12, width: "100%" }}>Open App</PrimaryButton>
-            <button className="hero-btn-mobile-only" onClick={() => navigate("/apply")} style={{ padding: "16px", borderRadius: 12, border: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 500, fontSize: 18, cursor: "pointer", background: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.6)", width: "100%" }}>Integrate Now</button>
+          <div className="fh-hero-btns">
+            <a href="#scan" style={{ padding: "18px 28px", borderRadius: 12, background: "linear-gradient(135deg, #4B0CA6, #7A1CCB)", color: "#ffffff", fontSize: 17, fontWeight: 600 }}>
+              Send us vaults to score
+            </a>
+            <a href={DOCS_URL} {...ext} style={{ padding: "17px 26px", borderRadius: 12, border: "1.5px solid #D6CCE8", color: "#140A2A", fontSize: 17, fontWeight: 600 }}>
+              Read the methodology
+            </a>
           </div>
+          <p style={{ margin: 0, fontSize: 14, color: "#5E5773" }}>We don't tell you where to allocate. We give you the data to decide.</p>
         </div>
-      </section>
 
-      {/* PROBLEM / WHY */}
-      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
-        <AnimatedSection>
-          <SectionHeader
-            tag="The Problem"
-            title="Resource exhaustion kills wallet yield features"
-            subtitle="Wallets face an impossible trilemma when trying to offer yield: too many protocols, zero monetization path, and unbearable complexity."
-          />
-        </AnimatedSection>
-        <div className="cards-row" style={{ marginTop: 64 }}>
-          {[
-            {
-              icon: <LayersIcon />,
-              title: "Market Fragmentation",
-              desc: "Morpho, Aave, Compound, Yearn, Pendle. 20+ protocols across multiple chains. Each one is a separate integration nightmare for your engineering team.",
-              stat: "20+",
-              statLabel: "protocols to integrate",
-            },
-            {
-              icon: <DollarIcon />,
-              title: "Missing Incentives",
-              desc: "Protocols want liquidity, not wallet partnerships. They have zero motivation to set up revenue-share for your distribution. Yield is a cost center, not a profit center.",
-              stat: "0 bps",
-              statLabel: "revenue for wallets today",
-            },
-            {
-              icon: <ShieldIcon />,
-              title: "Complexity Overload",
-              desc: "Different vaults, different risks, different scoring systems. Which vault do you show first? How do you explain risk to users? You need curated middleware.",
-              stat: "∞",
-              statLabel: "risk combinations",
-            },
-          ].map((item, i) => (
-            <AnimatedSection
-              key={i}
-              className="card-item"
-              style={{
-                padding: 32,
-                borderRadius: 16,
-                background: "#fff",
-                border: "1px solid rgba(122,28,203,0.08)",
-                display: "flex",
-                flexDirection: "column",
-                gap: 16,
-                transitionDelay: `${i * 0.1}s`,
-              }}
-            >
-              {item.icon}
-              <h3 style={{ fontSize: 20, fontWeight: 600, margin: 0, letterSpacing: "-0.01em" }}>{item.title}</h3>
-              <p style={{ fontSize: 15, color: "rgba(0,0,0,0.55)", lineHeight: 1.6, margin: 0, flex: 1 }}>{item.desc}</p>
-              <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 16, marginTop: 8 }}>
-                <GradientText style={{ fontSize: 28, fontWeight: 600 }}>{item.stat}</GradientText>
-                <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{item.statLabel}</div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-      </section>
-
-      {/* THREE PILLARS */}
-      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
-        <AnimatedSection>
-          <SectionHeader
-            tag="USP"
-            title="Your Yield Infrastructure Layer"
-            subtitle="Three pillars that turn yield from a maintenance burden into a revenue stream."
-          />
-        </AnimatedSection>
-        <div className="cards-row" style={{ marginTop: 64 }}>
-          {[
-            {
-              id: "zero",
-              icon: <PlugIcon />,
-              label: "Zero-Maintenance Yield",
-              title: "Integrate once, access every vault",
-              bullets: [
-                "Single API/SDK for all top yield protocols",
-                "Morpho, Aave, Pendle + dozens more, auto-updated",
-                "Multi-chain routing out of the box",
-                "No per-protocol maintenance",
-              ],
-            },
-            {
-              id: "rev",
-              icon: <DollarIcon />,
-              label: "Revenue-as-a-Service",
-              title: "Yield becomes your profit center",
-              bullets: [
-                "Automatic revenue share from 10 bps entry fee",
-                "No custom fee-taking smart contracts needed",
-                "Transparent on-chain tracking & dashboards",
-                "You earn while users earn",
-              ],
-            },
-            {
-              id: "risk",
-              icon: <ShieldIcon />,
-              label: "Risk-Layer Abstraction",
-              title: "Curator of curators",
-              bullets: [
-                "Aggregated scores from Credora, Bluechip & more",
-                "Standardized risk format for your UI",
-                "AI-curated strategy recommendations",
-                "You're a platform, not an advisor",
-              ],
-            },
-          ].map((pillar, i) => (
-            <AnimatedSection
-              key={pillar.id}
-              className="card-item"
-              style={{
-                padding: 32,
-                borderRadius: 16,
-                background: hoveredPillar === pillar.id ? "rgba(122,28,203,0.05)" : "#fff",
-                border: hoveredPillar === pillar.id ? "1px solid rgba(122,28,203,0.2)" : "1px solid rgba(0,0,0,0.06)",
-                boxShadow: hoveredPillar === pillar.id ? "0 8px 32px rgba(122,28,203,0.1)" : "none",
-                transition: "all 0.3s ease",
-                display: "flex",
-                flexDirection: "column",
-                gap: 20,
-                cursor: "default",
-                transitionDelay: `${i * 0.1}s`,
-              }}
-            >
-              <div
-                onMouseEnter={() => setHoveredPillar(pillar.id)}
-                onMouseLeave={() => setHoveredPillar(null)}
-                style={{ display: "flex", flexDirection: "column", gap: 20, flex: 1 }}
-              >
-                {pillar.icon}
-                <GradientText style={{ fontSize: 14, fontWeight: 600, letterSpacing: "0.02em" }}>{pillar.label}</GradientText>
-                <h3 style={{ fontSize: 22, fontWeight: 600, margin: 0, lineHeight: 1.3, letterSpacing: "-0.01em" }}>{pillar.title}</h3>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {pillar.bullets.map((b, j) => (
-                    <CheckItem key={j}>{b}</CheckItem>
+        <div style={{ border: "1px solid #E3DDEE", borderRadius: 20, background: "#ffffff", boxShadow: "0 24px 60px rgba(75, 12, 166, 0.10)", overflow: "hidden" }}>
+          <div style={{ padding: "18px 28px", display: "flex", justifyContent: "space-between", alignItems: "center", background: "#FAF8FD", borderBottom: "1px solid #ECE8F3", fontFamily: MONO, fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "#5E5773" }}>
+            <span>Vault report</span>
+            <span style={{ padding: "4px 10px", borderRadius: 6, background: "#ECE8F3", color: "#3A3350" }}>Snapshot · {SNAPSHOT.date}</span>
+          </div>
+          <div className="fh-report-body">
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <div style={{ fontSize: 22, fontWeight: 700 }}>{SNAPSHOT.name}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, fontSize: 13, fontWeight: 500 }}>
+                  {SNAPSHOT.tags.map((t) => (
+                    <span key={t} style={{ padding: "4px 10px", borderRadius: 6, background: "#F1ECFA", color: "#4B0CA6" }}>{t}</span>
                   ))}
                 </div>
               </div>
-            </AnimatedSection>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 64, lineHeight: 1, fontWeight: 800, letterSpacing: "-0.04em", color: "#4B0CA6" }}>{SNAPSHOT.score}</div>
+                <div style={{ fontSize: 13, color: "#5E5773", marginTop: 4 }}>Yieldo Score / 100</div>
+              </div>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {scoreRows.map(([label, weight, value]) => (
+                <div key={label} className="fh-bar-row">
+                  <span style={{ fontWeight: 600 }}>
+                    {label} <span style={{ color: "#5E5773", fontWeight: 400 }}>· {weight}</span>
+                  </span>
+                  <span style={{ height: 8, borderRadius: 4, background: "#F1ECFA", display: "block" }}>
+                    <span style={{ display: "block", height: 8, width: `${value}%`, borderRadius: 4, background: "#4B0CA6" }} />
+                  </span>
+                  <span style={{ textAlign: "right", fontFamily: "'JetBrains Mono', monospace", fontWeight: 600 }}>{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: 12 }}>
+              {reportStats.map(([label, value, color]) => (
+                <div key={label} style={{ padding: "14px 16px", borderRadius: 12, border: "1px solid #ECE8F3" }}>
+                  <div style={{ fontSize: 12, color: "#5E5773" }}>{label}</div>
+                  <div style={{ fontSize: 18, fontWeight: 700, marginTop: 4, ...(color ? { color } : {}) }}>{value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProofStrip() {
+  return (
+    <section>
+      <div className="fh-wrap">
+        <div className="fh-proof">
+          {proofItems.map(([big, small]) => (
+            <div key={big}>
+              <div style={{ fontSize: 40, fontWeight: 800, letterSpacing: "-0.03em", color: "#4B0CA6" }}>{big}</div>
+              <div style={{ fontSize: 14, color: "#3A3350", marginTop: 4 }}>{small}</div>
+            </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* LIVE YIELD TABLE */}
-      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)", background: "rgba(122,28,203,0.02)" }}>
-        <AnimatedSection>
-          <SectionHeader
-            tag="Live Preview"
-            title="Top AI-curated Yield Opportunities"
-            subtitle="Preview the strategies your users will see. Real protocols, real yields, real-time updates."
-          />
-        </AnimatedSection>
-        <AnimatedSection style={{ marginTop: 56 }}>
-          <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(0,0,0,0.06)", background: "#fff" }}>
+function Problem() {
+  return (
+    <section>
+      <div className="fh-wrap fh-py-lg fh-stack">
+        <div style={{ display: "flex", flexDirection: "column", gap: 18, maxWidth: 820 }}>
+          <div style={eyebrow}>The problem</div>
+          <h2 className="fh-h2" style={h2Style}>APY and TVL are marketing numbers. Your IC needs evidence.</h2>
+        </div>
+        <div className="fh-grid3" style={{ gap: 32 }}>
+          {problems.map(([title, body]) => (
+            <div key={title} style={{ paddingTop: 28, borderTop: "3px solid #4B0CA6", display: "flex", flexDirection: "column", gap: 12 }}>
+              <div style={{ fontSize: 22, fontWeight: 700 }}>{title}</div>
+              <p style={bodyP}>{body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Signals() {
+  return (
+    <section id="signals" style={{ background: "#FAF8FD" }}>
+      <div className="fh-wrap fh-py-md fh-stack">
+        <div className="fh-sig-head">
+          <div style={{ display: "flex", flexDirection: "column", gap: 18, maxWidth: 760 }}>
+            <div style={eyebrow}>What we check</div>
+            <h2 className="fh-h2" style={h2Style}>The signals you won't find on a yield dashboard.</h2>
+          </div>
+          <p style={{ ...bodyP, maxWidth: 400 }}>
+            Every vault is scored on four weighted dimensions (Risk 35%, Trust 25%, Capital 20%, Performance 20%) and benchmarked against Aave V3.
+          </p>
+        </div>
+
+        <div className="fh-grid3" style={{ gap: 24 }}>
+          <div style={signalCard}>
+            <svg {...iconProps}><rect x="3" y="3" width="18" height="18" rx="4" /><path d="M10 8v8" /><path d="M14 8v8" /></svg>
+            <div style={signalTitle}>Pause &amp; admin history</div>
+            <p style={signalP}>Has the contract ever been paused, upgraded or had parameters changed? When, by whom, and how fast did it recover?</p>
+            <div style={{ marginTop: "auto", display: "flex", gap: 6, alignItems: "center" }}>
+              <span style={{ flexGrow: 1, height: 6, borderRadius: 3, background: "#D6CCE8" }} />
+              <span style={{ width: 14, height: 14, borderRadius: "50%", background: "#4B0CA6" }} />
+              <span style={{ flexGrow: 1, height: 6, borderRadius: 3, background: "#D6CCE8" }} />
+              <span style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid #4B0CA6", boxSizing: "border-box" }} />
+              <span style={{ flexGrow: 2, height: 6, borderRadius: 3, background: "#D6CCE8" }} />
+            </div>
+            <div style={monoLabels}><span>deploy</span><span>paused</span><span>upgrade</span><span>today</span></div>
+          </div>
+
+          <div style={signalCard}>
+            <svg {...iconProps}><circle cx="12" cy="12" r="9" /><path d="M12 3v9l6.4 6.4" /></svg>
+            <div style={signalTitle}>Depositor concentration</div>
+            <p style={signalP}>What share of TVL sits in the top wallets, and what the vault looks like if they withdraw tomorrow.</p>
+            <div style={{ marginTop: "auto", display: "flex", height: 28, borderRadius: 8, overflow: "hidden" }}>
+              <span style={{ width: "38%", background: "#4B0CA6" }} />
+              <span style={{ width: "22%", background: "#9E3BFF" }} />
+              <span style={{ width: "40%", background: "#E3DDEE" }} />
+            </div>
+            <div style={monoLabels}><span>top 10</span><span>next 40</span><span>everyone else</span></div>
+          </div>
+
+          <div style={signalCard}>
+            <svg {...iconProps}><path d="M3 17l6-6 4 4 8-8" /><path d="M3 21h18" /></svg>
+            <div style={signalTitle}>Yield vs. the on-chain T-bill</div>
+            <p style={signalP}>How the vault's APY moves against Aave's base lending rate over time. Is the extra risk actually paid for?</p>
+            <svg style={{ marginTop: "auto" }} width="100%" height="64" viewBox="0 0 300 64" preserveAspectRatio="none" fill="none">
+              <path d="M0 30 L40 26 L80 20 L120 28 L160 18 L200 22 L240 14 L300 18" stroke="#4B0CA6" strokeWidth="2.5" />
+              <path d="M0 44 L40 43 L80 42 L120 44 L160 41 L200 42 L240 40 L300 41" stroke="#00C6B5" strokeWidth="2.5" strokeDasharray="5 4" />
+            </svg>
+            <div style={{ ...monoLabels, justifyContent: "flex-start", gap: 20 }}><span>— vault APY</span><span>- - Aave base rate</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Offer() {
+  return (
+    <section>
+      <div className="fh-wrap fh-py-xl fh-offer">
+        <div style={{ display: "flex", flexDirection: "column", gap: 22 }}>
+          <div style={eyebrow}>What you get</div>
+          <h2 className="fh-h2" style={h2Style}>The Yieldo Allocator Desk.</h2>
+          <p style={{ margin: 0, fontSize: 19, lineHeight: 1.6, color: "#3A3350" }}>
+            Everything your team needs to put a vault in front of the investment committee, and to know when something changes after you're in.
+          </p>
+          <div style={{ marginTop: 12, width: 64, height: 4, borderRadius: 2, background: "linear-gradient(90deg, #4B0CA6, #9E3BFF)" }} />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {offers.map(([num, title, body], i) => (
             <div
-              className="yield-table-header"
+              key={num}
               style={{
+                padding: "28px 0",
+                borderTop: "1px solid #E3DDEE",
+                ...(i === offers.length - 1 ? { borderBottom: "1px solid #E3DDEE" } : {}),
                 display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr 1fr 80px",
-                padding: "14px 20px",
-                background: "rgba(122,28,203,0.04)",
-                fontSize: 13,
-                fontWeight: 600,
-                color: "rgba(0,0,0,0.5)",
-                textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                gridTemplateColumns: "72px minmax(0, 1fr)",
+                gap: 24,
               }}
             >
-              <span>Strategy</span>
-              <span>APY Range</span>
-              <span>Risk</span>
-              <span>Chain</span>
-              <span></span>
+              <div style={{ fontSize: 44, fontWeight: 800, lineHeight: 1, color: "#D6CCE8" }}>{num}</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ fontSize: 24, fontWeight: 700 }}>{title}</div>
+                <p style={bodyP}>{body}</p>
+              </div>
             </div>
-            {[
-              { name: "USDC Lending Optimizer", type: "Morpho + Aave", apy: "8.2% → 14.5%", risk: "Low", riskColor: "#1a9d3f", chain: "Ethereum" },
-              { name: "ETH Staking Yield", type: "Lido + Pendle", apy: "5.1% → 9.8%", risk: "Medium", riskColor: "#b8960a", chain: "Ethereum" },
-              { name: "Stablecoin Compounder", type: "Yearn + Morpho", apy: "12.5% → 34%", risk: "Low", riskColor: "#1a9d3f", chain: "Base" },
-            ].map((row, i) => (
-              <div
-                key={i}
-                className="yield-table-row"
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "2fr 1fr 1fr 1fr 80px",
-                  padding: "18px 20px",
-                  borderTop: "1px solid rgba(0,0,0,0.04)",
-                  alignItems: "center",
-                  fontSize: 15,
-                  transition: "background 0.15s",
-                }}
-              >
-                <div>
-                  <div style={{ fontWeight: 500 }}>{row.name}</div>
-                  <div style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", marginTop: 2 }}>{row.type}</div>
-                </div>
-                <div style={{ fontWeight: 500 }}>
-                  <span style={{ color: "#f24548" }}>{row.apy.split("→")[0]}</span>
-                  <span style={{ color: "rgba(0,0,0,0.3)", margin: "0 4px" }}>→</span>
-                  <span style={{ color: "#1a9d3f" }}>{row.apy.split("→")[1]}</span>
-                </div>
-                <div>
-                  <span
-                    style={{
-                      padding: "4px 10px",
-                      borderRadius: 6,
-                      background: `${row.riskColor}15`,
-                      border: `1px solid ${row.riskColor}30`,
-                      color: row.riskColor,
-                      fontSize: 13,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {row.risk}
-                  </span>
-                </div>
-                <div style={{ color: "rgba(0,0,0,0.6)" }}>{row.chain}</div>
-                <div style={{ textAlign: "right" }}>
-                  <span style={{ cursor: "pointer", color: "#7A1CCB", fontSize: 18 }}>→</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AlertPreview() {
+  return (
+    <section>
+      <div className="fh-wrap">
+        <div className="fh-alert">
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            <div style={{ ...eyebrow, color: "#00C6B5" }}>Monitoring</div>
+            <h3 className="fh-h3" style={{ margin: 0, lineHeight: 1.12, fontWeight: 800, letterSpacing: "-0.02em", color: "#ffffff" }}>
+              Know before it's on Crypto Twitter.
+            </h3>
+            <p style={{ ...bodyP, color: "#CFC7E0" }}>Alerts are tiered by severity, so a parameter tweak doesn't wake you up and a pause does.</p>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {alerts.map(([level, badge, text, meta]) => (
+              <div key={level} style={{ padding: "18px 20px", borderRadius: 14, background: "#241640", display: "flex", gap: 16, alignItems: "flex-start" }}>
+                <span style={{ ...alertBadge, ...badge }}>{level}</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  <span style={{ color: "#ffffff", fontSize: 16, fontWeight: 600 }}>{text}</span>
+                  <span style={{ color: "#A99FC0", fontSize: 13, fontFamily: MONO }}>{meta}</span>
                 </div>
               </div>
             ))}
           </div>
-        </AnimatedSection>
-      </section>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-      {/* HOW IT WORKS */}
-      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
-        <AnimatedSection>
-          <SectionHeader
-            tag="Integration"
-            title="How It Works"
-            subtitle="Go from zero to yield in three steps. No smart contract development required."
-          />
-        </AnimatedSection>
-        <div className="steps-row" style={{ marginTop: 64 }}>
-          {[
-            {
-              step: "01",
-              title: "Integrate",
-              desc: "Drop in our SDK or call our API. One endpoint, standardized data for all vaults.",
-              icon: "🔌",
-            },
-            {
-              step: "02",
-              title: "Curate",
-              desc: "Choose which strategies to show your users. AI-scored, risk-rated, auto-updated.",
-              icon: "⭐",
-            },
-            {
-              step: "03",
-              title: "Earn",
-              desc: "Automatic revenue share from every deposit. Track your AUM-time in real-time dashboards.",
-              icon: "💰",
-            },
-          ].map((s, i) => (
-            <AnimatedSection key={i} className="step-item" style={{ textAlign: "center", position: "relative", transitionDelay: `${i * 0.15}s` }}>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: 280,
-                  height: 120,
-                  background: "radial-gradient(ellipse at center, rgba(122,28,203,0.08) 0%, transparent 70%)",
-                  pointerEvents: "none",
-                }}
-              />
-              <div style={{ position: "relative" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 16px" }}>
-                  <GradientText style={{ fontSize: 14, opacity: 0.5 }}>STEP</GradientText>
-                  <GradientText style={{ fontSize: 48, opacity: 0.3 }}>{s.step}</GradientText>
-                </div>
-                <div style={{ fontSize: 48, margin: "8px 0 16px" }}>{s.icon}</div>
-                <h3 style={{ fontSize: 36, fontWeight: 400, margin: "0 0 12px" }}>{s.title}</h3>
-                <p style={{ fontSize: 15, color: "rgba(0,0,0,0.55)", lineHeight: 1.6, maxWidth: 300, margin: "0 auto" }}>{s.desc}</p>
-              </div>
-            </AnimatedSection>
+function HowItWorks() {
+  return (
+    <section id="how">
+      <div className="fh-wrap fh-py-lg fh-stack">
+        <div style={{ display: "flex", flexDirection: "column", gap: 18, maxWidth: 760 }}>
+          <div style={eyebrow}>How it works</div>
+          <h2 className="fh-h2" style={h2Style}>Three steps. No integration.</h2>
+        </div>
+        <div className="fh-grid3" style={{ gap: 24 }}>
+          {steps.map(([n, title, body]) => (
+            <div key={n} style={{ padding: 36, borderRadius: 20, border: "1px solid #E3DDEE", display: "flex", flexDirection: "column", gap: 16 }}>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: "#4B0CA6", color: "#ffffff", fontSize: 20, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>{n}</div>
+              <div style={{ fontSize: 24, fontWeight: 700 }}>{title}</div>
+              <p style={bodyP}>{body}</p>
+            </div>
           ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      {/* ECONOMICS */}
-      <section className="section-padding" style={{ padding: "80px clamp(16px, 5vw, 260px)" }}>
-        <AnimatedSection>
-          <div
-            className="economics-box"
-            style={{
-              borderRadius: 16,
-              padding: "64px 80px",
-              background: COLORS.purple.gradientBg,
-              boxShadow: "0px 0px 47px 0px rgba(122,28,203,0.08)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 200,
-                background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.15) 0%, transparent 70%)",
-                pointerEvents: "none",
-              }}
-            />
-            <div style={{ position: "relative", textAlign: "center" }}>
-              <Tag>Economics</Tag>
-              <h2 className="section-title" style={{ fontSize: 48, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 40px", letterSpacing: "-0.02em" }}>
-                Transparent & Aligned
-              </h2>
-              <div className="economics-stats" style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
-                <StatCard number="10 bps" label="Entry Fee" sublabel="0.1%, industry lowest" />
-                <StatCard number="5 bps" label="Your Revenue Share" sublabel="50% goes directly to you" />
-                <StatCard number="$500K+" label="Annual at $500M Volume" sublabel="Scales with your AUM" />
-                <StatCard number="0" label="Dev Overhead" sublabel="No smart contract work needed" />
-              </div>
-            </div>
-          </div>
-        </AnimatedSection>
-      </section>
+const emailOk = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+const MSG_FINE = "No newsletter. We only use your email to reply.";
+const MSG_INVALID = "Fill in name, firm, a valid work email and at least one vault.";
+const MSG_FAILED = "Something went wrong and your request was not sent. Please try again, or message us on X @YieldoHQ.";
 
-      {/* VISION */}
-      <section className="section-padding section-v-padding" style={{ padding: "100px clamp(16px, 5vw, 260px)" }}>
-        <AnimatedSection>
-          <SectionHeader
-            tag="Vision"
-            title="The Most Trusted Filter in DeFi"
-            subtitle="From curated middleware to decentralized yield governance."
-          />
-        </AnimatedSection>
-        <div className="vision-row" style={{ marginTop: 56 }}>
-          {[
-            { phase: "Today", title: "Curated Middleware", desc: "Yieldo selects vaults based on external scoring (Credora, Bluechip). One API, best yields." },
-            { phase: "Tomorrow", title: "Community Governance", desc: "Token holders and curators vote on which vaults enter the Recommended tier for partner wallets." },
-            { phase: "Future", title: "Chainlink for Yield", desc: "Decentralized curation network. Risk ownership shifts to the system. Yieldo becomes the trust layer." },
-          ].map((v, i) => (
-            <AnimatedSection key={i} className="vision-item" style={{ textAlign: "center", position: "relative", zIndex: 1, marginBottom: 40, transitionDelay: `${i * 0.15}s` }}>
-              <div
-                style={{
-                  width: 14,
-                  height: 14,
-                  borderRadius: "50%",
-                  backgroundImage: COLORS.purple.gradient,
-                  margin: "0 auto 20px",
-                  boxShadow: "0 0 12px rgba(122,28,203,0.4)",
-                }}
-              />
-              <GradientText style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>{v.phase}</GradientText>
-              <h3 style={{ fontSize: 20, fontWeight: 600, margin: "8px 0", letterSpacing: "-0.01em" }}>{v.title}</h3>
-              <p style={{ fontSize: 14, color: "rgba(0,0,0,0.5)", lineHeight: 1.6, maxWidth: 280, margin: "0 auto" }}>{v.desc}</p>
-            </AnimatedSection>
-          ))}
+function FinalCta() {
+  const [values, setValues] = useState({ name: "", firm: "", email: "", vaults: "", telegram: "" });
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState("");
+
+  const set = (k) => (e) => setValues((v) => ({ ...v, [k]: e.target.value }));
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (status === "sending") return;
+    const { name, firm, email, vaults, telegram } = values;
+    if (!name.trim() || !firm.trim() || !emailOk(email.trim()) || !vaults.trim()) {
+      setError(MSG_INVALID);
+      return;
+    }
+    setError("");
+    setStatus("sending");
+    try {
+      const res = await fetch(import.meta.env.VITE_SHEET_BEST_SCAN_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "homepage-scan",
+          name: name.trim(),
+          firm: firm.trim(),
+          email: email.trim(),
+          vaults: vaults.trim(),
+          telegram: telegram.trim(),
+          timestamp: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) throw new Error("not ok");
+      setStatus("done");
+    } catch {
+      setError(MSG_FAILED);
+      setStatus("idle");
+    }
+  };
+
+  return (
+    <section id="scan" style={{ background: "linear-gradient(135deg, #4B0CA6 0%, #7A1CCB 60%, #9E3BFF 100%)" }}>
+      <div className="fh-wrap fh-cta">
+        <div>
+          <h2 className="fh-h2-cta" style={{ margin: 0, lineHeight: 1.05, fontWeight: 800, letterSpacing: "-0.035em", color: "#ffffff" }}>
+            Your first vault scan is on us.
+          </h2>
+          <p style={{ margin: "24px 0 0", fontSize: 20, lineHeight: 1.55, color: "#EFE6FF", maxWidth: 520 }}>
+            Send one vault you're evaluating. You get the full score and the data behind it, free. Judge the work before you commit.
+          </p>
+          <ul className="fh-cta-list">
+            <li>Free, no commitment</li>
+            <li>No integration, no wallet connection</li>
+            <li>A person replies, not a drip campaign</li>
+          </ul>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="section-padding" style={{ padding: "80px clamp(16px, 5vw, 260px) 100px" }}>
-        <AnimatedSection>
-          <div
-            className="cta-box"
-            style={{
-              borderRadius: 16,
-              padding: "80px",
-              textAlign: "center",
-              position: "relative",
-              overflow: "hidden",
-              backgroundImage: COLORS.purple.gradientBg,
-              boxShadow: "0px 0px 47px rgba(69,199,242,0.1)",
-            }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 300,
-                background: "radial-gradient(ellipse at center bottom, rgba(141,31,249,0.2) 0%, transparent 70%)",
-                pointerEvents: "none",
-              }}
-            />
-            <div style={{ position: "relative" }}>
-              <Tag>Get Started</Tag>
-              <h2 className="cta-title" style={{ fontSize: 56, fontWeight: 400, textTransform: "uppercase", margin: "16px 0 32px", lineHeight: 1.15, letterSpacing: "-0.02em" }}>
-                Ready to turn yield<br />into revenue?
-              </h2>
-              <div className="cta-buttons" style={{ display: "flex", gap: 16, justifyContent: "center" }}>
-                <PrimaryButton large onClick={() => navigate("/apply")}>Start Integration</PrimaryButton>
-                <SecondaryButton onClick={() => navigate("/apply")}>Book a Demo</SecondaryButton>
-              </div>
-              <p style={{ fontSize: 14, color: "rgba(0,0,0,0.4)", marginTop: 16 }}>
-                Free to start · No minimum volume · Ship in days
-              </p>
-            </div>
-          </div>
-        </AnimatedSection>
-      </section>
-
-      {/* FOOTER */}
-      <footer
-        className="section-padding"
-        style={{
-          padding: "48px clamp(16px, 5vw, 260px)",
-          backgroundImage: COLORS.purple.gradientBg,
-          display: "flex",
-          flexDirection: "column",
-          gap: 32,
-        }}
-      >
-        <div className="footer-top" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 24 }}>
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-              <img src="/yieldo-new.png" alt="Yieldo" style={{ width: 28, height: 28, borderRadius: 6 }} />
-              <span style={{ fontSize: 16, fontWeight: 600, letterSpacing: "0.05em" }}>YIELDO</span>
-            </div>
-            <p style={{ fontSize: 15, color: "rgba(0,0,0,0.5)", maxWidth: 400, lineHeight: 1.5 }}>
-              The intelligent distribution layer for on-chain yield. One API for every wallet.
+        {status === "done" ? (
+          <div className="fh-done">
+            <b style={{ fontSize: 24 }}>Request received.</b>
+            <p style={{ margin: 0, color: "#3A3350", fontSize: 16, lineHeight: 1.6 }}>
+              We'll be in touch with your scored report.
             </p>
           </div>
-          <div className="footer-links" style={{ display: "flex", gap: 32, fontSize: 15, color: "rgba(0,0,0,0.5)", flexWrap: "wrap" }}>
-            <Link to="/wallet" style={{ color: "inherit", textDecoration: "none" }}>For Wallets</Link>
-            <Link to="/vault" style={{ color: "inherit", textDecoration: "none" }}>For Vaults</Link>
-            <Link to="/creator" style={{ color: "inherit", textDecoration: "none" }}>For Creators</Link>
-            <a href="https://docs.yieldo.xyz" target="_blank" rel="noopener noreferrer" style={{ color: "inherit", textDecoration: "none" }}>Documentation</a>
-          </div>
+        ) : (
+          <form className="fh-form" onSubmit={submit} noValidate>
+            <div className="fh-row2">
+              <div className="fh-f">
+                <label htmlFor="fh-name">Name</label>
+                <input id="fh-name" name="name" autoComplete="name" placeholder="Jane Doe" required value={values.name} onChange={set("name")} />
+              </div>
+              <div className="fh-f">
+                <label htmlFor="fh-firm">Fund / firm</label>
+                <input id="fh-firm" name="firm" autoComplete="organization" placeholder="Acme Capital" required value={values.firm} onChange={set("firm")} />
+              </div>
+            </div>
+            <div className="fh-f">
+              <label htmlFor="fh-email">Work email</label>
+              <input id="fh-email" name="email" type="email" autoComplete="email" placeholder="jane@acmecapital.com" required value={values.email} onChange={set("email")} />
+            </div>
+            <div className="fh-f">
+              <label htmlFor="fh-vaults">Vault to scan <em>· address or link, one per line</em></label>
+              <textarea id="fh-vaults" name="vaults" placeholder="0xbeef0173…a64cb  (Ethereum)" required value={values.vaults} onChange={set("vaults")} />
+            </div>
+            <div className="fh-f">
+              <label htmlFor="fh-tg">Telegram <em>· optional, for alerts</em></label>
+              <input id="fh-tg" name="telegram" placeholder="@handle" value={values.telegram} onChange={set("telegram")} />
+            </div>
+            <button type="submit" disabled={status === "sending"}>
+              {status === "sending" ? "Sending…" : "Get your free vault scan"}
+            </button>
+            <p role="status" style={{ margin: 0, fontSize: 13, textAlign: "center", color: error ? "#B3261E" : "#5E5773" }}>
+              {error || MSG_FINE}
+            </p>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  const link = { color: "#3A3350" };
+  return (
+    <footer style={{ borderTop: "1px solid #ECE8F3" }}>
+      <div className="fh-wrap fh-footer">
+        <span>© Yieldo</span>
+        <span style={{ maxWidth: 560, textAlign: "center" }}>Yieldo provides data and analytics only. Nothing on this site is investment advice.</span>
+        <div className="fh-footer-links">
+          <a href={DOCS_URL} {...ext} style={link}>Methodology</a>
+          <a href="https://x.com/YieldoHQ" {...ext} style={link}>X @YieldoHQ</a>
+          <a href="https://discord.gg/5qvKa5FhjM" {...ext} style={link}>Discord</a>
         </div>
-        <div className="footer-bottom" style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-          <p style={{ fontSize: 13, color: "rgba(0,0,0,0.4)", margin: 0 }}>&copy; 2025 YIELDO. All rights reserved</p>
-          <div style={{ display: "flex", gap: 8 }}>
-            <a href="https://x.com/YieldoHQ" target="_blank" rel="noopener noreferrer"
-               aria-label="Yieldo on X" title="Yieldo on X"
-               style={{
-                 width: 36, height: 36, borderRadius: 8, background: "#000",
-                 color: "#fff", display: "inline-flex", alignItems: "center",
-                 justifyContent: "center", cursor: "pointer", textDecoration: "none",
-                 transition: "transform 0.15s, background 0.15s",
-               }}
-               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.background = "#1a1a1a"; }}
-               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#000"; }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            <a href="https://discord.gg/5qvKa5FhjM" target="_blank" rel="noopener noreferrer"
-               aria-label="Yieldo on Discord" title="Yieldo on Discord"
-               style={{
-                 width: 36, height: 36, borderRadius: 8, background: "#5865F2",
-                 color: "#fff", display: "inline-flex", alignItems: "center",
-                 justifyContent: "center", cursor: "pointer", textDecoration: "none",
-                 transition: "transform 0.15s, background 0.15s",
-               }}
-               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.background = "#4752C4"; }}
-               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.background = "#5865F2"; }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      </footer>
+      </div>
+    </footer>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <div
+      id="top"
+      className="fh-root"
+      style={{ display: "flex", flexDirection: "column", background: "#ffffff", fontFamily: "'Inter', system-ui, sans-serif", color: "#140A2A" }}
+    >
+      <Nav />
+      <Hero />
+      <ProofStrip />
+      <Problem />
+      <Signals />
+      <Offer />
+      <AlertPreview />
+      <HowItWorks />
+      <FinalCta />
+      <Footer />
     </div>
   );
 }
