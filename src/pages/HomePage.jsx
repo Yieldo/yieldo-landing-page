@@ -387,7 +387,7 @@ function HowItWorks() {
 }
 
 const emailOk = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-const MSG_FINE = "We reply within one business day. No newsletter.";
+const MSG_FINE = "No newsletter. We only use your email to reply.";
 const MSG_INVALID = "Fill in name, firm, a valid work email and at least one vault.";
 const MSG_FAILED = "Something went wrong and your request was not sent. Please try again, or message us on X @YieldoHQ.";
 
@@ -441,7 +441,7 @@ function FinalCta() {
             Send one vault you're evaluating. You get the full score and the data behind it, free. Judge the work before you commit.
           </p>
           <ul className="fh-cta-list">
-            <li>Scored report within 48 hours</li>
+            <li>Free, no commitment</li>
             <li>No integration, no wallet connection</li>
             <li>A person replies, not a drip campaign</li>
           </ul>
@@ -451,7 +451,7 @@ function FinalCta() {
           <div className="fh-done">
             <b style={{ fontSize: 24 }}>Request received.</b>
             <p style={{ margin: 0, color: "#3A3350", fontSize: 16, lineHeight: 1.6 }}>
-              We'll reply within one business day with your scored report timeline.
+              We'll be in touch with your scored report.
             </p>
           </div>
         ) : (
